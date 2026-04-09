@@ -251,18 +251,19 @@ p {
 .cta-button {
   background: linear-gradient(135deg, #7B2FF7 0%, #4A90F7 50%, #FF3C8E 100%);
   color: white;
-  padding: 10px 28px;
-  border-radius: 50px;
+  padding: 14px 32px;
+  border-radius: 999px;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1rem;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(123, 47, 247, 0.3);
   white-space: nowrap;
+  min-height: 54px;
 }
 
 .cta-button:hover {
@@ -367,10 +368,10 @@ p {
 }
 
 .btn {
-  padding: var(--spacing-sm) var(--spacing-xl);
-  border-radius: var(--radius-md);
+  padding: 1rem 2rem;
+  border-radius: 999px;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 1rem;
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-xs);
@@ -383,6 +384,7 @@ p {
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(123, 47, 247, 0.35);
   animation: btnPulseGlow 3s ease-in-out infinite;
+  min-height: 56px;
 }
 
 @keyframes btnPulseGlow {
@@ -1385,9 +1387,18 @@ p {
   background: #111018;
   color: var(--text-white);
   padding: 80px 0 32px;
-  min-height: 60vh;
   display: flex;
   align-items: center;
+}
+
+/* CTA button mobile text swap helpers */
+.cta-button .cta-text-mobile {
+  display: none;
+}
+
+/* Auth links inside dropdown - hidden on desktop */
+.nav-auth-mobile {
+  display: none;
 }
 
 .footer-content {

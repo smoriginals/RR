@@ -276,7 +276,7 @@
               <a href="about.html" class="nav-link">About</a>
             </li>
             <li class="nav-item has-dropdown">
-              <a href="#" class="nav-link">Plan <i class="fas fa-chevron-down"></i></a>
+              <a href="javascript:void(0)" class="nav-link">Plan <i class="fas fa-chevron-down"></i></a>
               <ul class="nav-dropdown">
                 <li><a href="plans.html">View Plans</a></li>
                 <li><a href="plans.html#comparison">Compare Plans</a></li>
@@ -292,11 +292,17 @@
             <li class="nav-item">
               <a href="contact.html" class="nav-link">Contact</a>
             </li>
+            <li class="nav-auth-mobile">
+              <div class="auth-buttons">
+                <a href="signin.html" class="auth-btn-login"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="signup.html" class="auth-btn-signup"><i class="fas fa-user-plus"></i> Sign Up</a>
+              </div>
+            </li>
           </ul>
         </nav>
         <div style="display: flex; align-items: center; gap: 12px;">
           <a href="signin.html" class="cta-button">
-            <i class="fas fa-user-graduate"></i> Start Learning
+            <i class="fas fa-user-graduate"></i> <span class="cta-text-desktop">Start Learning</span><span class="cta-text-mobile">Sign Up</span>
           </a>
         </div>
         <button class="mobile-toggle" onclick="toggleMobileMenu()"><span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span></button>
@@ -356,6 +362,7 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
+        <!-- About + Social -->
         <div class="footer-section">
           <div class="logo" style="color: white; margin-bottom: 12px;">
             <img src="assets/new/images/logo.png" alt="Richer" style="max-height: 36px;">
@@ -368,6 +375,8 @@
             <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
           </div>
         </div>
+
+        <!-- Quick Links -->
         <div class="footer-section">
           <h3>Quick Links</h3>
           <ul class="footer-links">
@@ -379,6 +388,8 @@
             <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
           </ul>
         </div>
+
+        <!-- Legal -->
         <div class="footer-section">
           <h3>Legal</h3>
           <ul class="footer-links">
@@ -387,6 +398,8 @@
             <li><a href="refund-policy.html"><i class="fas fa-chevron-right"></i> Refund Policy</a></li>
           </ul>
         </div>
+
+        <!-- Contact -->
         <div class="footer-section">
           <h3>Contact Us</h3>
           <div class="contact-info">
@@ -401,10 +414,15 @@
             <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
             <div>New Delhi, India</div>
           </div>
+          <div class="contact-info">
+            <div class="contact-icon"><i class="fas fa-clock"></i></div>
+            <div>Mon - Sat, 10:00 - 18:00</div>
+          </div>
         </div>
       </div>
+
       <div class="footer-bottom">
-        <p>&copy; 2024 Richer. All Rights Reserved. Design & Developed By YourCompany.</p>
+        <p>&copy; 2026 Richer. All Rights Reserved. Design & Developed By YourCompany.</p>
       </div>
     </div>
   </footer>

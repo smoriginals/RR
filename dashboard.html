@@ -2198,8 +2198,7 @@
           </div>
 
           <!-- Hidden Logout Form -->
-          <form id="logoutForm" method="POST" action="signin.html" class="hidden-form">
-            <input type="hidden" name="_token" value="csrf_placeholder">
+          <form id="logoutForm" method="GET" action="signin.html" class="hidden-form">
           </form>
         </div>
 
@@ -3555,7 +3554,7 @@
             showConfirmButton: false,
             customClass: { popup: 'logout-popup' }
           }).then(function() {
-            document.getElementById('logoutForm').submit();
+            window.location.href = 'signin.html';
           });
         }
       });
