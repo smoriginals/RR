@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Post - Richer</title>
+  <link rel="shortcut icon" href="assets/new/images/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header/Navigation -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo"><a href="index.html"><img src="assets/new/images/logo.png" alt="Richer Logo"></a>
+        </div>
+        <nav>
+          <ul class="nav-menu">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="courses.html" class="nav-link">Courses</a></li>
+            <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+        <a href="signin.html" class="cta-button">
+          <i class="fas fa-user"></i> Start Learning
+        </a>
+        <button class="mobile-toggle" onclick="toggleMobileMenu()"><span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Blog Content -->
+  <article style="padding: var(--spacing-2xl) 0;">
+    <div class="container" style="max-width: 800px;">
+      <div class="breadcrumb">
+        <a href="blog.html">Blog</a>
+        <span>/</span>
+        <span>10 Digital Marketing Trends to Watch in 2024</span>
+      </div>
+
+      <header style="margin-bottom: var(--spacing-2xl);">
+        <h1>10 Digital Marketing Trends to Watch in 2024</h1>
+        <div style="display: flex; gap: var(--spacing-lg); flex-wrap: wrap; color: var(--text-light); margin-top: var(--spacing-lg); font-size: 0.9rem;">
+          <span><i class="fas fa-calendar"></i> December 15, 2023</span>
+          <span><i class="fas fa-clock"></i> 5 min read</span>
+          <span><i class="fas fa-user"></i> By John Smith</span>
+        </div>
+      </header>
+
+      <div style="position: relative; height: 400px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: var(--spacing-2xl);">
+        <img src="https://picsum.photos/800/400?random=1" alt="Featured Image" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+
+      <!-- Author Card -->
+      <div style="background: var(--light-bg); padding: var(--spacing-lg); border-radius: var(--radius-lg); margin-bottom: var(--spacing-2xl);">
+        <div style="display: flex; gap: var(--spacing-lg); align-items: flex-start;">
+          <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="John Smith" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">
+          <div>
+            <h3 style="margin-bottom: var(--spacing-xs);">About the Author</h3>
+            <strong>John Smith</strong>
+            <p style="margin-top: var(--spacing-xs);">Digital marketing expert with 10+ years of experience. Specialized in SEO, content marketing, and social media strategy. Passionate about helping businesses grow online.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blog Content -->
+      <div style="font-size: 1.05rem; line-height: 1.8; color: var(--text-dark);">
+        <p>The digital marketing landscape is evolving rapidly. As we look ahead to 2024, businesses must adapt to new technologies, consumer behaviors, and platform changes. In this comprehensive guide, we'll explore the top 10 digital marketing trends that will shape the industry.</p>
+
+        <h2 style="margin: var(--spacing-2xl) 0 var(--spacing-lg);">1. AI-Powered Personalization</h2>
+        <p>Artificial intelligence is revolutionizing personalization. From chatbots to predictive analytics, AI helps businesses deliver tailored experiences at scale. Expect to see more brands leveraging AI for customer segmentation and content recommendations.</p>
+
+        <h2 style="margin: var(--spacing-2xl) 0 var(--spacing-lg);">2. Video Marketing Dominance</h2>
+        <p>Video continues to reign supreme. Short-form videos on TikTok and Instagram Reels are capturing attention, while long-form content on YouTube dominates education and entertainment. Invest in video production if you haven't already.</p>
+
+        <h2 style="margin: var(--spacing-2xl) 0 var(--spacing-lg);">3. Voice Search Optimization</h2>
+        <p>With smart speakers becoming ubiquitous, voice search is growing rapidly. Optimize your content for conversational queries and featured snippets to capture voice search traffic.</p>
+
+        <h2 style="margin: var(--spacing-2xl) 0 var(--spacing-lg);">4. Social Commerce Evolution</h2>
+        <p>Shopping directly from social media is becoming the norm. Platforms like Instagram, TikTok, and Facebook now allow seamless shopping experiences, blurring the lines between social media and e-commerce.</p>
+
+        <p><strong>The digital marketing landscape is constantly evolving, and staying ahead of the curve is essential for business success. Whether you're just starting or already established, embracing these trends will help you stay competitive and drive meaningful results in 2024.</strong></p>
+      </div>
+
+      <!-- Social Share -->
+      <div style="display: flex; align-items: center; gap: var(--spacing-lg); margin: var(--spacing-2xl) 0; padding: var(--spacing-lg) 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+        <strong>Share this article:</strong>
+        <a href="#" style="width: 40px; height: 40px; background: #3b5998; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#" style="width: 40px; height: 40px; background: #1da1f2; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" style="width: 40px; height: 40px; background: #e1306c; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#" style="width: 40px; height: 40px; background: #0a66c2; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </div>
+
+      <!-- Related Posts -->
+      <div style="margin-top: var(--spacing-2xl);">
+        <h2 style="margin-bottom: var(--spacing-lg);">Related Articles</h2>
+        <div class="courses-grid" style="grid-template-columns: repeat(3, 1fr);">
+          <div class="blog-card">
+            <div class="blog-card-image">
+              <img src="https://picsum.photos/400/300?random=2" alt="Blog">
+            </div>
+            <div class="blog-card-content">
+              <h3 class="blog-card-title">Build a Personal Brand</h3>
+              <div class="blog-card-meta">
+                <span><i class="fas fa-user"></i> Emily White</span>
+                <span><i class="fas fa-calendar"></i> Dec 10</span>
+              </div>
+              <a href="blog-detail.html" class="blog-card-read">Read More →</a>
+            </div>
+          </div>
+
+          <div class="blog-card">
+            <div class="blog-card-image">
+              <img src="https://picsum.photos/400/300?random=3" alt="Blog">
+            </div>
+            <div class="blog-card-content">
+              <h3 class="blog-card-title">Content Marketing Guide</h3>
+              <div class="blog-card-meta">
+                <span><i class="fas fa-user"></i> David Turner</span>
+                <span><i class="fas fa-calendar"></i> Nov 15</span>
+              </div>
+              <a href="blog-detail.html" class="blog-card-read">Read More →</a>
+            </div>
+          </div>
+
+          <div class="blog-card">
+            <div class="blog-card-image">
+              <img src="https://picsum.photos/400/300?random=4" alt="Blog">
+            </div>
+            <div class="blog-card-content">
+              <h3 class="blog-card-title">Email Marketing Tips</h3>
+              <div class="blog-card-meta">
+                <span><i class="fas fa-user"></i> Amanda Green</span>
+                <span><i class="fas fa-calendar"></i> Nov 10</span>
+              </div>
+              <a href="blog-detail.html" class="blog-card-read">Read More →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comments Section -->
+      <div style="margin-top: var(--spacing-2xl); padding: var(--spacing-2xl); background: var(--light-bg); border-radius: var(--radius-lg);">
+        <h2 style="margin-bottom: var(--spacing-lg);">Comments (2)</h2>
+        
+        <div style="margin-bottom: var(--spacing-lg);">
+          <div style="display: flex; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Commenter" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+            <div style="flex: 1;">
+              <strong>Rahul Verma</strong>
+              <p style="font-size: 0.875rem; color: var(--text-light);">Dec 16, 2023</p>
+              <p>Great article! Very insightful information about the upcoming trends. Looking forward to more content like this!</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: var(--spacing-md);">
+            <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Commenter" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+            <div style="flex: 1;">
+              <strong>Priya Sharma</strong>
+              <p style="font-size: 0.875rem; color: var(--text-light);">Dec 15, 2023</p>
+              <p>Thanks for breaking down these trends so clearly. Definitely implementing these strategies for my campaign!</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">Leave a Comment</h3>
+        <form>
+          <div class="form-group">
+            <input type="text" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <textarea placeholder="Your comment..." rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Post Comment</button>
+        </form>
+      </div>
+    </div>
+  </article>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <p>Read insights and stories from industry experts.</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fas fa-plus"></i> Home</a></li>
+            <li><a href="blog.html"><i class="fas fa-plus"></i> Blog</a></li>
+            <li><a href="courses.html"><i class="fas fa-plus"></i> Courses</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 Richer. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="scroll-to-top" onclick="scrollToTop()">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

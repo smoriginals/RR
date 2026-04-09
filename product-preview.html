@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Preview - Richer</title>
+  <link rel="shortcut icon" href="assets/new/images/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="assets/new/css/enhancements.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .product-hero {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #1a1035 50%, var(--secondary-color) 100%);
+      padding: 120px 0 60px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle at 30% 70%, rgba(123,47,247,0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 30%, rgba(255,60,142,0.1) 0%, transparent 50%);
+      animation: floatBg 15s ease-in-out infinite;
+    }
+    @keyframes floatBg { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-2%,2%)} }
+    .product-hero .container { position: relative; z-index: 1; }
+    .product-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .product-hero-image {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      position: relative;
+    }
+    .product-hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      aspect-ratio: 4/3;
+    }
+    .product-hero-image .course-badge {
+      top: 16px; left: 16px;
+      font-size: 0.85rem;
+      padding: 6px 16px;
+    }
+    .product-hero-info h1 {
+      color: #fff;
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .product-hero-info .hero-desc {
+      color: rgba(255,255,255,0.85);
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .product-meta {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .product-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.9);
+    }
+    .product-meta-item i {
+      color: var(--accent-color);
+      font-size: 1rem;
+    }
+    .product-price-box {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .product-price-box .price-current {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #fff;
+      animation: none;
+    }
+    .product-price-box .price-original {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .product-price-box .price-discount {
+      font-size: 0.9rem;
+      padding: 4px 12px;
+    }
+    .product-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .product-actions .btn {
+      padding: 14px 32px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .btn-outline-white {
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.4);
+      color: #fff;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-outline-white:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: #fff;
+    }
+
+    /* Details Section */
+    .product-details {
+      padding: 60px 0;
+    }
+    .product-details-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 48px;
+    }
+    .detail-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid var(--border-color);
+      margin-bottom: 32px;
+    }
+    .detail-tab {
+      padding: 12px 24px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-light);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+    .detail-tab.active {
+      color: var(--primary-color);
+      border-bottom-color: var(--primary-color);
+    }
+    .detail-tab:hover {
+      color: var(--primary-color);
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .learn-list {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .learn-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.95rem;
+      color: var(--text-body);
+    }
+    .learn-list li i {
+      color: var(--primary-color);
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .curriculum-item {
+      background: var(--light-bg);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .curriculum-item:hover {
+      background: rgba(123,47,247,0.08);
+      transform: translateX(4px);
+    }
+    .curriculum-item .item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .curriculum-item .item-left i {
+      color: var(--primary-color);
+      width: 20px;
+      text-align: center;
+    }
+    .curriculum-item .item-right {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    /* Sidebar */
+    .product-sidebar {
+      position: sticky;
+      top: 100px;
+    }
+    .sidebar-card {
+      background: var(--text-white);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      border: 1px solid var(--border-color);
+    }
+    .sidebar-feature {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.9rem;
+    }
+    .sidebar-feature:last-child { border-bottom: none; }
+    .sidebar-feature i {
+      color: var(--primary-color);
+      width: 20px;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    /* Related Courses */
+    .related-section {
+      padding: 60px 0;
+      background: var(--light-bg);
+    }
+
+    @media (max-width: 768px) {
+      .product-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .product-hero-info h1 { font-size: 1.6rem; }
+      .product-details-grid {
+        grid-template-columns: 1fr;
+      }
+      .learn-list { grid-template-columns: 1fr; }
+      .product-hero { padding: 100px 0 40px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header/Navigation -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo"><a href="index.html"><img src="assets/new/images/logo.png" alt="Richer Logo"></a>
+        </div>
+        <nav>
+          <ul class="nav-menu">
+            <li class="nav-item">
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="about.html" class="nav-link">About</a>
+            </li>
+            <li class="nav-item has-dropdown">
+              <a href="#" class="nav-link">Plan <i class="fas fa-chevron-down"></i></a>
+              <ul class="nav-dropdown">
+                <li><a href="plans.html">View Plans</a></li>
+                <li><a href="plans.html#comparison">Compare Plans</a></li>
+                <li><a href="plans.html#faq">Plan FAQ</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="courses.html" class="nav-link active">Courses</a>
+            </li>
+            <li class="nav-item">
+              <a href="blog.html" class="nav-link">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a href="contact.html" class="nav-link">Contact</a>
+            </li>
+          </ul>
+        </nav>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <a href="signin.html" class="cta-button">
+            <i class="fas fa-user-graduate"></i> Start Learning
+          </a>
+        </div>
+        <button class="mobile-toggle" onclick="toggleMobileMenu()"><span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Product Hero -->
+  <section class="product-hero" id="product-hero">
+    <!-- Populated by JS -->
+  </section>
+
+  <!-- Product Details -->
+  <section class="product-details">
+    <div class="container">
+      <div class="product-details-grid">
+        <!-- Main Content -->
+        <div>
+          <div class="detail-tabs">
+            <button class="detail-tab active" onclick="switchTab('overview')">Overview</button>
+            <button class="detail-tab" onclick="switchTab('curriculum')">Curriculum</button>
+            <button class="detail-tab" onclick="switchTab('reviews')">Reviews</button>
+          </div>
+
+          <div class="tab-content active" id="tab-overview">
+            <!-- Populated by JS -->
+          </div>
+
+          <div class="tab-content" id="tab-curriculum">
+            <!-- Populated by JS -->
+          </div>
+
+          <div class="tab-content" id="tab-reviews">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="product-sidebar" id="product-sidebar">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Courses -->
+  <section class="related-section">
+    <div class="container">
+      <h2 style="margin-bottom: var(--spacing-lg);">You May Also Like</h2>
+      <div class="courses-grid" id="related-courses" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="logo" style="color: white; margin-bottom: 12px;">
+            <img src="assets/new/images/logo.png" alt="Richer" style="max-height: 36px;">
+          </div>
+          <p>Richer is an innovative e-learning platform for personal branding, digital marketing, and creating passive income streams.</p>
+          <div class="footer-socials">
+            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+            <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+            <li><a href="courses.html"><i class="fas fa-chevron-right"></i> Courses</a></li>
+            <li><a href="plans.html"><i class="fas fa-chevron-right"></i> Plans</a></li>
+            <li><a href="blog.html"><i class="fas fa-chevron-right"></i> Blog</a></li>
+            <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Legal</h3>
+          <ul class="footer-links">
+            <li><a href="privacy-policy.html"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+            <li><a href="terms.html"><i class="fas fa-chevron-right"></i> Terms & Conditions</a></li>
+            <li><a href="refund-policy.html"><i class="fas fa-chevron-right"></i> Refund Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <div class="contact-info">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <div><a href="mailto:info@Richer.com" style="color: rgba(255,255,255,0.7);">info@Richer.com</a></div>
+          </div>
+          <div class="contact-info">
+            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+            <div><a href="tel:+911234567890" style="color: rgba(255,255,255,0.7);">+91-1234567890</a></div>
+          </div>
+          <div class="contact-info">
+            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>New Delhi, India</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Richer. All Rights Reserved. Design & Developed By YourCompany.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="scroll-to-top" onclick="scrollToTop()">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <script src="js/main.js"></script>
+
+  <script>
+    // Course packages data
+    var packages = {
+      1: {
+        name: 'App Development Starter',
+        image: 'assets/new/images/App.jpeg',
+        badge: 'Starter',
+        badgeClass: '',
+        rating: '4.5',
+        reviews: '120',
+        stars: '★★★★☆',
+        courses: 2,
+        price: 260,
+        original: 499,
+        discount: '48% OFF',
+        description: 'Kickstart your app development journey with this beginner-friendly package. Learn the fundamentals of mobile and web app creation using modern frameworks and tools.',
+        learn: [
+          'Build your first mobile app from scratch',
+          'Understand app UI/UX design principles',
+          'Learn basic programming logic & structure',
+          'Deploy apps to testing environments',
+          'Work with APIs and data handling',
+          'Debug and problem-solve like a pro'
+        ],
+        curriculum: [
+          { title: 'Introduction to App Development', type: 'video', duration: '45 min' },
+          { title: 'Setting Up Your Development Environment', type: 'video', duration: '30 min' },
+          { title: 'Understanding Layouts & Components', type: 'video', duration: '50 min' },
+          { title: 'Building Your First Screen', type: 'code', duration: '1 hr' },
+          { title: 'Navigation & Routing Basics', type: 'video', duration: '35 min' },
+          { title: 'Final Project: Mini App', type: 'code', duration: '2 hr' }
+        ],
+        reviewsList: [
+          { name: 'Aman Gupta', avatar: 'A', rating: '★★★★★', text: 'Perfect for beginners! I had zero coding experience and now I built my first app.' },
+          { name: 'Sneha Patel', avatar: 'S', rating: '★★★★☆', text: 'Clear explanations and great projects. Worth the price for getting started.' }
+        ],
+        features: ['2 Courses', 'Lifetime Access', 'Mobile Friendly', 'Certificate of Completion', 'Community Access']
+      },
+      2: {
+        name: 'Graphic Design Pro',
+        image: 'assets/new/images/Graphics.jpeg',
+        badge: 'Popular',
+        badgeClass: '',
+        rating: '4.5',
+        reviews: '250',
+        stars: '★★★★☆',
+        courses: 6,
+        price: 512,
+        original: 999,
+        discount: '49% OFF',
+        description: 'Master the art of visual communication. From Canva to advanced Photoshop, this package covers everything you need to create stunning graphics for brands and social media.',
+        learn: [
+          'Create professional social media graphics',
+          'Design logos and brand identity kits',
+          'Master Canva, Photoshop & Illustrator',
+          'Build effective marketing creatives',
+          'Understand color theory & typography',
+          'Create print-ready designs & portfolios'
+        ],
+        curriculum: [
+          { title: 'Design Principles & Color Theory', type: 'video', duration: '40 min' },
+          { title: 'Canva Mastery: Zero to Hero', type: 'video', duration: '1 hr' },
+          { title: 'Photoshop Essentials', type: 'video', duration: '1.5 hr' },
+          { title: 'Logo Design Workshop', type: 'code', duration: '2 hr' },
+          { title: 'Social Media Templates', type: 'video', duration: '45 min' },
+          { title: 'Brand Identity Project', type: 'code', duration: '3 hr' },
+          { title: 'Typography & Layout Mastery', type: 'video', duration: '50 min' },
+          { title: 'Portfolio Building', type: 'file', duration: '1 hr' }
+        ],
+        reviewsList: [
+          { name: 'Pooja Mehta', avatar: 'P', rating: '★★★★★', text: 'The Canva + Photoshop combo is exactly what I needed. Now I freelance as a designer!' },
+          { name: 'Rohit Sharma', avatar: 'R', rating: '★★★★☆', text: 'Great structured content. The brand identity project was challenging but rewarding.' }
+        ],
+        features: ['6 Courses', 'Lifetime Access', 'Design Templates', 'Certificate of Completion', 'Project Files Included', 'Community Access']
+      },
+      3: {
+        name: 'Web Development Expert',
+        image: 'assets/new/images/Web.jpeg',
+        badge: 'Bestseller',
+        badgeClass: '',
+        rating: '4.5',
+        reviews: '380',
+        stars: '★★★★☆',
+        courses: 12,
+        price: 1050,
+        original: 2999,
+        discount: '65% OFF',
+        description: 'Become a full-stack web developer. This comprehensive package covers HTML, CSS, JavaScript, React, Node.js, databases, and deployment — everything to build production-ready websites.',
+        learn: [
+          'Build responsive websites with HTML & CSS',
+          'Master JavaScript & modern ES6+ features',
+          'Create dynamic frontends with React',
+          'Build backends with Node.js & Express',
+          'Work with MongoDB & SQL databases',
+          'Deploy projects to live servers',
+          'Version control with Git & GitHub',
+          'REST API development & integration'
+        ],
+        curriculum: [
+          { title: 'HTML5 & Semantic Markup', type: 'video', duration: '1 hr' },
+          { title: 'CSS3 & Responsive Design', type: 'video', duration: '1.5 hr' },
+          { title: 'JavaScript Fundamentals', type: 'video', duration: '2 hr' },
+          { title: 'Advanced JS: ES6+ & Async', type: 'video', duration: '1.5 hr' },
+          { title: 'React.js Complete Guide', type: 'video', duration: '3 hr' },
+          { title: 'Node.js & Express Backend', type: 'video', duration: '2 hr' },
+          { title: 'Database Design (MongoDB + SQL)', type: 'video', duration: '2 hr' },
+          { title: 'REST API Development', type: 'code', duration: '2 hr' },
+          { title: 'Authentication & Security', type: 'video', duration: '1.5 hr' },
+          { title: 'Git, GitHub & Version Control', type: 'video', duration: '45 min' },
+          { title: 'Deployment (Vercel, Netlify, AWS)', type: 'video', duration: '1 hr' },
+          { title: 'Full-Stack Capstone Project', type: 'code', duration: '5 hr' }
+        ],
+        reviewsList: [
+          { name: 'Vikas Yadav', avatar: 'V', rating: '★★★★★', text: 'Went from zero coding knowledge to landing a junior developer job in 4 months. Incredible value!' },
+          { name: 'Ananya Singh', avatar: 'A', rating: '★★★★★', text: 'The most comprehensive web dev course I\'ve seen. The capstone project is portfolio-worthy.' },
+          { name: 'Deepak Kumar', avatar: 'D', rating: '★★★★☆', text: 'Great content, especially the React and Node.js sections. Worth every rupee.' }
+        ],
+        features: ['12 Courses', 'Lifetime Access', 'Source Code', 'Certificate of Completion', 'Project Files', 'Community Access', '1-on-1 Doubt Support']
+      },
+      4: {
+        name: 'Social Media Mastery',
+        image: 'assets/new/images/Social.jpeg',
+        badge: 'Master',
+        badgeClass: 'badge-premium',
+        rating: '5.0',
+        reviews: '420',
+        stars: '★★★★★',
+        courses: 17,
+        price: 2299,
+        original: 5999,
+        discount: '62% OFF',
+        description: 'Dominate every social platform. From Instagram Reels to YouTube growth, LinkedIn authority to Twitter/X virality — build a massive personal brand and monetize your audience.',
+        learn: [
+          'Grow Instagram to 100K+ followers organically',
+          'Create viral Reels & short-form content',
+          'Build a profitable YouTube channel',
+          'Master LinkedIn personal branding',
+          'Run profitable Facebook & Instagram Ads',
+          'Monetize your social media audience',
+          'Content calendar & strategy planning',
+          'Analytics, insights & performance tracking'
+        ],
+        curriculum: [
+          { title: 'Social Media Strategy Blueprint', type: 'video', duration: '1 hr' },
+          { title: 'Instagram Growth Masterclass', type: 'video', duration: '2.5 hr' },
+          { title: 'Reels & Short-Form Content Creation', type: 'video', duration: '2 hr' },
+          { title: 'YouTube Channel Setup & Growth', type: 'video', duration: '2 hr' },
+          { title: 'YouTube SEO & Monetization', type: 'video', duration: '1.5 hr' },
+          { title: 'LinkedIn Authority Building', type: 'video', duration: '1 hr' },
+          { title: 'Twitter/X Viral Content Strategy', type: 'video', duration: '1 hr' },
+          { title: 'Facebook Marketing & Groups', type: 'video', duration: '1.5 hr' },
+          { title: 'Paid Advertising (Meta Ads)', type: 'video', duration: '2.5 hr' },
+          { title: 'Content Calendar Masterplan', type: 'file', duration: '45 min' },
+          { title: 'Analytics & Performance Tracking', type: 'video', duration: '1 hr' },
+          { title: 'Capstone: 30-Day Growth Plan', type: 'code', duration: '3 hr' }
+        ],
+        reviewsList: [
+          { name: 'Priya Kapoor', avatar: 'P', rating: '★★★★★', text: 'Grew my Instagram from 500 to 25K in 2 months using the strategies in this course. Life-changing!' },
+          { name: 'Arjun Nair', avatar: 'A', rating: '★★★★★', text: 'The LinkedIn module alone was worth the entire price. Got 3 client leads from my first viral post.' },
+          { name: 'Neha Joshi', avatar: 'N', rating: '★★★★☆', text: 'Comprehensive and practical. The Reels creation section is the best I\'ve seen online.' }
+        ],
+        features: ['17 Courses', 'Lifetime Access', 'Templates & Scripts', 'Certificate of Completion', 'Content Calendar Templates', 'Private Community', '1-on-1 Doubt Support']
+      },
+      5: {
+        name: 'SEO Brahmastra Bundle',
+        image: 'assets/new/images/Seo.jpeg',
+        badge: 'Brahmastra',
+        badgeClass: 'badge-premium',
+        rating: '5.0',
+        reviews: '550',
+        stars: '★★★★★',
+        courses: 20,
+        price: 4999,
+        original: 10999,
+        discount: '55% OFF',
+        description: 'The ultimate SEO arsenal. Master on-page, off-page, technical SEO, local SEO, e-commerce SEO, and AI-powered strategies to rank #1 on Google and drive massive organic traffic.',
+        learn: [
+          'Rank any website on Google page 1',
+          'Master on-page & technical SEO',
+          'Build high-authority backlinks',
+          'Perform advanced keyword research',
+          'Optimize for local & e-commerce SEO',
+          'Use AI tools for SEO automation',
+          'Audit websites like a pro SEO consultant',
+          'Generate consistent organic revenue'
+        ],
+        curriculum: [
+          { title: 'SEO Fundamentals & How Google Works', type: 'video', duration: '1 hr' },
+          { title: 'Keyword Research Masterclass', type: 'video', duration: '2 hr' },
+          { title: 'On-Page SEO Deep Dive', type: 'video', duration: '2.5 hr' },
+          { title: 'Technical SEO & Site Speed', type: 'video', duration: '2 hr' },
+          { title: 'Content Strategy for SEO', type: 'video', duration: '1.5 hr' },
+          { title: 'Link Building & Off-Page SEO', type: 'video', duration: '2 hr' },
+          { title: 'Local SEO for Businesses', type: 'video', duration: '1.5 hr' },
+          { title: 'E-Commerce SEO', type: 'video', duration: '1.5 hr' },
+          { title: 'AI-Powered SEO Tools & Automation', type: 'video', duration: '2 hr' },
+          { title: 'Google Search Console Mastery', type: 'video', duration: '1 hr' },
+          { title: 'SEO Auditing Framework', type: 'code', duration: '2 hr' },
+          { title: 'Advanced Schema & Rich Snippets', type: 'video', duration: '1 hr' },
+          { title: 'Capstone: Full SEO Client Project', type: 'code', duration: '5 hr' }
+        ],
+        reviewsList: [
+          { name: 'Karan Malhotra', avatar: 'K', rating: '★★★★★', text: 'Ranked my client\'s website from page 5 to position 2 in 6 weeks. The backlink strategies are gold!' },
+          { name: 'Ritu Agarwal', avatar: 'R', rating: '★★★★★', text: 'Started an SEO freelance business after this course. Making 50K/month from just 3 clients.' },
+          { name: 'Manish Tiwari', avatar: 'M', rating: '★★★★★', text: 'The AI-powered SEO section is next-level. No other course teaches this. Absolute game-changer.' }
+        ],
+        features: ['20 Courses', 'Lifetime Access', 'SEO Toolkit Access', 'Certificate of Completion', 'Audit Templates', 'Private Community', '1-on-1 Mentoring', 'Weekly Live Q&A']
+      },
+      6: {
+        name: 'N8N Automation Premium Pro',
+        image: 'assets/new/images/N8N.jpeg',
+        badge: 'Premium Pro',
+        badgeClass: 'badge-premium',
+        rating: '4.5',
+        reviews: '600',
+        stars: '★★★★☆',
+        courses: 23,
+        price: 9998,
+        original: 20998,
+        discount: '52% OFF',
+        description: 'The most advanced automation package. Master N8N, Zapier, Make.com and AI automation to build powerful no-code workflows that save hundreds of hours and generate passive income.',
+        learn: [
+          'Build complex N8N automation workflows',
+          'Integrate 500+ apps without code',
+          'Create AI-powered automation bots',
+          'Automate social media, email & CRM',
+          'Build SaaS products with no-code tools',
+          'Sell automation services to clients',
+          'Master Zapier & Make.com alongside N8N',
+          'Deploy production-grade automations'
+        ],
+        curriculum: [
+          { title: 'Introduction to Automation & N8N', type: 'video', duration: '1 hr' },
+          { title: 'N8N Setup & Your First Workflow', type: 'video', duration: '1.5 hr' },
+          { title: 'Triggers, Actions & Logic', type: 'video', duration: '2 hr' },
+          { title: 'API Integrations Deep Dive', type: 'video', duration: '2.5 hr' },
+          { title: 'AI Nodes & ChatGPT Integration', type: 'video', duration: '2 hr' },
+          { title: 'Social Media Automation', type: 'video', duration: '1.5 hr' },
+          { title: 'Email & CRM Automation', type: 'video', duration: '1.5 hr' },
+          { title: 'E-Commerce Automation Flows', type: 'video', duration: '2 hr' },
+          { title: 'Zapier & Make.com Comparison', type: 'video', duration: '1.5 hr' },
+          { title: 'Building No-Code SaaS Products', type: 'video', duration: '3 hr' },
+          { title: 'Error Handling & Debugging', type: 'video', duration: '1 hr' },
+          { title: 'Self-Hosting N8N (Advanced)', type: 'video', duration: '1.5 hr' },
+          { title: 'Client Projects & Freelancing', type: 'video', duration: '2 hr' },
+          { title: 'Capstone: Full Automation Business', type: 'code', duration: '5 hr' }
+        ],
+        reviewsList: [
+          { name: 'Sahil Verma', avatar: 'S', rating: '★★★★★', text: 'This course is a goldmine. Built an automation agency and making 2L/month within 3 months.' },
+          { name: 'Divya Patel', avatar: 'D', rating: '★★★★☆', text: 'The AI integration modules are incredible. Automated my entire business workflow in a weekend.' },
+          { name: 'Rajesh Kumar', avatar: 'R', rating: '★★★★★', text: 'Most comprehensive N8N course available. The no-code SaaS section alone changed my career path.' }
+        ],
+        features: ['23 Courses', 'Lifetime Access', 'Workflow Templates', 'Certificate of Completion', 'N8N Blueprint Library', 'Private Community', '1-on-1 Mentoring', 'Weekly Live Q&A', 'Priority Support']
+      }
+    };
+
+    // Get package ID from URL
+    var urlParams = new URLSearchParams(window.location.search);
+    var packageId = parseInt(urlParams.get('id')) || 1;
+    var pkg = packages[packageId];
+
+    if (!pkg) {
+      pkg = packages[1];
+      packageId = 1;
+    }
+
+    // Update page title
+    document.title = pkg.name + ' - Richer';
+
+    // Render Hero
+    document.getElementById('product-hero').innerHTML = '<div class="container"><div class="product-hero-grid">' +
+      '<div class="product-hero-image">' +
+        '<img src="' + pkg.image + '" alt="' + pkg.name + '">' +
+        '<span class="course-badge ' + pkg.badgeClass + '">' + pkg.badge + '</span>' +
+      '</div>' +
+      '<div class="product-hero-info">' +
+        '<h1>' + pkg.name + '</h1>' +
+        '<p class="hero-desc">' + pkg.description + '</p>' +
+        '<div class="product-meta">' +
+          '<div class="product-meta-item"><i class="fas fa-star"></i> ' + pkg.rating + ' (' + pkg.reviews + ' reviews)</div>' +
+          '<div class="product-meta-item"><i class="fas fa-book"></i> ' + pkg.courses + ' Courses</div>' +
+          '<div class="product-meta-item"><i class="fas fa-users"></i> ' + (parseInt(pkg.reviews) * 8) + '+ Students</div>' +
+          '<div class="product-meta-item"><i class="fas fa-infinity"></i> Lifetime Access</div>' +
+        '</div>' +
+        '<div class="product-price-box">' +
+          '<span class="price-current">\u20B9' + pkg.price.toLocaleString('en-IN') + '</span>' +
+          '<span class="price-original"><del>\u20B9' + pkg.original.toLocaleString('en-IN') + '</del></span>' +
+          '<span class="price-discount">' + pkg.discount + '</span>' +
+        '</div>' +
+        '<div class="product-actions">' +
+          '<button class="btn btn-primary" onclick="addToCart(\'package-' + packageId + '\', \'course\', {name: \'' + pkg.name.replace(/'/g, "\\'") + '\', price: ' + pkg.price + '})">' +
+            '<i class="fas fa-shopping-cart"></i> Buy Now</button>' +
+          '<button class="btn btn-outline-white" onclick="window.location.href=\'checkout.html\'">' +
+            '<i class="fas fa-bolt"></i> Enroll Instantly</button>' +
+        '</div>' +
+      '</div>' +
+    '</div></div>';
+
+    // Render Overview Tab
+    var learnHtml = '<h3 style="margin-bottom: 20px;">What You\'ll Learn</h3><ul class="learn-list">';
+    pkg.learn.forEach(function(item) {
+      learnHtml += '<li><i class="fas fa-check-circle"></i> <span>' + item + '</span></li>';
+    });
+    learnHtml += '</ul>';
+    document.getElementById('tab-overview').innerHTML = learnHtml;
+
+    // Render Curriculum Tab
+    var currHtml = '<h3 style="margin-bottom: 20px;">Course Curriculum</h3><p style="color: var(--text-light); margin-bottom: 20px;">' + pkg.curriculum.length + ' lessons</p>';
+    pkg.curriculum.forEach(function(item, i) {
+      var icon = item.type === 'video' ? 'fa-play-circle' : item.type === 'code' ? 'fa-code' : 'fa-file-alt';
+      currHtml += '<div class="curriculum-item">' +
+        '<div class="item-left"><i class="fas ' + icon + '"></i> <span>' + (i + 1) + '. ' + item.title + '</span></div>' +
+        '<div class="item-right">' + item.duration + '</div>' +
+      '</div>';
+    });
+    document.getElementById('tab-curriculum').innerHTML = currHtml;
+
+    // Render Reviews Tab
+    var revHtml = '<h3 style="margin-bottom: 20px;">Student Reviews</h3>' +
+      '<div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding: 20px; background: var(--light-bg); border-radius: var(--radius-md);">' +
+        '<div style="font-size: 2.5rem; font-weight: 800; color: var(--primary-color);">' + pkg.rating + '</div>' +
+        '<div><div style="color: #ffc107; font-size: 1.2rem;">' + pkg.stars + '</div><div style="color: var(--text-light); font-size: 0.9rem;">' + pkg.reviews + ' reviews</div></div>' +
+      '</div>';
+    pkg.reviewsList.forEach(function(rev) {
+      revHtml += '<div style="padding: 20px; background: var(--light-bg); border-radius: var(--radius-md); margin-bottom: 12px;">' +
+        '<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">' +
+          '<div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700;">' + rev.avatar + '</div>' +
+          '<div><strong>' + rev.name + '</strong><div style="color: #ffc107; font-size: 0.85rem;">' + rev.rating + '</div></div>' +
+        '</div>' +
+        '<p style="color: var(--text-body); font-size: 0.95rem; line-height: 1.6;">"' + rev.text + '"</p>' +
+      '</div>';
+    });
+    document.getElementById('tab-reviews').innerHTML = revHtml;
+
+    // Render Sidebar
+    var sideHtml = '<div class="sidebar-card">' +
+      '<div style="margin-bottom: 20px; text-align: center;">' +
+        '<div class="price-current" style="font-size: 2rem; animation: none;">\u20B9' + pkg.price.toLocaleString('en-IN') + '</div>' +
+        '<div style="color: var(--text-light);"><del>\u20B9' + pkg.original.toLocaleString('en-IN') + '</del> &nbsp; <span class="price-discount">' + pkg.discount + '</span></div>' +
+      '</div>' +
+      '<button class="btn btn-primary" style="width: 100%; margin-bottom: 10px;" onclick="addToCart(\'package-' + packageId + '\', \'course\', {name: \'' + pkg.name.replace(/'/g, "\\'") + '\', price: ' + pkg.price + '})">' +
+        '<i class="fas fa-shopping-cart"></i> Buy Now</button>' +
+      '<a href="checkout.html" class="btn btn-secondary" style="width: 100%; text-align: center; display: block; margin-bottom: 20px;">' +
+        '<i class="fas fa-bolt"></i> Enroll Instantly</a>' +
+      '<div style="font-weight: 600; margin-bottom: 12px;">This package includes:</div>';
+    pkg.features.forEach(function(f) {
+      sideHtml += '<div class="sidebar-feature"><i class="fas fa-check"></i> <span>' + f + '</span></div>';
+    });
+    sideHtml += '<div class="sidebar-feature"><i class="fas fa-undo"></i> <span>30-Day Money-Back Guarantee</span></div>';
+    sideHtml += '</div>';
+    document.getElementById('product-sidebar').innerHTML = sideHtml;
+
+    // Render Related Courses (show 3 others)
+    var relatedHtml = '';
+    var relatedIds = [];
+    var allIds = [1,2,3,4,5,6];
+    allIds.forEach(function(id) { if (id !== packageId) relatedIds.push(id); });
+    relatedIds = relatedIds.slice(0, 3);
+    relatedIds.forEach(function(id) {
+      var p = packages[id];
+      relatedHtml += '<div class="course-card" onclick="window.location.href=\'product-preview.html?id=' + id + '\'" style="cursor:pointer;">' +
+        '<div class="course-card-image">' +
+          '<img src="' + p.image + '" alt="' + p.name + '">' +
+          '<span class="course-badge ' + p.badgeClass + '">' + p.badge + '</span>' +
+        '</div>' +
+        '<div class="course-card-content">' +
+          '<h3 class="course-card-title">' + p.name + '</h3>' +
+          '<div class="course-card-rating"><span class="stars">' + p.stars + '</span> <span>' + p.rating + ' (' + p.reviews + ')</span></div>' +
+          '<div class="course-count"><i class="fas fa-book"></i> ' + p.courses + ' Courses Included</div>' +
+          '<div class="course-price">' +
+            '<span class="price-current">\u20B9' + p.price.toLocaleString('en-IN') + '</span>' +
+            '<span class="price-original"><del>\u20B9' + p.original.toLocaleString('en-IN') + '</del></span>' +
+            '<span class="price-discount">' + p.discount + '</span>' +
+          '</div>' +
+          '<a href="product-preview.html?id=' + id + '" class="btn btn-primary" style="width: 100%; text-align: center;" onclick="event.stopPropagation();">View Course</a>' +
+        '</div>' +
+      '</div>';
+    });
+    document.getElementById('related-courses').innerHTML = relatedHtml;
+
+    // Tab switching
+    function switchTab(tabName) {
+      document.querySelectorAll('.detail-tab').forEach(function(t) { t.classList.remove('active'); });
+      document.querySelectorAll('.tab-content').forEach(function(t) { t.classList.remove('active'); });
+      document.getElementById('tab-' + tabName).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>

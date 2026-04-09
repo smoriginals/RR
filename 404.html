@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found - Richer</title>
+  <link rel="shortcut icon" href="assets/new/images/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .error-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 70vh;
+      text-align: center;
+      padding: var(--spacing-2xl);
+    }
+
+    .error-code {
+      font-size: 120px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: var(--spacing-lg);
+      animation: slideInDown 0.6s ease-out;
+    }
+
+    .error-icon {
+      font-size: 80px;
+      color: var(--primary);
+      margin-bottom: var(--spacing-lg);
+      animation: bounce 2s infinite;
+    }
+
+    .error-title {
+      font-size: 32px;
+      color: var(--text-dark);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .error-message {
+      font-size: 18px;
+      color: var(--text-light);
+      max-width: 500px;
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .error-suggestions {
+      background: var(--light-bg);
+      padding: var(--spacing-2xl);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--spacing-2xl);
+      text-align: left;
+    }
+
+    .error-suggestions h3 {
+      color: var(--primary);
+      margin-bottom: var(--spacing-md);
+      text-align: center;
+    }
+
+    .suggestions-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .suggestions-list li {
+      padding: var(--spacing-sm) 0;
+      display: flex;
+      align-items: center;
+      color: var(--text-dark);
+    }
+
+    .suggestions-list li i {
+      color: var(--primary);
+      margin-right: var(--spacing-md);
+      font-size: 18px;
+    }
+
+    .suggestions-list a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .suggestions-list a:hover {
+      color: var(--secondary);
+    }
+
+    .error-buttons {
+      display: flex;
+      gap: var(--spacing-md);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .error-buttons a {
+      padding: var(--spacing-md) var(--spacing-lg);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      background: linear-gradient(135deg, #7B2FF7 0%, #FF3C8E 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(123, 47, 247, 0.35);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .error-buttons a:hover {
+      background: linear-gradient(135deg, #5A1AD4 0%, #d4327a 100%);
+      color: white;
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 12px 35px rgba(123, 47, 247, 0.5);
+    }
+
+    .error-buttons a:active {
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    .btn-home {
+      background: linear-gradient(135deg, #7B2FF7 0%, #FF3C8E 100%);
+      color: white;
+    }
+
+    .btn-courses {
+      background: linear-gradient(135deg, #7B2FF7 0%, #FF3C8E 100%);
+      color: white;
+      border: none;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .error-code {
+        font-size: 80px;
+      }
+
+      .error-icon {
+        font-size: 60px;
+      }
+
+      .error-title {
+        font-size: 24px;
+      }
+
+      .error-message {
+        font-size: 16px;
+      }
+
+      .error-buttons {
+        flex-direction: column;
+      }
+
+      .error-buttons a {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header/Navigation -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo"><a href="index.html"><img src="assets/new/images/logo.png" alt="Richer Logo"></a>
+        </div>
+        <nav>
+          <ul class="nav-menu">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="courses.html" class="nav-link">Courses</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+        <button class="mobile-toggle" onclick="toggleMobileMenu()"><span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Error Container -->
+  <main>
+    <div class="error-container">
+      <div class="error-code">404</div>
+      <div class="error-icon">
+        <i class="fas fa-search"></i>
+      </div>
+      
+      <h1 class="error-title">Page Not Found</h1>
+      <p class="error-message">
+        Oops! It looks like the page you're looking for has taken a wrong turn. 
+        Don't worry, let's get you back on track!
+      </p>
+
+      <div class="error-suggestions">
+        <h3>Here are some helpful suggestions:</h3>
+        <ul class="suggestions-list">
+          <li>
+            <i class="fas fa-home"></i>
+            <a href="index.html">Return to Homepage</a>
+          </li>
+          <li>
+            <i class="fas fa-book"></i>
+            <a href="courses.html">Browse Our Courses</a>
+          </li>
+          <li>
+            <i class="fas fa-graduation-cap"></i>
+            <a href="plans.html">View Our Plans</a>
+          </li>
+          <li>
+            <i class="fas fa-envelope"></i>
+            <a href="contact.html">Contact Our Support Team</a>
+          </li>
+          <li>
+            <i class="fas fa-file-alt"></i>
+            <a href="blog.html">Read Our Blog</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="error-buttons">
+        <a href="index.html" class="btn-home">
+          <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+        <a href="courses.html" class="btn-courses">
+          Browse Courses <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" style="margin-top: var(--spacing-3xl);">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <p>Explore thousands of courses and continue learning.</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Popular Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fas fa-plus"></i> Home</a></li>
+            <li><a href="courses.html"><i class="fas fa-plus"></i> Courses</a></li>
+            <li><a href="plans.html"><i class="fas fa-plus"></i> Plans</a></li>
+            <li><a href="about.html"><i class="fas fa-plus"></i> About Us</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 Richer. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

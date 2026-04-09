@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Richer</title>
+  <link rel="shortcut icon" href="assets/new/images/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header/Navigation -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo"><a href="index.html"><img src="assets/new/images/logo.png" alt="Richer Logo"></a>
+        </div>
+        <nav>
+          <ul class="nav-menu">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="courses.html" class="nav-link">Courses</a></li>
+            <li class="nav-item"><a href="plans.html" class="nav-link">Plans</a></li>
+          </ul>
+        </nav>
+        <a href="signin.html" class="cta-button">
+          <i class="fas fa-user"></i> Start Learning
+        </a>
+        <button class="mobile-toggle" onclick="toggleMobileMenu()"><span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Title -->
+  <div class="page-title">
+    <div class="container">
+      <h1>Checkout</h1>
+      <p>Complete your purchase securely</p>
+    </div>
+  </div>
+
+  <!-- Checkout Section -->
+  <section class="section">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1fr 350px; gap: var(--spacing-2xl);">
+        <!-- Checkout Form -->
+        <div>
+          <h2 style="margin-bottom: var(--spacing-lg);">Billing Details</h2>
+
+          <form id="checkout-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="first-name">First Name *</label>
+                <input type="text" id="first-name" name="first-name" required placeholder="John">
+              </div>
+
+              <div class="form-group">
+                <label for="last-name">Last Name *</label>
+                <input type="text" id="last-name" name="last-name" required placeholder="Doe">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" required placeholder="john@example.com">
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input type="tel" id="phone" name="phone" required placeholder="+91 98765 43210">
+            </div>
+
+            <div class="form-group">
+              <label for="address">Street Address *</label>
+              <input type="text" id="address" name="address" required placeholder="123 Main Street">
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">City *</label>
+                <input type="text" id="city" name="city" required placeholder="City">
+              </div>
+
+              <div class="form-group">
+                <label for="state">State/Province *</label>
+                <input type="text" id="state" name="state" required placeholder="State">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="zip">Postal Code *</label>
+                <input type="text" id="zip" name="zip" required placeholder="12345">
+              </div>
+
+              <div class="form-group">
+                <label for="country">Country *</label>
+                <input type="text" id="country" name="country" required placeholder="India">
+              </div>
+            </div>
+
+            <h2 style="margin: var(--spacing-2xl) 0 var(--spacing-lg);">Payment Method</h2>
+
+            <div style="display: flex; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+              <label style="flex: 1;">
+                <input type="radio" name="payment" value="card" checked>
+                <span style="display: block; padding: var(--spacing-md); border: 2px solid var(--primary-color); border-radius: var(--radius-md); text-align: center; cursor: pointer;">
+                  <i class="fas fa-credit-card"></i> Credit Card
+                </span>
+              </label>
+
+              <label style="flex: 1;">
+                <input type="radio" name="payment" value="paypal">
+                <span style="display: block; padding: var(--spacing-md); border: 2px solid var(--border-color); border-radius: var(--radius-md); text-align: center; cursor: pointer;">
+                  <i class="fab fa-paypal"></i> PayPal
+                </span>
+              </label>
+
+              <label style="flex: 1;">
+                <input type="radio" name="payment" value="upi">
+                <span style="display: block; padding: var(--spacing-md); border: 2px solid var(--border-color); border-radius: var(--radius-md); text-align: center; cursor: pointer;">
+                  <i class="fas fa-mobile-alt"></i> UPI
+                </span>
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label for="coupon">Coupon Code</label>
+              <input type="text" id="coupon" name="coupon" placeholder="Enter coupon code (e.g., WELCOME10)">
+            </div>
+
+            <div class="checkbox" style="margin-bottom: var(--spacing-lg);">
+              <input type="checkbox" id="terms" name="terms" required>
+              <label for="terms" style="margin: 0;">I agree to the <a href="terms.html" style="color: var(--primary-color);">Terms & Conditions</a></label>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              <i class="fas fa-lock"></i> Place Order Securely
+            </button>
+          </form>
+
+          <div style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: var(--light-bg); border-radius: var(--radius-md);">
+            <i class="fas fa-shield-alt" style="color: var(--primary-color); margin-right: var(--spacing-sm);"></i>
+            <strong>Your payment is secure.</strong> All transactions are encrypted with 256-bit SSL security.
+          </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div>
+          <div style="background: var(--light-bg); border-radius: var(--radius-lg); padding: var(--spacing-lg); position: sticky; top: 100px;">
+            <h3 style="margin-bottom: var(--spacing-lg);">Order Summary</h3>
+
+            <div style="display: flex; justify-content: space-between; padding: var(--spacing-md) 0; border-bottom: 1px solid var(--border-color);">
+              <span>Digital Marketing Mastery</span>
+              <span style="font-weight: 600;">₹299</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; padding: var(--spacing-md) 0; border-bottom: 1px solid var(--border-color);">
+              <span>Professional Package</span>
+              <span style="font-weight: 600;">₹1299</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; padding: var(--spacing-md) 0; color: var(--text-light); font-size: 0.9rem;">
+              <span>Subtotal</span>
+              <span>₹1598</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; padding: var(--spacing-md) 0; color: var(--text-light); font-size: 0.9rem;">
+              <span>Discount (WELCOME10: -10%)</span>
+              <span style="color: var(--secondary-color);">-₹159.80</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; padding: var(--spacing-md) 0; color: var(--text-light); font-size: 0.9rem;">
+              <span>Tax (18%)</span>
+              <span>₹258.84</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; padding: var(--spacing-lg) 0; border-top: 2px solid var(--border-color); border-bottom: 2px solid var(--border-color); font-weight: 700; font-size: 1.1rem;">
+              <span>Total</span>
+              <span>₹1797.04</span>
+            </div>
+
+            <div style="margin-top: var(--spacing-lg); padding: var(--spacing-md); background: #d4edda; border-radius: var(--radius-md); color: #155724; font-size: 0.875rem;">
+              <i class="fas fa-check-circle"></i> Free shipping on all orders
+            </div>
+
+            <div style="margin-top: var(--spacing-lg); padding: var(--spacing-md); background: #e7d4f5; border-radius: var(--radius-md); color: #662c91; font-size: 0.875rem;">
+              <i class="fas fa-gift"></i> All courses include lifetime access & certificates
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <p>Secure checkout powered by industry-leading payment processors.</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fas fa-plus"></i> Home</a></li>
+            <li><a href="courses.html"><i class="fas fa-plus"></i> Courses</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Legal</h3>
+          <ul class="footer-links">
+            <li><a href="terms.html"><i class="fas fa-plus"></i> Terms</a></li>
+            <li><a href="privacy-policy.html"><i class="fas fa-plus"></i> Privacy</a></li>
+            <li><a href="refund-policy.html"><i class="fas fa-plus"></i> Refunds</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 Richer. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

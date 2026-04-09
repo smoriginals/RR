@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+  <title>Richer - Course Player</title>
+  <link rel="shortcut icon" href="assets/new/images/logo.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+  <style>
+    :root {
+      --primary: #7B2FF7;
+      --primary-dark: #3a56d4;
+      --primary-light: #eef1ff;
+      --secondary: #FF3C8E;
+      --gradient: linear-gradient(135deg, #7B2FF7 0%, #FF3C8E 100%);
+      --success: #28a745;
+      --success-light: #e8f5e9;
+      --warning: #ffc107;
+      --danger: #e74c3c;
+      --text-dark: #1a1a2e;
+      --text-med: #555;
+      --text-light: #888;
+      --bg: #f0f2f8;
+      --card: #ffffff;
+      --border: #e8ecf4;
+      --shadow: 0 2px 12px rgba(0,0,0,0.06);
+      --r-sm: 8px; --r-md: 12px; --r-lg: 16px;
+      --tr: all 0.3s ease;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text-dark);line-height:1.6;overflow-x:hidden}
+    a{text-decoration:none;color:inherit;transition:var(--tr)}
+    a:hover{text-decoration:none;color:var(--primary)}
+    img{max-width:100%}
+    ul{list-style:none;padding:0;margin:0}
+
+    /* ══════════ TOPBAR ══════════ */
+    .topbar{
+      background:var(--card);border-bottom:1px solid var(--border);
+      padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;
+      position:sticky;top:0;z-index:100;
+    }
+    .topbar__left{display:flex;align-items:center;gap:14px}
+    .topbar__logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;color:var(--text-dark)}
+    .topbar__logo img{height:30px}
+    .topbar__back{
+      width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);
+      background:var(--card);color:var(--text-med);display:flex;align-items:center;justify-content:center;
+      font-size:14px;cursor:pointer;transition:var(--tr);
+    }
+    .topbar__back:hover{background:var(--primary-light);color:var(--primary);border-color:var(--primary)}
+    .topbar__course-title{font-size:14px;font-weight:700;color:var(--text-dark);max-width:400px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .topbar__lang-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--primary-light);color:var(--primary)}
+    .topbar__right{display:flex;align-items:center;gap:12px}
+    .topbar__progress{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--text-med)}
+    .topbar__progress-bar{width:120px;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+    .topbar__progress-fill{height:100%;background:var(--gradient);border-radius:3px;transition:width .4s ease}
+    @media(max-width:768px){
+      .topbar__course-title{max-width:150px;font-size:12px}
+      .topbar__progress-bar{width:60px}
+      .topbar__lang-badge{display:none}
+    }
+
+    /* ══════════ LAYOUT ══════════ */
+    .cp-layout{display:flex;min-height:calc(100vh - 56px)}
+
+    /* ══════════ CONDENSED SIDEBAR ══════════ */
+    .cp-sidebar{
+      width:320px;min-width:320px;background:var(--card);border-right:1px solid var(--border);
+      overflow-y:auto;position:sticky;top:56px;height:calc(100vh - 56px);
+      scrollbar-width:thin;scrollbar-color:var(--border) transparent;
+      transition:width .3s ease,min-width .3s ease,transform .3s ease;
+    }
+    .cp-sidebar::-webkit-scrollbar{width:4px}
+    .cp-sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+    .cp-sidebar.collapsed{width:0;min-width:0;overflow:hidden;border:none}
+
+    .cp-sidebar__header{
+      padding:16px 18px;border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .cp-sidebar__title{font-size:15px;font-weight:800;color:var(--text-dark)}
+    .cp-sidebar__count{font-size:11px;color:var(--text-light);font-weight:600}
+    .cp-sidebar__toggle{
+      width:28px;height:28px;border-radius:6px;border:1.5px solid var(--border);
+      background:var(--card);color:var(--text-med);display:flex;align-items:center;justify-content:center;
+      font-size:12px;cursor:pointer;transition:var(--tr);
+    }
+    .cp-sidebar__toggle:hover{background:var(--primary-light);color:var(--primary);border-color:var(--primary)}
+
+    /* Section / Module */
+    .cp-section{border-bottom:1px solid var(--border)}
+    .cp-section__head{
+      padding:14px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;
+      font-size:13px;font-weight:700;color:var(--text-dark);transition:var(--tr);
+      background:var(--bg);
+    }
+    .cp-section__head:hover{background:var(--primary-light);color:var(--primary)}
+    .cp-section__head i{transition:transform .2s ease;font-size:11px;color:var(--text-light)}
+    .cp-section__head.open i{transform:rotate(180deg)}
+    .cp-section__meta{font-size:11px;font-weight:500;color:var(--text-light);margin-left:8px}
+    .cp-section__body{display:none;padding:4px 0}
+    .cp-section__body.open{display:block}
+
+    /* Lesson Item */
+    .cp-lesson{
+      padding:10px 18px 10px 24px;display:flex;align-items:center;gap:10px;
+      cursor:pointer;transition:var(--tr);font-size:13px;color:var(--text-med);
+      border-left:3px solid transparent;
+    }
+    .cp-lesson:hover{background:var(--primary-light);color:var(--primary)}
+    .cp-lesson.active{background:var(--primary-light);color:var(--primary);border-left-color:var(--primary);font-weight:700}
+    .cp-lesson.completed{color:var(--success)}
+    .cp-lesson__icon{width:20px;text-align:center;font-size:12px;flex-shrink:0}
+    .cp-lesson__title{flex:1;line-height:1.3}
+    .cp-lesson__duration{font-size:11px;color:var(--text-light);white-space:nowrap}
+    .cp-lesson.completed .cp-lesson__icon{color:var(--success)}
+
+    /* ══════════ MAIN CONTENT ══════════ */
+    .cp-main{flex:1;min-width:0;padding:0}
+
+    /* Video Player Area */
+    .cp-video{
+      width:100%;background:#000;position:relative;
+      aspect-ratio:16/9;max-height:calc(100vh - 56px - 100px);
+    }
+    .cp-video iframe,.cp-video video{width:100%;height:100%;display:block;border:none}
+    .cp-video__placeholder{
+      width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      color:#fff;gap:16px;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);
+    }
+    .cp-video__placeholder i{font-size:60px;opacity:.5}
+    .cp-video__placeholder p{font-size:15px;font-weight:600;opacity:.7}
+
+    /* Content Below Video */
+    .cp-content{padding:24px 28px}
+    .cp-content__title{font-size:20px;font-weight:800;color:var(--text-dark);margin-bottom:6px}
+    .cp-content__meta{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+    .cp-content__meta-item{font-size:12px;color:var(--text-light);display:flex;align-items:center;gap:5px}
+    .cp-content__meta-item i{color:var(--primary);font-size:13px}
+
+    /* Tabs under video */
+    .cp-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:20px}
+    .cp-tab-btn{
+      padding:10px 20px;font-size:13px;font-weight:700;color:var(--text-light);
+      border:none;background:none;cursor:pointer;position:relative;transition:var(--tr);
+    }
+    .cp-tab-btn:hover{color:var(--primary)}
+    .cp-tab-btn.active{color:var(--primary)}
+    .cp-tab-btn.active::after{
+      content:'';position:absolute;bottom:-2px;left:0;right:0;
+      height:2px;background:var(--primary);border-radius:2px;
+    }
+    .cp-tab-pane{display:none}
+    .cp-tab-pane.active{display:block}
+
+    .cp-description{font-size:13px;color:var(--text-med);line-height:1.8}
+    .cp-description p{margin-bottom:12px}
+
+    /* Mobile toggle for sidebar */
+    .cp-mobile-toggle{
+      display:none;position:fixed;bottom:20px;right:20px;z-index:200;
+      width:48px;height:48px;border-radius:50%;border:none;
+      background:var(--gradient);color:#fff;font-size:18px;
+      box-shadow:0 4px 15px rgba(123, 47, 247,.3);cursor:pointer;
+    }
+    @media(max-width:991px){
+      .cp-sidebar{position:fixed;top:56px;left:0;z-index:150;transform:translateX(-100%);height:calc(100vh - 56px);box-shadow:4px 0 20px rgba(0,0,0,.1)}
+      .cp-sidebar.mobile-open{transform:translateX(0)}
+      .cp-mobile-toggle{display:flex;align-items:center;justify-content:center}
+      .cp-overlay{display:none;position:fixed;inset:0;top:56px;background:rgba(0,0,0,.4);z-index:149}
+      .cp-overlay.show{display:block}
+      .cp-content{padding:18px 16px}
+    }
+    @media(max-width:576px){
+      .cp-content__title{font-size:16px}
+    }
+  </style>
+</head>
+<body data-leftbar-compact-mode="condensed">
+
+  <!-- ══════════ TOPBAR ══════════ -->
+  <header class="topbar">
+    <div class="topbar__left">
+      <a href="affiliate.html" class="topbar__back" title="Back to Courses"><i class="fas fa-arrow-left"></i></a>
+      <a href="index.html" class="topbar__logo">
+        <img src="assets/new/images/logo.png" alt="Richer"> Richer
+      </a>
+      <span class="topbar__course-title" id="cpCourseTitle">Course Title</span>
+      <span class="topbar__lang-badge" id="cpLangBadge">Hindi</span>
+    </div>
+    <div class="topbar__right">
+      <div class="topbar__progress">
+        <div class="topbar__progress-bar"><div class="topbar__progress-fill" id="cpProgressFill" style="width:35%"></div></div>
+        <span id="cpProgressText">35%</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══════════ LAYOUT ══════════ -->
+  <div class="cp-layout">
+
+    <!-- ══════════ CONDENSED SIDEBAR ══════════ -->
+    <aside class="cp-sidebar" id="cpSidebar">
+      <div class="cp-sidebar__header">
+        <div>
+          <div class="cp-sidebar__title">Course Content</div>
+          <div class="cp-sidebar__count">5 Sections · 18 Lessons</div>
+        </div>
+        <button class="cp-sidebar__toggle" id="cpSidebarToggle" title="Collapse"><i class="fas fa-chevron-left"></i></button>
+      </div>
+
+      <!-- Section 1 -->
+      <div class="cp-section">
+        <div class="cp-section__head open" onclick="toggleSection(this)">
+          <span>📖 Section 1: Introduction<span class="cp-section__meta">· 3 Lessons</span></span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="cp-section__body open">
+          <div class="cp-lesson completed" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-check-circle"></i></span>
+            <span class="cp-lesson__title">1.1 Welcome &amp; Course Overview</span>
+            <span class="cp-lesson__duration">4:30</span>
+          </div>
+          <div class="cp-lesson completed" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-check-circle"></i></span>
+            <span class="cp-lesson__title">1.2 How to Navigate This Course</span>
+            <span class="cp-lesson__duration">3:15</span>
+          </div>
+          <div class="cp-lesson active" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-play-circle"></i></span>
+            <span class="cp-lesson__title">1.3 Setting Up Your Workspace</span>
+            <span class="cp-lesson__duration">6:45</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="cp-section">
+        <div class="cp-section__head" onclick="toggleSection(this)">
+          <span>📘 Section 2: Fundamentals<span class="cp-section__meta">· 4 Lessons</span></span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="cp-section__body">
+          <div class="cp-lesson" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-play-circle"></i></span>
+            <span class="cp-lesson__title">2.1 Core Concepts Explained</span>
+            <span class="cp-lesson__duration">8:20</span>
+          </div>
+          <div class="cp-lesson" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-play-circle"></i></span>
+            <span class="cp-lesson__title">2.2 Key Terminology</span>
+            <span class="cp-lesson__duration">5:50</span>
+          </div>
+          <div class="cp-lesson" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-play-circle"></i></span>
+            <span class="cp-lesson__title">2.3 Understanding the Framework</span>
+            <span class="cp-lesson__duration">10:15</span>
+          </div>
+          <div class="cp-lesson" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-play-circle"></i></span>
+            <span class="cp-lesson__title">2.4 Practical Exercise #1</span>
+            <span class="cp-lesson__duration">12:00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="cp-section">
+        <div class="cp-section__head" onclick="toggleSection(this)">
+          <span>📗 Section 3: Advanced Techniques<span class="cp-section__meta">· 4 Lessons</span></span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="cp-section__body">
+          <div class="cp-lesson" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-play-circle"></i></span>
+            <span class="cp-lesson__title">3.1 Strategy Building</span>
+            <span class="cp-lesson__duration">9:30</span>
+          </div>
+          <div class="cp-lesson" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-play-circle"></i></span>
+            <span class="cp-lesson__title">3.2 Real World Applications</span>
+            <span class="cp-lesson__duration">11:45</span>
+          </div>
+          <div class="cp-lesson" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-play-circle"></i></span>
+            <span class="cp-lesson__title">3.3 Case Studies</span>
+            <span class="cp-lesson__duration">14:00</span>
+          </div>
+          <div class="cp-lesson" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-play-circle"></i></span>
+            <span class="cp-lesson__title">3.4 Practical Exercise #2</span>
+            <span class="cp-lesson__duration">8:30</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4 -->
+      <div class="cp-section">
+        <div class="cp-section__head" onclick="toggleSection(this)">
+          <span>📙 Section 4: Pro Tips &amp; Tricks<span class="cp-section__meta">· 4 Lessons</span></span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="cp-section__body">
+          <div class="cp-lesson" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-play-circle"></i></span>
+            <span class="cp-lesson__title">4.1 Hidden Features</span>
+            <span class="cp-lesson__duration">7:20</span>
+          </div>
+          <div class="cp-lesson" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-play-circle"></i></span>
+            <span class="cp-lesson__title">4.2 Optimization Strategies</span>
+            <span class="cp-lesson__duration">9:10</span>
+          </div>
+          <div class="cp-lesson" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-play-circle"></i></span>
+            <span class="cp-lesson__title">4.3 Common Mistakes to Avoid</span>
+            <span class="cp-lesson__duration">6:40</span>
+          </div>
+          <div class="cp-lesson" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-play-circle"></i></span>
+            <span class="cp-lesson__title">4.4 Industry Best Practices</span>
+            <span class="cp-lesson__duration">10:55</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 5 -->
+      <div class="cp-section">
+        <div class="cp-section__head" onclick="toggleSection(this)">
+          <span>🎓 Section 5: Conclusion<span class="cp-section__meta">· 3 Lessons</span></span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="cp-section__body">
+          <div class="cp-lesson" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-play-circle"></i></span>
+            <span class="cp-lesson__title">5.1 Summary &amp; Key Takeaways</span>
+            <span class="cp-lesson__duration">5:00</span>
+          </div>
+          <div class="cp-lesson" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-play-circle"></i></span>
+            <span class="cp-lesson__title">5.2 Final Project Assignment</span>
+            <span class="cp-lesson__duration">3:30</span>
+          </div>
+          <div class="cp-lesson" onclick="selectLesson(this)" data-video="">
+            <span class="cp-lesson__icon"><i class="fas fa-play-circle"></i></span>
+            <span class="cp-lesson__title">5.3 Next Steps &amp; Resources</span>
+            <span class="cp-lesson__duration">4:15</span>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Mobile overlay -->
+    <div class="cp-overlay" id="cpOverlay" onclick="closeMobileSidebar()"></div>
+
+    <!-- ══════════ MAIN CONTENT ══════════ -->
+    <div class="cp-main">
+
+      <!-- Video Player -->
+      <div class="cp-video" id="cpVideo">
+        <div class="cp-video__placeholder">
+          <i class="fas fa-play-circle"></i>
+          <p>Select a lesson to start watching</p>
+        </div>
+      </div>
+
+      <!-- Content Below Video -->
+      <div class="cp-content">
+        <h2 class="cp-content__title" id="cpLessonTitle">1.3 Setting Up Your Workspace</h2>
+        <div class="cp-content__meta">
+          <span class="cp-content__meta-item"><i class="fas fa-clock"></i> 6 min 45 sec</span>
+          <span class="cp-content__meta-item"><i class="fas fa-layer-group"></i> Section 1: Introduction</span>
+          <span class="cp-content__meta-item"><i class="fas fa-language"></i> <span id="cpLessonLang">Hindi</span></span>
+        </div>
+
+        <!-- Tabs -->
+        <div class="cp-tabs">
+          <button class="cp-tab-btn active" onclick="switchTab(this,'overview')">Overview</button>
+          <button class="cp-tab-btn" onclick="switchTab(this,'notes')">Notes</button>
+          <button class="cp-tab-btn" onclick="switchTab(this,'resources')">Resources</button>
+        </div>
+
+        <!-- Tab: Overview -->
+        <div class="cp-tab-pane active" id="cp-tab-overview">
+          <div class="cp-description">
+            <p>In this lesson, you'll learn how to set up your workspace for maximum productivity. We'll cover the essential tools, software configurations, and environment setup needed to follow along with the rest of the course.</p>
+            <p><strong>What you'll learn:</strong></p>
+            <ul style="padding-left:20px;margin-bottom:12px">
+              <li style="margin-bottom:6px;list-style:disc">How to install and configure required software</li>
+              <li style="margin-bottom:6px;list-style:disc">Setting up your development environment</li>
+              <li style="margin-bottom:6px;list-style:disc">Creating your first project structure</li>
+              <li style="margin-bottom:6px;list-style:disc">Tips for organizing your workspace</li>
+            </ul>
+            <p>Make sure to follow along step by step for the best learning experience.</p>
+          </div>
+        </div>
+
+        <!-- Tab: Notes -->
+        <div class="cp-tab-pane" id="cp-tab-notes">
+          <div class="cp-description">
+            <p style="color:var(--text-light);text-align:center;padding:30px 0"><i class="fas fa-sticky-note" style="font-size:40px;display:block;margin-bottom:12px;opacity:.4"></i>Your notes for this lesson will appear here.<br>Take notes while watching to improve retention.</p>
+          </div>
+        </div>
+
+        <!-- Tab: Resources -->
+        <div class="cp-tab-pane" id="cp-tab-resources">
+          <div class="cp-description">
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg);border-radius:var(--r-md);margin-bottom:10px;cursor:pointer;transition:var(--tr)" onmouseover="this.style.background='var(--primary-light)'" onmouseout="this.style.background='var(--bg)'">
+              <i class="fas fa-file-pdf" style="font-size:20px;color:var(--danger)"></i>
+              <div style="flex:1"><div style="font-size:13px;font-weight:700">Lesson Notes PDF</div><div style="font-size:11px;color:var(--text-light)">2.4 MB</div></div>
+              <i class="fas fa-download" style="color:var(--primary);font-size:14px"></i>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg);border-radius:var(--r-md);margin-bottom:10px;cursor:pointer;transition:var(--tr)" onmouseover="this.style.background='var(--primary-light)'" onmouseout="this.style.background='var(--bg)'">
+              <i class="fas fa-file-code" style="font-size:20px;color:var(--primary)"></i>
+              <div style="flex:1"><div style="font-size:13px;font-weight:700">Starter Template</div><div style="font-size:11px;color:var(--text-light)">450 KB</div></div>
+              <i class="fas fa-download" style="color:var(--primary);font-size:14px"></i>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg);border-radius:var(--r-md);margin-bottom:10px;cursor:pointer;transition:var(--tr)" onmouseover="this.style.background='var(--primary-light)'" onmouseout="this.style.background='var(--bg)'">
+              <i class="fas fa-link" style="font-size:20px;color:var(--success)"></i>
+              <div style="flex:1"><div style="font-size:13px;font-weight:700">Helpful Links &amp; References</div><div style="font-size:11px;color:var(--text-light)">External Links</div></div>
+              <i class="fas fa-external-link-alt" style="color:var(--primary);font-size:14px"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lesson Navigation -->
+        <div style="display:flex;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--border)">
+          <button class="btn btn-outline-secondary btn-sm" onclick="prevLesson()" style="padding:8px 20px;font-size:13px;font-weight:600;border-radius:var(--r-md)">
+            <i class="fas fa-chevron-left" style="margin-right:6px"></i> Previous Lesson
+          </button>
+          <button class="btn btn-sm" onclick="nextLesson()" style="padding:8px 20px;font-size:13px;font-weight:600;border-radius:var(--r-md);background:var(--gradient);color:#fff;border:none">
+            Next Lesson <i class="fas fa-chevron-right" style="margin-left:6px"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile sidebar toggle -->
+  <button class="cp-mobile-toggle" id="cpMobileToggle" onclick="openMobileSidebar()"><i class="fas fa-list"></i></button>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+  <script>
+    // ══════════ READ URL PARAMS ══════════
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var course = params.get('course') || 'course';
+      var lang = params.get('lang') || 'hindi';
+
+      // Format course name
+      var courseName = course.replace(/-/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+      document.getElementById('cpCourseTitle').textContent = courseName;
+      document.title = 'Richer - ' + courseName;
+
+      // Language badge
+      var langLabels = { hindi: 'Hindi · हिन्दी', english: 'English', hinglish: 'Hinglish · हिंग्लिश' };
+      document.getElementById('cpLangBadge').textContent = langLabels[lang] || lang;
+      document.getElementById('cpLessonLang').textContent = langLabels[lang] || lang;
+
+      // Back button should persist panel state
+      document.querySelector('.topbar__back').addEventListener('click', function(e) {
+        e.preventDefault();
+        try { localStorage.setItem('aff_active_panel', 'courses'); } catch(ex) {}
+        window.location.href = 'affiliate.html';
+      });
+    })();
+
+    // ══════════ SIDEBAR TOGGLE ══════════
+    var cpSidebar = document.getElementById('cpSidebar');
+    var cpOverlay = document.getElementById('cpOverlay');
+
+    document.getElementById('cpSidebarToggle').addEventListener('click', function() {
+      cpSidebar.classList.toggle('collapsed');
+      var icon = this.querySelector('i');
+      if (cpSidebar.classList.contains('collapsed')) {
+        icon.className = 'fas fa-chevron-right';
+      } else {
+        icon.className = 'fas fa-chevron-left';
+      }
+    });
+
+    function openMobileSidebar() {
+      cpSidebar.classList.add('mobile-open');
+      cpOverlay.classList.add('show');
+    }
+    function closeMobileSidebar() {
+      cpSidebar.classList.remove('mobile-open');
+      cpOverlay.classList.remove('show');
+    }
+
+    // ══════════ SECTION TOGGLE ══════════
+    function toggleSection(el) {
+      el.classList.toggle('open');
+      var body = el.nextElementSibling;
+      body.classList.toggle('open');
+    }
+
+    // ══════════ LESSON SELECTION ══════════
+    var allLessons = document.querySelectorAll('.cp-lesson');
+
+    function selectLesson(el) {
+      // Remove active from all
+      allLessons.forEach(function(l) { l.classList.remove('active'); });
+      el.classList.add('active');
+
+      // Update title
+      var title = el.querySelector('.cp-lesson__title').textContent;
+      document.getElementById('cpLessonTitle').textContent = title;
+
+      // Update video placeholder with lesson title
+      document.getElementById('cpVideo').innerHTML =
+        '<div class="cp-video__placeholder">' +
+        '<i class="fas fa-play-circle" style="cursor:pointer" onclick="this.parentElement.innerHTML=\'<p style=\\\'font-size:16px;font-weight:600;color:#fff;opacity:.8\\\'>Video player would load here for:<br>' + title + '</p>\'"></i>' +
+        '<p>' + title + '</p>' +
+        '</div>';
+
+      // Expand parent section if collapsed
+      var section = el.closest('.cp-section');
+      var head = section.querySelector('.cp-section__head');
+      var body = section.querySelector('.cp-section__body');
+      if (!head.classList.contains('open')) {
+        head.classList.add('open');
+        body.classList.add('open');
+      }
+
+      // Close mobile sidebar
+      closeMobileSidebar();
+    }
+
+    // ══════════ PREV / NEXT ══════════
+    function getCurrentIndex() {
+      for (var i = 0; i < allLessons.length; i++) {
+        if (allLessons[i].classList.contains('active')) return i;
+      }
+      return 0;
+    }
+
+    function prevLesson() {
+      var idx = getCurrentIndex();
+      if (idx > 0) selectLesson(allLessons[idx - 1]);
+    }
+
+    function nextLesson() {
+      var idx = getCurrentIndex();
+      if (idx < allLessons.length - 1) {
+        // Mark current as completed
+        allLessons[idx].classList.add('completed');
+        allLessons[idx].querySelector('.cp-lesson__icon').innerHTML = '<i class="fas fa-check-circle"></i>';
+        selectLesson(allLessons[idx + 1]);
+        updateProgress();
+      }
+    }
+
+    function updateProgress() {
+      var completed = document.querySelectorAll('.cp-lesson.completed').length;
+      var total = allLessons.length;
+      var pct = Math.round((completed / total) * 100);
+      document.getElementById('cpProgressFill').style.width = pct + '%';
+      document.getElementById('cpProgressText').textContent = pct + '%';
+    }
+
+    // ══════════ TABS ══════════
+    function switchTab(btn, tabId) {
+      document.querySelectorAll('.cp-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.cp-tab-pane').forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('cp-tab-' + tabId).classList.add('active');
+    }
+
+    // Init progress
+    updateProgress();
+  </script>
+</body>
+</html>

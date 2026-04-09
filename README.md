@@ -1,2 +1,2 @@
-# RR
-RR
+# Richer-clone
+Richer-clone

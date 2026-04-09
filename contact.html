@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Richer - Get in Touch</title>
+  <link rel="shortcut icon" href="assets/new/images/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header/Navigation -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo"><a href="index.html"><img src="assets/new/images/logo.png" alt="Richer Logo"></a>
+        </div>
+        <nav>
+          <ul class="nav-menu">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+            <li class="nav-item has-dropdown">
+              <a href="#" class="nav-link">Plan <i class="fas fa-chevron-down"></i></a>
+              <ul class="nav-dropdown">
+                <li><a href="plans.html">View Plans</a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a href="courses.html" class="nav-link">Courses</a></li>
+            <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+        <a href="signin.html" class="cta-button">
+          <i class="fas fa-user"></i> Start Learning
+        </a>
+        <button class="mobile-toggle" onclick="toggleMobileMenu()"><span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Title -->
+  <div class="page-title">
+    <div class="container">
+      <h1>Get in Touch</h1>
+      <p>We'd love to hear from you. Send us a message!</p>
+    </div>
+  </div>
+
+  <!-- Contact Section -->
+  <section class="section">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-2xl); margin-bottom: var(--spacing-2xl);">
+        <!-- Contact Form -->
+        <div>
+          <h2 style="margin-bottom: var(--spacing-lg);">Send us a Message</h2>
+          <form id="contact-form">
+            <div class="form-group">
+              <label for="name">Your Name *</label>
+              <input type="text" id="name" name="name" required placeholder="John Doe">
+            </div>
+
+            <div class="form-group">
+              <label for="email">Your Email *</label>
+              <input type="email" id="email" name="email" required placeholder="john@example.com">
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject *</label>
+              <input type="text" id="subject" name="subject" required placeholder="How can we help?">
+            </div>
+
+            <div class="form-group">
+              <label for="message">Your Message *</label>
+              <textarea id="message" name="message" required placeholder="Tell us more..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- Contact Info & Map -->
+        <div>
+          <h2 style="margin-bottom: var(--spacing-lg);">Contact Information</h2>
+          
+          <div class="contact-info" style="color: var(--text-dark); margin-bottom: var(--spacing-lg);">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <div>
+              <strong>Email</strong>
+              <p><a href="mailto:info@Richer.com">info@Richer.com</a></p>
+            </div>
+          </div>
+
+          <div class="contact-info" style="color: var(--text-dark); margin-bottom: var(--spacing-lg);">
+            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+            <div>
+              <strong>Phone</strong>
+              <p><a href="tel:+911234567890">+91-1234567890</a></p>
+            </div>
+          </div>
+
+          <div class="contact-info" style="color: var(--text-dark); margin-bottom: var(--spacing-lg);">
+            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <strong>Address</strong>
+              <p>New Delhi, India</p>
+            </div>
+          </div>
+
+          <div class="contact-info" style="color: var(--text-dark);">
+            <div class="contact-icon"><i class="fas fa-clock"></i></div>
+            <div>
+              <strong>Business Hours</strong>
+              <p>Monday - Saturday: 10:00 AM - 6:00 PM<br>Sunday: Closed</p>
+            </div>
+          </div>
+
+          <div style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: var(--light-bg); border-radius: var(--radius-lg);">
+            <h3 style="margin-bottom: var(--spacing-md);">Follow Us</h3>
+            <div style="display: flex; gap: var(--spacing-md);">
+              <a href="#" style="width: 40px; height: 40px; background: linear-gradient(135deg, #7B2FF7 0%, #FF3C8E 100%); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" style="width: 40px; height: 40px; background: linear-gradient(135deg, #7B2FF7 0%, #FF3C8E 100%); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" style="width: 40px; height: 40px; background: linear-gradient(135deg, #7B2FF7 0%, #FF3C8E 100%); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="#" style="width: 40px; height: 40px; background: linear-gradient(135deg, #7B2FF7 0%, #FF3C8E 100%); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);">
+                <i class="fab fa-youtube"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map Placeholder -->
+      <div style="background: var(--light-bg); border-radius: var(--radius-lg); padding: var(--spacing-2xl); text-align: center; margin-bottom: var(--spacing-2xl);">
+        <i class="fas fa-map" style="font-size: 3rem; color: var(--primary-color); margin-bottom: var(--spacing-md);"></i>
+        <p style="color: var(--text-light);">
+          <strong>Google Maps Embed</strong>
+          <br>
+          <a href="https://maps.google.com" target="_blank" class="btn btn-primary" style="margin-top: var(--spacing-md);">
+            <i class="fas fa-directions"></i> Open in Maps
+          </a>
+        </p>
+      </div>
+
+      <!-- FAQ Section -->
+      <div>
+        <h2 style="text-align: center; margin-bottom: var(--spacing-lg);">Frequently Asked Questions</h2>
+        <div class="accordion" style="max-width: 800px; margin: 0 auto;">
+          <div class="accordion-item active">
+            <div class="accordion-header" onclick="toggleFaq(this)">
+              <span>What is your average response time?</span>
+              <span class="accordion-toggle">−</span>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-content-inner">
+                <p>We aim to respond to all inquiries within 24 business hours. For urgent matters, please call our phone number directly.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleFaq(this)">
+              <span>Do you offer technical support?</span>
+              <span class="accordion-toggle">+</span>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-content-inner">
+                <p>Yes, we provide technical support to all our students. Use our email or phone line to reach our support team.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleFaq(this)">
+              <span>Can I schedule a call with someone?</span>
+              <span class="accordion-toggle">+</span>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-content-inner">
+                <p>Yes! Email us mentioning your preferred time and we'll arrange a call with our team.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="logo" style="color: white; margin-bottom: var(--spacing-lg);">
+            <img src="assets/new/images/logo.png" alt="Richer" style="max-height: 40px;">
+          </div>
+          <p>Have questions? We're here to help!</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fas fa-plus"></i> Home</a></li>
+            <li><a href="courses.html"><i class="fas fa-plus"></i> Courses</a></li>
+            <li><a href="blog.html"><i class="fas fa-plus"></i> Blog</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Legal</h3>
+          <ul class="footer-links">
+            <li><a href="privacy-policy.html"><i class="fas fa-plus"></i> Privacy</a></li>
+            <li><a href="terms.html"><i class="fas fa-plus"></i> Terms</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 Richer. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="scroll-to-top" onclick="scrollToTop()">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

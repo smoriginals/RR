@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courses - Richer</title>
+  <link rel="shortcut icon" href="assets/new/images/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header/Navigation -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo"><a href="index.html"><img src="assets/new/images/logo.png" alt="Richer Logo"></a>
+        </div>
+        <nav>
+          <ul class="nav-menu">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+            <li class="nav-item has-dropdown">
+              <a href="#" class="nav-link">Plan <i class="fas fa-chevron-down"></i></a>
+              <ul class="nav-dropdown">
+                <li><a href="plans.html">View Plans</a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a href="courses.html" class="nav-link">Courses</a></li>
+            <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+        <a href="signin.html" class="cta-button">
+          <i class="fas fa-user"></i> Start Learning
+        </a>
+        <button class="mobile-toggle" onclick="toggleMobileMenu()"><span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Title -->
+  <div class="page-title">
+    <div class="container">
+      <h1>Our Courses</h1>
+      <p>Explore 500+ industry-leading online courses</p>
+    </div>
+  </div>
+
+  <!-- Courses Section -->
+  <section class="section">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 250px 1fr; gap: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+        <!-- Sidebar Filters -->
+        <div>
+          <div class="filter-sidebar">
+            <div style="margin-bottom: var(--spacing-lg);">
+              <input type="text" class="search-input" placeholder="Search courses..." style="width: 100%; padding: var(--spacing-sm) var(--spacing-md); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+            </div>
+
+            <div class="filter-group">
+              <h4 class="filter-title">Category</h4>
+              <div class="filter-options">
+                <div class="filter-option">
+                  <input type="checkbox" id="cat-all" checked onchange="filterCourses()">
+                  <label for="cat-all">All Categories</label>
+                </div>
+                <div class="filter-option">
+                  <input type="checkbox" id="cat-digital" onchange="filterCourses('digital')">
+                  <label for="cat-digital">Digital Marketing</label>
+                </div>
+                <div class="filter-option">
+                  <input type="checkbox" id="cat-prog" onchange="filterCourses('programming')">
+                  <label for="cat-prog">Programming</label>
+                </div>
+                <div class="filter-option">
+                  <input type="checkbox" id="cat-design" onchange="filterCourses('design')">
+                  <label for="cat-design">Design</label>
+                </div>
+                <div class="filter-option">
+                  <input type="checkbox" id="cat-business" onchange="filterCourses('business')">
+                  <label for="cat-business">Business</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <h4 class="filter-title">Price Range</h4>
+              <div class="filter-options">
+                <div class="filter-option">
+                  <input type="radio" id="price-all" name="price" checked>
+                  <label for="price-all">All Prices</label>
+                </div>
+                <div class="filter-option">
+                  <input type="radio" id="price-free" name="price" onchange="filterCourses('', 0, 0)">
+                  <label for="price-free">Free</label>
+                </div>
+                <div class="filter-option">
+                  <input type="radio" id="price-low" name="price" onchange="filterCourses('', 0, 500)">
+                  <label for="price-low">Under ₹500</label>
+                </div>
+                <div class="filter-option">
+                  <input type="radio" id="price-mid" name="price" onchange="filterCourses('', 500, 2000)">
+                  <label for="price-mid">₹500 - ₹2000</label>
+                </div>
+                <div class="filter-option">
+                  <input type="radio" id="price-high" name="price" onchange="filterCourses('', 2000, 10000)">
+                  <label for="price-high">Over ₹2000</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <h4 class="filter-title">Rating</h4>
+              <div class="filter-options">
+                <div class="filter-option">
+                  <input type="checkbox" id="rating-all" checked>
+                  <label for="rating-all">All Ratings</label>
+                </div>
+                <div class="filter-option">
+                  <input type="checkbox" id="rating-5">
+                  <label for="rating-5">★★★★★ 5 Stars</label>
+                </div>
+                <div class="filter-option">
+                  <input type="checkbox" id="rating-4">
+                  <label for="rating-4">★★★★☆ 4+ Stars</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-lg);">
+            <h3>500+ Courses Available</h3>
+            <select class="sort-select" style="padding: var(--spacing-sm) var(--spacing-md); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+              <option value="">Sort by: Most Popular</option>
+              <option value="newest">Newest</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="rating">Top Rated</option>
+            </select>
+          </div>
+
+          <div class="courses-grid">
+            <!-- Course 1 -->
+            <div class="course-card" data-category="digital" data-price="299" data-rating="4.8">
+              <div class="course-card-image">
+                <img src="https://picsum.photos/600/400?random=10" alt="Course">
+              </div>
+              <div class="course-card-content">
+                <h3 class="course-card-title">Complete Digital Marketing Mastery</h3>
+                <div class="course-card-rating">
+                  <span class="stars">★★★★☆</span>
+                  <span>4.8 (450)</span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: var(--spacing-md);">By John Smith</p>
+                <div class="course-price">
+                  <span class="price-current">₹299</span>
+                  <span class="price-original"><del>₹999</del></span>
+                </div>
+                <button class="btn btn-primary" onclick="addToCart('course-1', 'course', {name: 'Digital Marketing Mastery', price: 299})">
+                  <i class="fas fa-shopping-cart"></i> Enroll
+                </button>
+              </div>
+            </div>
+
+            <!-- Course 2 -->
+            <div class="course-card" data-category="programming" data-price="399" data-rating="4.9">
+              <div class="course-card-image">
+                <img src="https://picsum.photos/600/400?random=11" alt="Course">
+              </div>
+              <div class="course-card-content">
+                <h3 class="course-card-title">Python Programming for Beginners</h3>
+                <div class="course-card-rating">
+                  <span class="stars">★★★★★</span>
+                  <span>4.9 (320)</span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: var(--spacing-md);">By Alex Johnson</p>
+                <div class="course-price">
+                  <span class="price-current">₹399</span>
+                  <span class="price-original"><del>₹1299</del></span>
+                </div>
+                <button class="btn btn-primary" onclick="addToCart('course-2', 'course', {name: 'Python for Beginners', price: 399})">
+                  <i class="fas fa-shopping-cart"></i> Enroll
+                </button>
+              </div>
+            </div>
+
+            <!-- Course 3 -->
+            <div class="course-card" data-category="design" data-price="349" data-rating="4.7">
+              <div class="course-card-image">
+                <img src="https://picsum.photos/600/400?random=12" alt="Course">
+              </div>
+              <div class="course-card-content">
+                <h3 class="course-card-title">UI/UX Design Fundamentals</h3>
+                <div class="course-card-rating">
+                  <span class="stars">★★★★☆</span>
+                  <span>4.7 (280)</span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: var(--spacing-md);">By Sarah Davis</p>
+                <div class="course-price">
+                  <span class="price-current">₹349</span>
+                  <span class="price-original"><del>₹1099</del></span>
+                </div>
+                <button class="btn btn-primary" onclick="addToCart('course-3', 'course', {name: 'UI/UX Design', price: 349})">
+                  <i class="fas fa-shopping-cart"></i> Enroll
+                </button>
+              </div>
+            </div>
+
+            <!-- Course 4 -->
+            <div class="course-card" data-category="business" data-price="249" data-rating="4.8">
+              <div class="course-card-image">
+                <img src="https://picsum.photos/600/400?random=13" alt="Course">
+              </div>
+              <div class="course-card-content">
+                <h3 class="course-card-title">Business Strategy & Growth</h3>
+                <div class="course-card-rating">
+                  <span class="stars">★★★★☆</span>
+                  <span>4.8 (190)</span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: var(--spacing-md);">By Mike Brown</p>
+                <div class="course-price">
+                  <span class="price-current">₹249</span>
+                  <span class="price-original"><del>₹799</del></span>
+                </div>
+                <button class="btn btn-primary" onclick="addToCart('course-4', 'course', {name: 'Business Strategy', price: 249})">
+                  <i class="fas fa-shopping-cart"></i> Enroll
+                </button>
+              </div>
+            </div>
+
+            <!-- Course 5 -->
+            <div class="course-card" data-category="digital" data-price="299" data-rating="4.9">
+              <div class="course-card-image">
+                <img src="https://picsum.photos/600/400?random=14" alt="Course">
+              </div>
+              <div class="course-card-content">
+                <h3 class="course-card-title">YouTube Channel Growth Strategies</h3>
+                <div class="course-card-rating">
+                  <span class="stars">★★★★★</span>
+                  <span>4.9 (510)</span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: var(--spacing-md);">By Emily White</p>
+                <div class="course-price">
+                  <span class="price-current">₹299</span>
+                  <span class="price-original"><del>₹899</del></span>
+                </div>
+                <button class="btn btn-primary" onclick="addToCart('course-5', 'course', {name: 'YouTube Growth', price: 299})">
+                  <i class="fas fa-shopping-cart"></i> Enroll
+                </button>
+              </div>
+            </div>
+
+            <!-- Course 6 -->
+            <div class="course-card" data-category="programming" data-price="449" data-rating="4.7">
+              <div class="course-card-image">
+                <img src="https://picsum.photos/600/400?random=15" alt="Course">
+              </div>
+              <div class="course-card-content">
+                <h3 class="course-card-title">Web Development with React</h3>
+                <div class="course-card-rating">
+                  <span class="stars">★★★★☆</span>
+                  <span>4.7 (380)</span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: var(--spacing-md);">By Chris Wilson</p>
+                <div class="course-price">
+                  <span class="price-current">₹449</span>
+                  <span class="price-original"><del>₹1399</del></span>
+                </div>
+                <button class="btn btn-primary" onclick="addToCart('course-6', 'course', {name: 'React Development', price: 449})">
+                  <i class="fas fa-shopping-cart"></i> Enroll
+                </button>
+              </div>
+            </div>
+
+            <!-- Additional courses (7-12) -->
+            <div class="course-card" data-category="design" data-price="329" data-rating="4.6">
+              <div class="course-card-image">
+                <img src="https://picsum.photos/600/400?random=16" alt="Course">
+              </div>
+              <div class="course-card-content">
+                <h3 class="course-card-title">Graphic Design Masterclass</h3>
+                <div class="course-card-rating">
+                  <span class="stars">★★★★☆</span>
+                  <span>4.6 (220)</span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: var(--spacing-md);">By Jessica Lee</p>
+                <div class="course-price">
+                  <span class="price-current">₹329</span>
+                  <span class="price-original"><del>₹1099</del></span>
+                </div>
+                <button class="btn btn-primary" onclick="addToCart('course-7', 'course', {name: 'Graphic Design', price: 329})">
+                  <i class="fas fa-shopping-cart"></i> Enroll
+                </button>
+              </div>
+            </div>
+
+            <div class="course-card" data-category="digital" data-price="349" data-rating="4.8">
+              <div class="course-card-image">
+                <img src="https://picsum.photos/600/400?random=17" alt="Course">
+              </div>
+              <div class="course-card-content">
+                <h3 class="course-card-title">Instagram Marketing Pro</h3>
+                <div class="course-card-rating">
+                  <span class="stars">★★★★☆</span>
+                  <span>4.8 (390)</span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: var(--spacing-md);">By David Turner</p>
+                <div class="course-price">
+                  <span class="price-current">₹349</span>
+                  <span class="price-original"><del>₹1299</del></span>
+                </div>
+                <button class="btn btn-primary" onclick="addToCart('course-8', 'course', {name: 'Instagram Marketing', price: 349})">
+                  <i class="fas fa-shopping-cart"></i> Enroll
+                </button>
+              </div>
+            </div>
+
+            <div class="course-card" data-category="programming" data-price="379" data-rating="4.9">
+              <div class="course-card-image">
+                <img src="https://picsum.photos/600/400?random=18" alt="Course">
+              </div>
+              <div class="course-card-content">
+                <h3 class="course-card-title">JavaScript Advanced Concepts</h3>
+                <div class="course-card-rating">
+                  <span class="stars">★★★★★</span>
+                  <span>4.9 (340)</span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: var(--spacing-md);">By Robert Martin</p>
+                <div class="course-price">
+                  <span class="price-current">₹379</span>
+                  <span class="price-original"><del>₹1199</del></span>
+                </div>
+                <button class="btn btn-primary" onclick="addToCart('course-9', 'course', {name: 'JavaScript Advanced', price: 379})">
+                  <i class="fas fa-shopping-cart"></i> Enroll
+                </button>
+              </div>
+            </div>
+
+            <div class="course-card" data-category="business" data-price="299" data-rating="4.7">
+              <div class="course-card-image">
+                <img src="https://picsum.photos/600/400?random=19" alt="Course">
+              </div>
+              <div class="course-card-content">
+                <h3 class="course-card-title">Entrepreneurship 101</h3>
+                <div class="course-card-rating">
+                  <span class="stars">★★★★☆</span>
+                  <span>4.7 (160)</span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: var(--spacing-md);">By Laura Smith</p>
+                <div class="course-price">
+                  <span class="price-current">₹299</span>
+                  <span class="price-original"><del>₹999</del></span>
+                </div>
+                <button class="btn btn-primary" onclick="addToCart('course-10', 'course', {name: 'Entrepreneurship', price: 299})">
+                  <i class="fas fa-shopping-cart"></i> Enroll
+                </button>
+              </div>
+            </div>
+
+            <div class="course-card" data-category="design" data-price="399" data-rating="4.8">
+              <div class="course-card-image">
+                <img src="https://picsum.photos/600/400?random=20" alt="Course">
+              </div>
+              <div class="course-card-content">
+                <h3 class="course-card-title">Video Editing Pro with Adobe</h3>
+                <div class="course-card-rating">
+                  <span class="stars">★★★★☆</span>
+                  <span>4.8 (270)</span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: var(--spacing-md);">By Kevin Zhang</p>
+                <div class="course-price">
+                  <span class="price-current">₹399</span>
+                  <span class="price-original"><del>₹1399</del></span>
+                </div>
+                <button class="btn btn-primary" onclick="addToCart('course-11', 'course', {name: 'Video Editing', price: 399})">
+                  <i class="fas fa-shopping-cart"></i> Enroll
+                </button>
+              </div>
+            </div>
+
+            <div class="course-card" data-category="digital" data-price="279" data-rating="4.6">
+              <div class="course-card-image">
+                <img src="https://picsum.photos/600/400?random=21" alt="Course">
+              </div>
+              <div class="course-card-content">
+                <h3 class="course-card-title">Email Marketing Mastery</h3>
+                <div class="course-card-rating">
+                  <span class="stars">★★★★☆</span>
+                  <span>4.6 (145)</span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: var(--spacing-md);">By Amanda Green</p>
+                <div class="course-price">
+                  <span class="price-current">₹279</span>
+                  <span class="price-original"><del>₹899</del></span>
+                </div>
+                <button class="btn btn-primary" onclick="addToCart('course-12', 'course', {name: 'Email Marketing', price: 279})">
+                  <i class="fas fa-shopping-cart"></i> Enroll
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination">
+            <a href="#">«</a>
+            <span class="active">1</span>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">»</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="logo" style="color: white; margin-bottom: var(--spacing-lg);">
+            <img src="assets/new/images/logo.png" alt="Richer" style="max-height: 40px;">
+          </div>
+          <p>Explore over 500 high-quality courses from expert instructors.</p>
+          <button style="background: linear-gradient(135deg, #7B2FF7 0%, #FF3C8E 100%); color: white; padding: var(--spacing-sm) var(--spacing-lg); border-radius: var(--radius-md); font-weight: 600; border: none; box-shadow: 0 4px 15px rgba(123, 47, 247, 0.35); cursor: pointer; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);">
+            <i class="fas fa-envelope"></i> Contact Us
+          </button>
+        </div>
+
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <div class="contact-info">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <div><a href="mailto:info@Richer.com">info@Richer.com</a></div>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h3>Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fas fa-plus"></i> Home</a></li>
+            <li><a href="courses.html"><i class="fas fa-plus"></i> Courses</a></li>
+            <li><a href="plans.html"><i class="fas fa-plus"></i> Plans</a></li>
+            <li><a href="blog.html"><i class="fas fa-plus"></i> Blog</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Legal</h3>
+          <ul class="footer-links">
+            <li><a href="privacy-policy.html"><i class="fas fa-plus"></i> Privacy</a></li>
+            <li><a href="terms.html"><i class="fas fa-plus"></i> Terms</a></li>
+            <li><a href="refund-policy.html"><i class="fas fa-plus"></i> Refunds</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 Richer. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="scroll-to-top" onclick="scrollToTop()">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

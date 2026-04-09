@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog - Richer</title>
+  <link rel="shortcut icon" href="assets/new/images/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header/Navigation -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo"><a href="index.html"><img src="assets/new/images/logo.png" alt="Richer Logo"></a>
+        </div>
+        <nav>
+          <ul class="nav-menu">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+            <li class="nav-item has-dropdown">
+              <a href="#" class="nav-link">Plan <i class="fas fa-chevron-down"></i></a>
+              <ul class="nav-dropdown">
+                <li><a href="plans.html">View Plans</a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a href="courses.html" class="nav-link">Courses</a></li>
+            <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+        <a href="signin.html" class="cta-button">
+          <i class="fas fa-user"></i> Start Learning
+        </a>
+        <button class="mobile-toggle" onclick="toggleMobileMenu()"><span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Title -->
+  <div class="page-title">
+    <div class="container">
+      <h1>Our Blog</h1>
+      <p>Tips, insights, and stories from the Richer community</p>
+    </div>
+  </div>
+
+  <!-- Blog Section -->
+  <section class="section">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1fr 300px; gap: var(--spacing-2xl);">
+        <!-- Blog Posts -->
+        <div>
+          <div style="margin-bottom: var(--spacing-lg); display: flex; gap: var(--spacing-md);">
+            <input type="text" class="search-input" placeholder="Search blog posts..." style="flex: 1; padding: var(--spacing-sm) var(--spacing-md); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+            <button style="background: linear-gradient(135deg, #7B2FF7 0%, #FF3C8E 100%); color: white; padding: var(--spacing-sm) var(--spacing-lg); border-radius: var(--radius-md); font-weight: 600; border: none; box-shadow: 0 4px 15px rgba(123, 47, 247, 0.35); cursor: pointer; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);">
+              <i class="fas fa-search"></i> Search
+            </button>
+          </div>
+
+          <div class="courses-grid" style="grid-template-columns: 1fr;">
+            <!-- Blog Post 1 -->
+            <div class="blog-card">
+              <div class="blog-card-image">
+                <img src="https://picsum.photos/800/400?random=1" alt="Blog Post">
+              </div>
+              <div class="blog-card-content">
+                <h3 class="blog-card-title">10 Digital Marketing Trends to Watch in 2024</h3>
+                <div class="blog-card-meta">
+                  <span><i class="fas fa-user"></i> John Smith</span>
+                  <span><i class="fas fa-calendar"></i> Dec 15, 2023</span>
+                  <span><i class="fas fa-clock"></i> 5 min read</span>
+                </div>
+                <p class="blog-card-excerpt">Discover the top digital marketing trends that will shape the industry in 2024. From AI-powered personalization to video marketing, learn what you need to stay ahead...</p>
+                <a href="blog-detail.html" class="blog-card-read">Read More →</a>
+              </div>
+            </div>
+
+            <!-- Blog Post 2 -->
+            <div class="blog-card">
+              <div class="blog-card-image">
+                <img src="https://picsum.photos/800/400?random=2" alt="Blog Post">
+              </div>
+              <div class="blog-card-content">
+                <h3 class="blog-card-title">How to Build a Personal Brand on Social Media</h3>
+                <div class="blog-card-meta">
+                  <span><i class="fas fa-user"></i> Emily White</span>
+                  <span><i class="fas fa-calendar"></i> Dec 10, 2023</span>
+                  <span><i class="fas fa-clock"></i> 7 min read</span>
+                </div>
+                <p class="blog-card-excerpt">Building a strong personal brand on social media doesn't happen overnight. Here's a step-by-step guide to help you create an authentic and engaging presence...</p>
+                <a href="blog-detail.html" class="blog-card-read">Read More →</a>
+              </div>
+            </div>
+
+            <!-- Blog Post 3 -->
+            <div class="blog-card">
+              <div class="blog-card-image">
+                <img src="https://picsum.photos/800/400?random=3" alt="Blog Post">
+              </div>
+              <div class="blog-card-content">
+                <h3 class="blog-card-title">Python Programming: A Beginner's Guide</h3>
+                <div class="blog-card-meta">
+                  <span><i class="fas fa-user"></i> Alex Johnson</span>
+                  <span><i class="fas fa-calendar"></i> Dec 5, 2023</span>
+                  <span><i class="fas fa-clock"></i> 6 min read</span>
+                </div>
+                <p class="blog-card-excerpt">Python is one of the most popular programming languages today. If you're thinking about learning to code, Python is a great place to start. Here's what you need to know...</p>
+                <a href="blog-detail.html" class="blog-card-read">Read More →</a>
+              </div>
+            </div>
+
+            <!-- Blog Post 4 -->
+            <div class="blog-card">
+              <div class="blog-card-image">
+                <img src="https://picsum.photos/800/400?random=4" alt="Blog Post">
+              </div>
+              <div class="blog-card-content">
+                <h3 class="blog-card-title">The Future of Remote Education</h3>
+                <div class="blog-card-meta">
+                  <span><i class="fas fa-user"></i> Sarah Davis</span>
+                  <span><i class="fas fa-calendar"></i> Nov 30, 2023</span>
+                  <span><i class="fas fa-clock"></i> 8 min read</span>
+                </div>
+                <p class="blog-card-excerpt">Remote education has transformed the way we learn. As technology continues to evolve, what does the future of online learning look like? Let's explore the possibilities...</p>
+                <a href="blog-detail.html" class="blog-card-read">Read More →</a>
+              </div>
+            </div>
+
+            <!-- Blog Post 5 -->
+            <div class="blog-card">
+              <div class="blog-card-image">
+                <img src="https://picsum.photos/800/400?random=5" alt="Blog Post">
+              </div>
+              <div class="blog-card-content">
+                <h3 class="blog-card-title">Mastering Web Design: UI/UX Best Practices</h3>
+                <div class="blog-card-meta">
+                  <span><i class="fas fa-user"></i> Jessica Lee</span>
+                  <span><i class="fas fa-calendar"></i> Nov 25, 2023</span>
+                  <span><i class="fas fa-clock"></i> 9 min read</span>
+                </div>
+                <p class="blog-card-excerpt">User experience is critical for web design success. In this article, we'll explore the best practices for creating beautiful, functional interfaces that users love...</p>
+                <a href="blog-detail.html" class="blog-card-read">Read More →</a>
+              </div>
+            </div>
+
+            <!-- Blog Post 6 -->
+            <div class="blog-card">
+              <div class="blog-card-image">
+                <img src="https://picsum.photos/800/400?random=6" alt="Blog Post">
+              </div>
+              <div class="blog-card-content">
+                <h3 class="blog-card-title">Growth Hacking Strategies for Startups</h3>
+                <div class="blog-card-meta">
+                  <span><i class="fas fa-user"></i> Mike Brown</span>
+                  <span><i class="fas fa-calendar"></i> Nov 20, 2023</span>
+                  <span><i class="fas fa-clock"></i> 7 min read</span>
+                </div>
+                <p class="blog-card-excerpt">Fast-tracking your startup's growth requires creative strategies. Discover the growth hacking techniques used by successful companies to scale rapidly...</p>
+                <a href="blog-detail.html" class="blog-card-read">Read More →</a>
+              </div>
+            </div>
+
+            <!-- Blog Post 7-9 -->
+            <div class="blog-card">
+              <div class="blog-card-image">
+                <img src="https://picsum.photos/800/400?random=7" alt="Blog Post">
+              </div>
+              <div class="blog-card-content">
+                <h3 class="blog-card-title">Content Marketing: The Ultimate Guide</h3>
+                <div class="blog-card-meta">
+                  <span><i class="fas fa-user"></i> David Turner</span>
+                  <span><i class="fas fa-calendar"></i> Nov 15, 2023</span>
+                  <span><i class="fas fa-clock"></i> 10 min read</span>
+                </div>
+                <p class="blog-card-excerpt">Content is king in digital marketing. Learn how to create compelling content that drives engagement and sells your products or services...</p>
+                <a href="blog-detail.html" class="blog-card-read">Read More →</a>
+              </div>
+            </div>
+
+            <div class="blog-card">
+              <div class="blog-card-image">
+                <img src="https://picsum.photos/800/400?random=8" alt="Blog Post">
+              </div>
+              <div class="blog-card-content">
+                <h3 class="blog-card-title">Email Marketing Automation Tips</h3>
+                <div class="blog-card-meta">
+                  <span><i class="fas fa-user"></i> Amanda Green</span>
+                  <span><i class="fas fa-calendar"></i> Nov 10, 2023</span>
+                  <span><i class="fas fa-clock"></i> 6 min read</span>
+                </div>
+                <p class="blog-card-excerpt">Automate your email marketing and see better results. Here are proven strategies to increase open rates, click-through rates, and conversions...</p>
+                <a href="blog-detail.html" class="blog-card-read">Read More →</a>
+              </div>
+            </div>
+
+            <div class="blog-card">
+              <div class="blog-card-image">
+                <img src="https://picsum.photos/800/400?random=9" alt="Blog Post">
+              </div>
+              <div class="blog-card-content">
+                <h3 class="blog-card-title">Video Marketing: Creating Viral Content</h3>
+                <div class="blog-card-meta">
+                  <span><i class="fas fa-user"></i> Robert Martin</span>
+                  <span><i class="fas fa-calendar"></i> Nov 5, 2023</span>
+                  <span><i class="fas fa-clock"></i> 8 min read</span>
+                </div>
+                <p class="blog-card-excerpt">Video content dominates social media. Discover the secrets to creating videos that capture attention, engage viewers, and drive conversions...</p>
+                <a href="blog-detail.html" class="blog-card-read">Read More →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination">
+            <a href="#">«</a>
+            <span class="active">1</span>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">»</a>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div>
+          <!-- Categories -->
+          <div class="filter-sidebar" style="margin-bottom: var(--spacing-lg);">
+            <h4 style="margin-bottom: var(--spacing-md);">Categories</h4>
+            <ul style="list-style: none;">
+              <li style="padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--border-color);">
+                <a href="#">Digital Marketing (24)</a>
+              </li>
+              <li style="padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--border-color);">
+                <a href="#">Programming (18)</a>
+              </li>
+              <li style="padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--border-color);">
+                <a href="#">Design (15)</a>
+              </li>
+              <li style="padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--border-color);">
+                <a href="#">Business (12)</a>
+              </li>
+              <li style="padding: var(--spacing-sm) 0;">
+                <a href="#">Education (20)</a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Recent Posts -->
+          <div class="filter-sidebar" style="margin-bottom: var(--spacing-lg);">
+            <h4 style="margin-bottom: var(--spacing-md);">Recent Posts</h4>
+            <ul style="list-style: none;">
+              <li style="padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--border-color);">
+                <a href="blog-detail.html" style="color: var(--primary-color); font-weight: 500;">10 Digital Marketing Trends</a>
+                <p style="font-size: 0.75rem; color: var(--text-light); margin: var(--spacing-xs) 0;">Dec 15, 2023</p>
+              </li>
+              <li style="padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--border-color);">
+                <a href="blog-detail.html" style="color: var(--primary-color); font-weight: 500;">Build a Personal Brand</a>
+                <p style="font-size: 0.75rem; color: var(--text-light); margin: var(--spacing-xs) 0;">Dec 10, 2023</p>
+              </li>
+              <li style="padding: var(--spacing-sm) 0;">
+                <a href="blog-detail.html" style="color: var(--primary-color); font-weight: 500;">Python for Beginners</a>
+                <p style="font-size: 0.75rem; color: var(--text-light); margin: var(--spacing-xs) 0;">Dec 5, 2023</p>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Tags -->
+          <div class="filter-sidebar">
+            <h4 style="margin-bottom: var(--spacing-md);">Tags</h4>
+            <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-sm);">
+              <a href="#" style="background: var(--light-bg); padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-sm); font-size: 0.875rem; color: var(--text-dark);">Digital Marketing</a>
+              <a href="#" style="background: var(--light-bg); padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-sm); font-size: 0.875rem; color: var(--text-dark);">Web Design</a>
+              <a href="#" style="background: var(--light-bg); padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-sm); font-size: 0.875rem; color: var(--text-dark);">Programming</a>
+              <a href="#" style="background: var(--light-bg); padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-sm); font-size: 0.875rem; color: var(--text-dark);">Education</a>
+              <a href="#" style="background: var(--light-bg); padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-sm); font-size: 0.875rem; color: var(--text-dark);">Business</a>
+              <a href="#" style="background: var(--light-bg); padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-sm); font-size: 0.875rem; color: var(--text-dark);">Tips</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="logo" style="color: white; margin-bottom: var(--spacing-lg);">
+            <img src="assets/new/images/logo.png" alt="Richer" style="max-height: 40px;">
+          </div>
+          <p>Learn from industry experts and grow your skills.</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fas fa-plus"></i> Home</a></li>
+            <li><a href="blog.html"><i class="fas fa-plus"></i> Blog</a></li>
+            <li><a href="courses.html"><i class="fas fa-plus"></i> Courses</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Legal</h3>
+          <ul class="footer-links">
+            <li><a href="privacy-policy.html"><i class="fas fa-plus"></i> Privacy</a></li>
+            <li><a href="terms.html"><i class="fas fa-plus"></i> Terms</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 Richer. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="scroll-to-top" onclick="scrollToTop()">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

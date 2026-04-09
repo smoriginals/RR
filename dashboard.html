@@ -1,0 +1,3864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+  <title>Richer - User Dashboard</title>
+  <link rel="shortcut icon" href="assets/new/images/logo.png">
+  <!-- Bootstrap 4 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Owl Carousel -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <!-- Enhancement Styles -->
+  <link rel="stylesheet" href="assets/new/css/enhancements.css">
+  <link rel="stylesheet" href="assets/new/css/affiliate.css">
+
+  <style>
+    /* ======= ROOT & RESET ======= */
+    :root {
+      --primary: #7B2FF7;
+      --primary-dark: #3a56d4;
+      --primary-light: #eef1ff;
+      --secondary: #FF3C8E;
+      --gradient-purple: linear-gradient(135deg, #7B2FF7 0%, #FF3C8E 100%);
+      --gradient-purple-hover: linear-gradient(135deg, #5A1AD4 0%, #d4327a 100%);
+      --text-dark: #1a1a2e;
+      --text-medium: #555;
+      --text-light: #888;
+      --bg-body: #f0f2f8;
+      --bg-card: #ffffff;
+      --border: #e8ecf4;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+      --shadow-md: 0 8px 30px rgba(0,0,0,0.08);
+      --shadow-lg: 0 15px 50px rgba(0,0,0,0.12);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --transition: all 0.3s ease;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-body);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; transition: var(--transition); }
+    a:hover { text-decoration: none; color: var(--primary); }
+    img { max-width: 100%; }
+    ul { list-style: none; padding: 0; margin: 0; }
+
+    /* ======= CUSTOM CURSOR ======= */
+    .custom-cursor__cursor {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: width 0.15s ease, height 0.15s ease, background 0.15s ease;
+    }
+    .custom-cursor__cursor-two {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 2px solid rgba(123, 47, 247,0.35);
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 99998;
+      transform: translate(-50%, -50%);
+      transition: width 0.15s ease, height 0.15s ease, border-color 0.15s ease;
+    }
+    @media (max-width: 991px) {
+      .custom-cursor__cursor, .custom-cursor__cursor-two { display: none; }
+    }
+
+    /* ======= ANIMATIONS ======= */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .fade-in-up { animation: fadeInUp 0.5s ease forwards; }
+    .slide-in-left { animation: slideInLeft 0.5s ease forwards; }
+    .slide-in-right { animation: slideInRight 0.5s ease forwards; }
+
+    /* ======= HEADER ======= */
+    .main-header {
+      background: var(--bg-card);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      z-index: 1000;
+    }
+    .main-header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+    .main-header__logo img {
+      height: 60px;
+      transition: var(--transition);
+    }
+    .main-header__logo:hover img { transform: scale(1.05); }
+    .main-header__right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .main-header__nav-list {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .main-header__nav-list li a {
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-medium);
+      transition: var(--transition);
+    }
+    .main-header__nav-list li a:hover,
+    .main-header__nav-list li a.current {
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+    .thm-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      background: var(--gradient-purple);
+      color: #fff !important;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(123, 47, 247,0.3);
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .thm-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0%; height: 100%;
+      background: rgba(0,0,0,0.25);
+      transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: -1;
+      border-radius: inherit;
+    }
+    .thm-btn:hover::before {
+      width: 100%;
+    }
+    .thm-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(123, 47, 247,0.45);
+      color: #fff !important;
+    }
+
+    /* Mobile header elements */
+    .mobile-login-btn {
+      display: none;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: var(--gradient-purple);
+      color: #fff;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      font-size: 16px;
+    }
+    .mobile-nav-toggler {
+      display: none;
+      width: 40px; height: 40px;
+      border-radius: var(--radius-sm);
+      background: var(--primary-light);
+      border: none;
+      color: var(--primary);
+      font-size: 18px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    .mobile-nav-toggler:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* Sticky header */
+    .stricky-header {
+      position: fixed;
+      top: -80px;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      background: var(--bg-card);
+      box-shadow: var(--shadow-md);
+      transition: top 0.4s ease;
+    }
+    .stricky-header.stricky-fixed { top: 0; }
+    .stricky-header .main-header__inner { padding: 8px 15px; }
+
+    /* Mobile Navigation Drawer */
+    .mobile-nav__wrapper {
+      position: fixed;
+      top: 0; left: -100%;
+      width: 300px;
+      height: 100vh;
+      background: var(--bg-card);
+      z-index: 10000;
+      overflow-y: auto;
+      transition: left 0.35s ease;
+      box-shadow: var(--shadow-lg);
+    }
+    .mobile-nav__wrapper.active { left: 0; }
+    .mobile-nav__overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+    .mobile-nav__overlay.active { opacity: 1; visibility: visible; }
+    .mobile-nav__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-nav__top img { height: 32px; }
+    .mobile-nav__close {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: none;
+      background: #fee;
+      color: #e74c3c;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    .mobile-nav__close:hover { background: #e74c3c; color: #fff; }
+    .mobile-nav__links {
+      padding: 20px;
+    }
+    .mobile-nav__links a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--text-dark);
+      transition: var(--transition);
+    }
+    .mobile-nav__links a:hover,
+    .mobile-nav__links a.active {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+    .mobile-nav__links a i { width: 20px; text-align: center; }
+    .mobile-nav__contact {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .mobile-nav__contact p {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-medium);
+      margin-bottom: 10px;
+    }
+    .mobile-nav__contact p i { color: var(--primary); width: 18px; }
+    .mobile-nav__social {
+      display: flex;
+      gap: 10px;
+      padding: 10px 20px 20px;
+    }
+    .mobile-nav__social a {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: var(--transition);
+    }
+    .mobile-nav__social a:hover {
+      background: var(--gradient-purple);
+      color: #fff;
+    }
+
+    @media (max-width: 991px) {
+      .main-header__nav-list, .main-header__right .thm-btn { display: none; }
+      .mobile-login-btn, .mobile-nav-toggler { display: flex; }
+      .main-header__right { gap: 10px; }
+    }
+
+    /* ======= USER PANEL SECTION ======= */
+    .user-panel {
+      padding: 16px 0;
+      min-height: calc(100vh - 70px);
+    }
+    .user-panel > .container {
+      max-width: 1500px;
+    }
+
+    /* ======= SIDEBAR ======= */
+    .sidebar {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      animation: slideInLeft 0.5s ease;
+      position: sticky;
+      top: 90px;
+    }
+    .sidebar__profile {
+      text-align: center;
+      padding: 20px 16px 14px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      position: relative;
+    }
+    .sidebar__profile::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 0; right: 0;
+      height: 40px;
+      background: var(--bg-card);
+      border-radius: 50% 50% 0 0;
+    }
+    .sidebar__avatar {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      border: 4px solid rgba(255,255,255,0.4);
+      object-fit: cover;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .sidebar__name {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 2px;
+      position: relative;
+      z-index: 1;
+    }
+    .sidebar__plan {
+      font-size: 12px;
+      opacity: 0.85;
+      position: relative;
+      z-index: 1;
+    }
+    .sidebar__actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 24px 20px 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .bg-icn {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-medium);
+      font-size: 15px;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .bg-icn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0%; height: 100%;
+      background: linear-gradient(135deg, #7B2FF7 0%, #FF3C8E 100%);
+      transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: -1;
+      border-radius: inherit;
+    }
+    .bg-icn:hover::before {
+      width: 100%;
+    }
+    .bg-icn:hover {
+      color: #fff;
+      border-color: transparent;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(123, 47, 247,0.3);
+    }
+
+    .sidebar__nav {
+      padding: 8px 14px 16px;
+    }
+    .sidebar__nav li {
+      margin-bottom: 2px;
+    }
+    .sidebar__nav li a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 16px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-medium);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .sidebar__nav li a::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0%; height: 100%;
+      background: var(--primary-light);
+      transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: -1;
+      border-radius: inherit;
+    }
+    .sidebar__nav li a:hover::before {
+      width: 100%;
+    }
+    .sidebar__nav li a.active::before {
+      width: 100%;
+      background: var(--gradient-purple);
+    }
+    .sidebar__nav li a i {
+      width: 20px;
+      text-align: center;
+      font-size: 15px;
+    }
+    .sidebar__nav li a:hover {
+      color: var(--primary);
+      transform: translateX(4px);
+    }
+    .sidebar__nav li a.active {
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(123, 47, 247,0.3);
+      transform: translateX(4px);
+    }
+    .sidebar__nav li a.active i { color: #fff; }
+
+    /* ======= MAIN CONTENT ======= */
+    .main-content {
+      animation: fadeInUp 0.5s ease;
+    }
+
+    /* Welcome */
+    .welcome-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .welcome-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 5px;
+      height: 100%;
+      background: var(--gradient-purple);
+      border-radius: 0 4px 4px 0;
+    }
+    .welcome-card h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+    .welcome-card h2 span {
+      background: var(--gradient-purple);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .welcome-card h2 img {
+      height: 28px;
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+    .welcome-card p {
+      color: var(--text-light);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* Section title bar */
+    .section-title-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .section-title-bar h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+    .section-title-bar a {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .section-title-bar a:hover { gap: 10px; }
+
+    /* Course Cards */
+    .course-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.5s ease backwards;
+      transform: translateZ(0);
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+    .course-card:nth-child(1) { animation-delay: 0.05s; }
+    .course-card:nth-child(2) { animation-delay: 0.1s; }
+    .course-card:nth-child(3) { animation-delay: 0.15s; }
+    .course-card:nth-child(4) { animation-delay: 0.2s; }
+    .course-card:nth-child(5) { animation-delay: 0.25s; }
+    .course-card:nth-child(6) { animation-delay: 0.3s; }
+
+    .course-card:hover {
+      transform: translateY(-5px) translateZ(0);
+      box-shadow: var(--shadow-lg);
+    }
+    .course-card__img {
+      position: relative;
+      height: 180px;
+      overflow: hidden;
+    }
+    .course-card__img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .course-card:hover .course-card__img img {
+      transform: scale(1.06);
+    }
+    .course-card__fav {
+      position: absolute;
+      top: 10px; right: 10px;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary);
+      font-size: 14px;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .course-card__fav::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0%; height: 100%;
+      background: var(--secondary);
+      transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: -1;
+      border-radius: inherit;
+    }
+    .course-card__fav:hover::before {
+      width: 100%;
+    }
+    .course-card__fav:hover {
+      color: #fff;
+      transform: scale(1.15);
+    }
+    .course-card__body {
+      padding: 18px 20px;
+    }
+    .course-card__title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .course-card__title a:hover { color: var(--primary); }
+
+    /* Recent Videos Sidebar */
+    .recent-videos {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+      animation: slideInRight 0.5s ease;
+    }
+    .recent-videos__title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--border);
+    }
+    .recent-videos__item {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .recent-videos__item:last-child { border-bottom: none; }
+    .recent-videos__item:hover {
+      background: var(--primary-light);
+      margin: 0 -12px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+    }
+    .recent-videos__thumb {
+      width: 65px;
+      height: 48px;
+      border-radius: 6px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .recent-videos__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .recent-videos__info {
+      flex: 1;
+      min-width: 0;
+    }
+    .recent-videos__tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-bottom: 4px;
+    }
+    .recent-videos__name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-dark);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.3;
+    }
+    .recent-videos__name:hover { color: var(--primary); }
+
+    /* ======= PACKAGES CAROUSEL SECTION ======= */
+    .packages-section {
+      padding: 24px 0 30px;
+    }
+    .packages-section__title {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+    }
+    .packages-section__title span {
+      background: var(--gradient-purple);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .package-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      margin: 8px 4px;
+      transform: translateZ(0);
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+    .package-card:hover {
+      transform: translateY(-4px) translateZ(0);
+      box-shadow: var(--shadow-lg);
+    }
+    .package-card__img {
+      height: 150px;
+      overflow: hidden;
+    }
+    .package-card__img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .package-card:hover .package-card__img img {
+      transform: scale(1.06);
+    }
+    .package-card__body {
+      padding: 16px;
+    }
+    .package-card__meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 12px;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+    .package-card__meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .package-card__meta i { color: var(--primary); font-size: 13px; }
+    .package-card__meta .star-rating i { color: #ffc107; }
+    .package-card__name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .package-card .thm-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 8px 16px;
+      font-size: 13px;
+    }
+    .package-card .thm-btn.active-pkg {
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      box-shadow: 0 4px 15px rgba(40,167,69,0.3);
+    }
+    .package-card .thm-btn.active-pkg:hover {
+      box-shadow: 0 8px 25px rgba(40,167,69,0.45);
+    }
+
+    /* Owl Carousel Overrides */
+    .owl-carousel .owl-nav button {
+      width: 36px; height: 36px;
+      border-radius: 50% !important;
+      background: var(--bg-card) !important;
+      box-shadow: var(--shadow-sm);
+      color: var(--text-dark) !important;
+      font-size: 18px !important;
+      transition: var(--transition);
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .owl-carousel .owl-nav button:hover {
+      background: var(--gradient-purple) !important;
+      color: #fff !important;
+    }
+    .owl-carousel .owl-nav .owl-prev { left: -18px; }
+    .owl-carousel .owl-nav .owl-next { right: -18px; }
+    .owl-dots { margin-top: 16px; text-align: center; }
+    .owl-dot span {
+      width: 10px !important; height: 10px !important;
+      background: var(--border) !important;
+      border-radius: 50% !important;
+      transition: var(--transition);
+    }
+    .owl-dot.active span {
+      background: var(--primary) !important;
+      width: 28px !important;
+      border-radius: 20px !important;
+    }
+
+    /* Hidden elements */
+    .hidden-form { display: none; }
+
+    /* ======= RESPONSIVE ======= */
+    @media (max-width: 991px) {
+      .user-panel { padding: 20px 0; }
+      .sidebar { margin-bottom: 24px; position: static; }
+      .welcome-card h2 { font-size: 20px; }
+      .welcome-card h2 img { display: none; }
+      .packages-section__title { font-size: 20px; }
+    }
+    @media (max-width: 767px) {
+      .welcome-card { padding: 18px 20px; }
+      .welcome-card h2 { font-size: 18px; }
+      .course-card__img { height: 150px; }
+      .course-card__body { padding: 14px 16px; }
+      .course-card__title { font-size: 14px; }
+      .recent-videos { padding: 16px; }
+      .packages-section { padding: 18px 0 24px; }
+      .packages-section__title { font-size: 18px; padding: 0 10px; }
+      .sidebar__profile { padding: 22px 16px 16px; }
+      .sidebar__avatar { width: 65px; height: 65px; }
+      .owl-carousel .owl-nav { display: none; }
+    }
+    @media (max-width: 480px) {
+      .user-panel { padding: 15px 0; }
+      .welcome-card h2 { font-size: 16px; }
+      .section-title-bar h3 { font-size: 15px; }
+      .sidebar__name { font-size: 15px; }
+      .referral-dashboard-section div[style*="grid-template-columns"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+
+    /* ======= DYNAMIC PANELS ======= */
+    .dashboard-panel {
+      display: none;
+      animation: fadeInUp 0.4s ease;
+    }
+    .dashboard-panel.active {
+      display: block;
+    }
+    /* ══════ Certificate Section ══════ */
+    .cert-hero {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: var(--radius-xl);
+      padding: 24px 24px 24px;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cert-hero::after {
+      content: '';
+      position: absolute;
+      top: -40%; right: -10%;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+    .cert-hero::before {
+      content: '';
+      position: absolute;
+      bottom: -30%; left: -8%;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+    .cert-hero h2 { font-size: 26px; font-weight: 800; margin-bottom: 6px; position: relative; z-index: 1; }
+    .cert-hero p  { opacity: 0.85; font-size: 14px; position: relative; z-index: 1; margin-bottom: 20px; }
+
+    /* Stats row inside hero */
+    .cert-stats {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+      flex-wrap: wrap;
+    }
+    .cert-stat-chip {
+      background: rgba(255,255,255,0.16);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 30px;
+      padding: 8px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+    .cert-stat-chip i { font-size: 14px; }
+    .cert-stat-chip--earned i  { color: #a8edba; }
+    .cert-stat-chip--prog  i  { color: #ffd97a; }
+    .cert-stat-chip--locked i { color: rgba(255,255,255,0.55); }
+
+    /* ── Currently Watching Section ── */
+    .cert-watching {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cert-watching::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #7B2FF7, #FF3C8E, #7B2FF7);
+      background-size: 200% 100%;
+      animation: certGradientBar 3s ease infinite;
+    }
+    @keyframes certGradientBar {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .cert-watching__label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cert-watching__label i {
+      font-size: 14px;
+      animation: certPulse 2s ease infinite;
+    }
+    @keyframes certPulse {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
+    .cert-watching__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    @media (max-width: 767px) {
+      .cert-watching__grid { grid-template-columns: 1fr; }
+    }
+
+    /* Video thumbnail */
+    .cert-video-thumb {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 16 / 9;
+      max-height: 180px;
+      background: #1a1a2e;
+    }
+    .cert-video-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease, filter 0.5s ease;
+    }
+    .cert-video-thumb:hover img {
+      transform: scale(1.06);
+      filter: brightness(0.75);
+    }
+    .cert-video-thumb__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.55) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+    }
+    .cert-play-btn {
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,0.92);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 18px;
+      padding-left: 3px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      transition: all 0.35s ease;
+      cursor: pointer;
+    }
+    .cert-video-thumb:hover .cert-play-btn {
+      transform: scale(1.12);
+      background: #fff;
+      box-shadow: 0 12px 40px rgba(123, 47, 247,0.35);
+    }
+    .cert-video-thumb__badge {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    /* Video info right column */
+    .cert-video-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .cert-video-info__course {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 4px 12px;
+      border-radius: 20px;
+      width: fit-content;
+    }
+    .cert-video-info__title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1.35;
+    }
+    .cert-video-info__lesson {
+      font-size: 12px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+    .cert-video-info__lesson i {
+      margin-right: 5px;
+      color: var(--primary);
+    }
+    .cert-continue-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      background: var(--gradient-purple);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 14px rgba(123, 47, 247,0.3);
+      width: fit-content;
+      margin-top: 4px;
+    }
+    .cert-continue-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(123, 47, 247,0.45);
+      color: #fff;
+    }
+
+    /* ── Progress Section ── */
+    .cert-progress-section {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .cert-progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .cert-progress-header__left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cert-progress-header__pct {
+      font-size: 22px;
+      font-weight: 800;
+      background: var(--gradient-purple);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .cert-progress-header__text {
+      font-size: 11px;
+      color: var(--text-light);
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .cert-progress-time {
+      font-size: 11px;
+      color: var(--text-light);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cert-progress-time i { color: var(--primary); }
+
+    /* Progress bar */
+    .cert-progress-track {
+      position: relative;
+      height: 10px;
+      background: #e9ecef;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .cert-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #7B2FF7 0%, #FF3C8E 50%, #7B2FF7 100%);
+      background-size: 200% 100%;
+      border-radius: 20px;
+      transition: width 1s cubic-bezier(0.22,1,0.36,1);
+      position: relative;
+      animation: certProgressShimmer 2.5s ease infinite;
+    }
+    @keyframes certProgressShimmer {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .cert-progress-fill::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 30px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35));
+      border-radius: 0 20px 20px 0;
+    }
+
+    /* Milestones */
+    .cert-milestones {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 2px;
+      position: relative;
+    }
+    .cert-milestone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: default;
+    }
+    .cert-milestone__dot {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: #dee2e6;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 1px #dee2e6;
+      transition: all 0.4s ease;
+      position: relative;
+      z-index: 2;
+    }
+    .cert-milestone.reached .cert-milestone__dot {
+      background: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary), 0 0 8px rgba(123, 47, 247,0.3);
+    }
+    .cert-milestone__label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #adb5bd;
+    }
+    .cert-milestone.reached .cert-milestone__label {
+      color: var(--primary);
+    }
+
+    /* ── Certificate Ready Banner (100%) ── */
+    .cert-ready-banner {
+      background: linear-gradient(135deg, #d4edda 0%, #c3f5d0 100%);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      margin-top: 24px;
+      border: 2px solid rgba(40,167,69,0.15);
+      position: relative;
+      overflow: hidden;
+      display: none;
+    }
+    .cert-ready-banner.visible { display: block; animation: certBannerReveal 0.6s ease forwards; }
+    @keyframes certBannerReveal {
+      from { opacity: 0; transform: translateY(20px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .cert-ready-icon {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, #28a745, #20c997);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 30px;
+      margin: 0 auto 14px;
+      box-shadow: 0 8px 25px rgba(40,167,69,0.3);
+      animation: certReadyBounce 0.7s cubic-bezier(0.22,1,0.36,1) 0.3s both;
+    }
+    @keyframes certReadyBounce {
+      0%   { transform: scale(0); }
+      50%  { transform: scale(1.2); }
+      70%  { transform: scale(0.92); }
+      100% { transform: scale(1); }
+    }
+    .cert-ready-banner h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #155724;
+      margin-bottom: 4px;
+    }
+    .cert-ready-banner p {
+      font-size: 13px;
+      color: #3c763d;
+      margin-bottom: 18px;
+    }
+    .cert-ready-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .cert-download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 30px;
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(40,167,69,0.35);
+    }
+    .cert-download-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(40,167,69,0.45);
+      color: #fff;
+    }
+    .cert-share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 24px;
+      background: transparent;
+      color: #28a745;
+      border: 2px solid rgba(40,167,69,0.3);
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .cert-share-btn:hover {
+      background: rgba(40,167,69,0.08);
+      border-color: #28a745;
+      transform: translateY(-2px);
+    }
+
+    /* ── Certificate Cards Grid ── */
+    .cert-grid-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cert-grid-title i {
+      color: var(--primary);
+    }
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 18px;
+    }
+    @media (max-width: 767px) {
+      .cert-grid { grid-template-columns: 1fr; }
+    }
+    .cert-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      border-left: 4px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transform: translateZ(0);
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+    .cert-card:hover {
+      transform: translateY(-4px) translateZ(0);
+      box-shadow: var(--shadow-md);
+    }
+    .cert-card--completed { border-left-color: #28a745; }
+    .cert-card--completed:hover { border-left-color: #28a745; }
+    .cert-card--progress { border-left-color: #ffc107; }
+    .cert-card--progress:hover { border-left-color: #f9a825; }
+    .cert-card--locked { border-left-color: var(--border); }
+    .cert-card--locked:hover { border-left-color: #adb5bd; }
+
+    .cert-card__icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .cert-card__icon--gold { background: #fff8e1; color: #f9a825; }
+    .cert-card__icon--blue { background: var(--primary-light); color: var(--primary); }
+    .cert-card__icon--green { background: #e8f5e9; color: #28a745; }
+    .cert-card__icon--pink { background: #fce4ec; color: var(--secondary); }
+    .cert-card__body { flex: 1; min-width: 0; }
+    .cert-card__title { font-size: 14px; font-weight: 700; color: var(--text-dark); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cert-card__desc { font-size: 11px; color: var(--text-light); margin-bottom: 6px; }
+
+    /* Mini progress bar inside card */
+    .cert-card__progress {
+      height: 6px;
+      background: #e9ecef;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .cert-card__progress-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.8s ease;
+    }
+    .cert-card__progress-fill--green  { background: linear-gradient(90deg, #28a745, #20c997); }
+    .cert-card__progress-fill--yellow { background: linear-gradient(90deg, #ffc107, #ff9800); }
+    .cert-card__progress-fill--red    { background: linear-gradient(90deg, #adb5bd, #ccc); }
+
+    .cert-card__status {
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .cert-card__status--completed {
+      background: #e8f5e9;
+      color: #28a745;
+    }
+    .cert-card__status--completed:hover {
+      background: #28a745;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .cert-card__status--progress {
+      background: #fff8e1;
+      color: #e67e22;
+    }
+    .cert-card__status--locked {
+      background: var(--bg-body);
+      color: var(--text-light);
+    }
+
+    /* ── Confetti Canvas ── */
+    .cert-confetti-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    /* Favorites */
+    .fav-empty {
+      text-align: center;
+      padding: 36px 16px;
+      color: var(--text-light);
+    }
+    .fav-empty i { font-size: 48px; color: var(--border); margin-bottom: 16px; }
+    .fav-empty h3 { font-size: 18px; font-weight: 700; color: var(--text-medium); margin-bottom: 6px; }
+    .fav-empty p { font-size: 13px; }
+    .fav-course {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      margin-bottom: 20px;
+      transform: translateZ(0);
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+    .fav-course:hover { transform: translateY(-4px) translateZ(0); box-shadow: var(--shadow-lg); }
+    .fav-course__img {
+      position: relative;
+      height: 180px;
+      overflow: hidden;
+    }
+    .fav-course__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .fav-course:hover .fav-course__img img { transform: scale(1.06); }
+    .fav-course__remove {
+      position: absolute;
+      top: 10px; right: 10px;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(231,76,60,0.9);
+      color: #fff;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      cursor: pointer;
+      transition: var(--transition);
+      overflow: hidden;
+      z-index: 1;
+    }
+    .fav-course__remove::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0%; height: 100%;
+      background: #c0392b;
+      transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: -1;
+      border-radius: inherit;
+    }
+    .fav-course__remove:hover::before { width: 100%; }
+    .fav-course__remove:hover { transform: scale(1.15); }
+    .fav-course__body { padding: 18px 20px; }
+    .fav-course__title { font-size: 15px; font-weight: 700; color: var(--text-dark); line-height: 1.4; }
+    .fav-course__meta { display: flex; align-items: center; gap: 12px; margin-top: 10px; font-size: 12px; color: var(--text-light); font-weight: 600; }
+    .fav-course__meta i { color: var(--primary); }
+    /* All Courses grid in panel */
+    .courses-filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .courses-search {
+      display: flex;
+      align-items: center;
+      background: var(--bg-body);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px 14px;
+      gap: 8px;
+      flex: 1;
+      max-width: 320px;
+      transition: var(--transition);
+    }
+    .courses-search:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(123, 47, 247,0.1); }
+    .courses-search i { color: var(--text-light); font-size: 14px; }
+    .courses-search input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-dark);
+      width: 100%;
+    }
+    .courses-category-btns {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .courses-cat-btn {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-medium);
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .courses-cat-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0%; height: 100%;
+      background: var(--primary);
+      transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: -1;
+      border-radius: inherit;
+    }
+    .courses-cat-btn:hover::before,
+    .courses-cat-btn.active::before {
+      width: 100%;
+    }
+    .courses-cat-btn:hover,
+    .courses-cat-btn.active {
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .course-full-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      margin-bottom: 20px;
+      animation: fadeInUp 0.5s ease backwards;
+      transform: translateZ(0);
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+    .course-full-card:hover { transform: translateY(-5px) translateZ(0); box-shadow: var(--shadow-lg); }
+    .course-full-card__img { position: relative; height: 190px; overflow: hidden; }
+    .course-full-card__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .course-full-card:hover .course-full-card__img img { transform: scale(1.06); }
+    .course-full-card__badge {
+      position: absolute;
+      top: 10px; left: 10px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .course-full-card__badge--new { background: var(--secondary); }
+    .course-full-card__badge--popular { background: var(--primary); }
+    .course-full-card__badge--advanced { background: #ff6b6b; }
+    .course-full-card__fav {
+      position: absolute;
+      top: 10px; right: 10px;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary);
+      font-size: 14px;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .course-full-card__fav::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0%; height: 100%;
+      background: var(--secondary);
+      transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: -1;
+      border-radius: inherit;
+    }
+    .course-full-card__fav:hover::before { width: 100%; }
+    .course-full-card__fav:hover { color: #fff; transform: scale(1.15); }
+    .course-full-card__body { padding: 18px 20px; }
+    .course-full-card__title { font-size: 16px; font-weight: 700; color: var(--text-dark); line-height: 1.4; margin-bottom: 8px; }
+    .course-full-card__meta { display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-light); font-weight: 600; }
+    .course-full-card__meta span { display: flex; align-items: center; gap: 4px; }
+    .course-full-card__meta i { font-size: 12px; color: var(--primary); }
+    .course-full-card__progress { margin-top: 10px; }
+    .course-full-card__progress-bar {
+      height: 6px;
+      border-radius: 3px;
+      background: var(--border);
+      overflow: hidden;
+    }
+    .course-full-card__progress-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: var(--gradient-purple);
+      transition: width 0.8s ease;
+    }
+    .course-full-card__progress-text {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-light);
+      margin-top: 4px;
+      text-align: right;
+    }
+    @media (max-width: 767px) {
+      .cert-hero { padding: 28px 20px; }
+      .cert-hero h2 { font-size: 20px; }
+      .cert-card { flex-direction: column; text-align: center; gap: 12px; }
+      .fav-course__img { height: 150px; }
+      .course-full-card__img { height: 150px; }
+      .courses-search { max-width: 100%; }
+    }
+
+    /* ======= GRADIENT TEXT ANIMATION ======= */
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .gradient-animate-text {
+      background: linear-gradient(270deg, #7B2FF7, #FF3C8E, #7B2FF7, #7B2FF7);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 4s ease infinite;
+    }
+
+    /* ======= TYPING CURSOR ======= */
+    @keyframes blink { 50% { opacity: 0; } }
+    .typing-cursor::after {
+      content: '|';
+      -webkit-text-fill-color: var(--primary);
+      animation: blink 0.8s step-end infinite;
+      font-weight: 400;
+    }
+
+    /* ======= PAGINATION ======= */
+    .pagination-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      margin-top: 24px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .page-btn {
+      width: 38px; height: 38px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-medium);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .page-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0%; height: 100%;
+      background: var(--primary-light);
+      transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: -1;
+      border-radius: inherit;
+    }
+    .page-btn:hover::before {
+      width: 100%;
+    }
+    .page-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .page-btn.active {
+      background: var(--gradient-purple);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(123, 47, 247,0.3);
+    }
+    .page-btn.active::before {
+      display: none;
+    }
+    .page-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .page-btn--nav {
+      width: auto;
+      padding: 0 14px;
+      font-size: 13px;
+      gap: 6px;
+    }
+    .page-info {
+      font-size: 12px;
+      color: var(--text-light);
+      font-weight: 600;
+      margin-left: 12px;
+    }
+    @media (max-width: 480px) {
+      .page-btn { width: 32px; height: 32px; font-size: 12px; }
+      .page-btn--nav { padding: 0 10px; font-size: 11px; }
+      .page-info { width: 100%; text-align: center; margin-left: 0; margin-top: 8px; }
+    }
+
+    /* ======= SWEETALERT2 LOGOUT CUSTOM ======= */
+    .swal2-popup.logout-popup {
+      border-radius: var(--radius-lg) !important;
+      padding: 20px 18px !important;
+    }
+    .swal2-popup.logout-popup .swal2-title {
+      font-size: 20px !important;
+      font-weight: 800 !important;
+      color: var(--text-dark) !important;
+    }
+    .swal2-popup.logout-popup .swal2-html-container {
+      font-size: 14px !important;
+      color: var(--text-medium) !important;
+    }
+    .swal2-popup.logout-popup .swal2-actions {
+      gap: 12px !important;
+    }
+    .swal2-popup.logout-popup .swal2-confirm.thm-btn {
+      background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%) !important;
+      box-shadow: 0 4px 15px rgba(231,76,60,0.3) !important;
+      padding: 10px 24px !important;
+      font-size: 14px !important;
+    }
+    .swal2-popup.logout-popup .swal2-confirm.thm-btn:hover {
+      box-shadow: 0 8px 25px rgba(231,76,60,0.45) !important;
+      transform: translateY(-2px) !important;
+    }
+    .swal2-popup.logout-popup .swal2-cancel.thm-btn {
+      background: var(--bg-body) !important;
+      color: var(--text-medium) !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+      padding: 10px 24px !important;
+      font-size: 14px !important;
+    }
+    .swal2-popup.logout-popup .swal2-cancel.thm-btn:hover {
+      background: var(--border) !important;
+      color: var(--text-dark) !important;
+    }
+
+    /* ======= VIEW COURSE BUTTON ======= */
+    .view-course-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      width: auto;
+      padding: 6px 14px;
+      margin-top: 10px;
+      background: var(--gradient-purple);
+      color: #fff !important;
+      border: none;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 10px rgba(123, 47, 247,0.2);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+    }
+    .view-course-btn i {
+      font-size: 10px;
+      transition: transform 0.3s ease;
+    }
+    .view-course-btn:hover i {
+      transform: translateX(3px);
+    }
+    .view-course-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0%; height: 100%;
+      background: rgba(0,0,0,0.2);
+      transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: -1;
+      border-radius: inherit;
+    }
+    .view-course-btn:hover::before { width: 100%; }
+    .view-course-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(123, 47, 247,0.35);
+      color: #fff !important;
+    }
+    .view-course-btn--completed {
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      box-shadow: 0 3px 10px rgba(40,167,69,0.2);
+    }
+    .view-course-btn--completed:hover {
+      box-shadow: 0 6px 18px rgba(40,167,69,0.35);
+    }
+
+    /* ======= STAR RATING ======= */
+    .course-full-card__rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+    }
+    .course-full-card__rating .stars {
+      display: flex;
+      gap: 1px;
+    }
+    .course-full-card__rating .stars i {
+      font-size: 12px;
+      color: #ffc107;
+    }
+    .course-full-card__rating .stars i.empty {
+      color: #ddd;
+    }
+    .course-full-card__rating .rating-text {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-medium);
+      margin-left: 4px;
+    }
+    .course-full-card__rating .reviews {
+      font-size: 11px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    /* ======= PRICE BADGE ======= */
+    .course-full-card__price {
+      position: absolute;
+      bottom: 10px; left: 10px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      backdrop-filter: blur(6px);
+    }
+    .course-full-card__price--free {
+      background: rgba(40,167,69,0.9);
+      color: #fff;
+    }
+    .course-full-card__price--paid {
+      background: rgba(255,255,255,0.92);
+      color: var(--text-dark);
+    }
+
+    /* ======= SORT DROPDOWN ======= */
+    .courses-sort-wrapper {
+      position: relative;
+    }
+    .courses-sort-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--bg-card);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-medium);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .courses-sort-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0%; height: 100%;
+      background: var(--primary-light);
+      transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: -1;
+      border-radius: inherit;
+    }
+    .courses-sort-btn:hover::before { width: 100%; }
+    .courses-sort-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .courses-sort-btn i { font-size: 12px; }
+    .courses-sort-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      min-width: 180px;
+      background: var(--bg-card);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      z-index: 100;
+      display: none;
+      overflow: hidden;
+    }
+    .courses-sort-menu.show { display: block; }
+    .courses-sort-menu button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 16px;
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-medium);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+    .courses-sort-menu button:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+    .courses-sort-menu button.active {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .courses-sort-menu button i { width: 16px; text-align: center; font-size: 12px; }
+
+    /* ======= COURSE COUNT BADGE ======= */
+    .courses-count {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-light);
+      padding: 6px 14px;
+      background: var(--bg-body);
+      border-radius: 20px;
+    }
+    .courses-count strong {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    /* ======= NO RESULTS STATE ======= */
+    .courses-no-results {
+      text-align: center;
+      padding: 36px 16px;
+      display: none;
+    }
+    .courses-no-results i {
+      font-size: 48px;
+      color: var(--border);
+      margin-bottom: 16px;
+    }
+    .courses-no-results h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-medium);
+      margin-bottom: 6px;
+    }
+    .courses-no-results p {
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    /* ======= UNIVERSAL DASHBOARD BUTTON HOVER ======= */
+    .dash-btn-hover {
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      transition: all 0.3s ease;
+    }
+    .dash-btn-hover::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0%; height: 100%;
+      background: rgba(0,0,0,0.2);
+      transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: -1;
+      border-radius: inherit;
+    }
+    .dash-btn-hover:hover::before { width: 100%; }
+    .dash-btn-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="custom-cursor__cursor"></div>
+  <div class="custom-cursor__cursor-two"></div>
+
+  <!-- ======= MOBILE NAV OVERLAY ======= -->
+  <div class="mobile-nav__overlay" id="mobileNavOverlay"></div>
+
+  <!-- ======= MOBILE NAV DRAWER ======= -->
+  <div class="mobile-nav__wrapper" id="mobileNavDrawer">
+    <div class="mobile-nav__top">
+      <img src="assets/new/images/logo.png" alt="Richer">
+      <button class="mobile-nav__close" id="mobileNavClose">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="mobile-nav__links">
+      <a href="index.html" class="active"><i class="fas fa-home"></i> Home</a>
+      <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="courses.html"><i class="fas fa-graduation-cap"></i> Courses</a>
+      <a href="#"><i class="fas fa-certificate"></i> Get Certificate</a>
+      <a href="plans.html"><i class="fas fa-arrow-up"></i> Upgrade Plan</a>
+      <a href="#"><i class="fas fa-heart"></i> Favorites</a>
+      <a href="#" onclick="confirmLogout(); return false;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+    <div class="mobile-nav__contact">
+      <p><i class="fas fa-envelope"></i> info@Richer.org</p>
+      <p><i class="fas fa-phone"></i> 7037104928</p>
+    </div>
+    <div class="mobile-nav__social">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+
+  <!-- ======= MAIN HEADER ======= -->
+  <header class="main-header">
+    <div class="main-header__inner">
+      <a href="index.html" class="main-header__logo">
+        <img src="assets/new/images/logo.png" alt="Richer Logo">
+      </a>
+      <div class="main-header__right">
+        <ul class="main-header__nav-list">
+          <li><a href="index.html" class="current">Home</a></li>
+          <li><a href="affiliate.html">Affiliate Panel</a></li>
+        </ul>
+        <!-- Notification Bell -->
+        <div class="notification-dropdown-wrapper" style="position:relative;display:inline-block;">
+          <button class="notification-bell" aria-label="Notifications" onclick="this.nextElementSibling.classList.toggle('active')" style="width:38px;height:38px;border-radius:50%;border:none;background:var(--primary-light);color:var(--primary);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;position:relative;">
+            <i class="fas fa-bell"></i>
+            <span style="position:absolute;top:-2px;right:-2px;width:18px;height:18px;background:#FF3C8E;color:#fff;font-size:0.65rem;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #fff;">3</span>
+          </button>
+          <div class="notif-dropdown" style="position:absolute;top:calc(100% + 8px);right:0;width:320px;max-height:380px;background:#fff;border-radius:14px;box-shadow:0 15px 50px rgba(0,0,0,0.15);z-index:1000;display:none;overflow:hidden;">
+            <div style="padding:14px 18px;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;">
+              <strong style="font-size:0.95rem;">Notifications</strong>
+              <span style="color:var(--primary);font-size:0.75rem;cursor:pointer;font-weight:600;">Mark all read</span>
+            </div>
+            <div style="padding:10px;max-height:280px;overflow-y:auto;">
+              <div style="display:flex;gap:10px;padding:10px;border-radius:8px;background:rgba(123, 47, 247,0.04);margin-bottom:6px;">
+                <div style="width:36px;height:36px;border-radius:10px;background:rgba(123, 47, 247,0.1);color:#7B2FF7;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-rupee-sign"></i></div>
+                <div><p style="font-size:0.82rem;margin:0 0 2px;color:#1a1a2e;">You earned ₹150 from a referral purchase!</p><small style="color:#999;font-size:0.72rem;">2 hours ago</small></div>
+              </div>
+              <div style="display:flex;gap:10px;padding:10px;border-radius:8px;background:rgba(123, 47, 247,0.04);margin-bottom:6px;">
+                <div style="width:36px;height:36px;border-radius:10px;background:rgba(40,167,69,0.1);color:#28a745;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-user-plus"></i></div>
+                <div><p style="font-size:0.82rem;margin:0 0 2px;color:#1a1a2e;">New user signed up using your referral link.</p><small style="color:#999;font-size:0.72rem;">5 hours ago</small></div>
+              </div>
+              <div style="display:flex;gap:10px;padding:10px;border-radius:8px;margin-bottom:6px;">
+                <div style="width:36px;height:36px;border-radius:10px;background:rgba(123, 47, 247,0.1);color:#7B2FF7;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-bell"></i></div>
+                <div><p style="font-size:0.82rem;margin:0 0 2px;color:#1a1a2e;">Your dashboard has new affiliate features.</p><small style="color:#999;font-size:0.72rem;">1 day ago</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href="#" class="thm-btn">
+          <i class="far fa-user"></i> Lal Mohammad
+        </a>
+        <a href="signin.html" class="mobile-login-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+        <button class="mobile-nav-toggler" id="mobileNavToggler">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======= STICKY HEADER ======= -->
+  <header class="stricky-header main-header">
+    <div class="main-header__inner">
+      <a href="index.html" class="main-header__logo">
+        <img src="assets/new/images/logo.png" alt="Richer Logo">
+      </a>
+      <div class="main-header__right">
+        <ul class="main-header__nav-list">
+          <li><a href="index.html" class="current">Home</a></li>
+          <li><a href="affiliate.html">Affiliate Panel</a></li>
+        </ul>
+        <!-- Notification Bell (Sticky) -->
+        <div class="notification-dropdown-wrapper" style="position:relative;display:inline-block;">
+          <button class="notification-bell" aria-label="Notifications" onclick="this.nextElementSibling.classList.toggle('active')" style="width:38px;height:38px;border-radius:50%;border:none;background:var(--primary-light);color:var(--primary);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;position:relative;">
+            <i class="fas fa-bell"></i>
+            <span style="position:absolute;top:-2px;right:-2px;width:18px;height:18px;background:#FF3C8E;color:#fff;font-size:0.65rem;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #fff;">3</span>
+          </button>
+        </div>
+        <a href="#" class="thm-btn">
+          <i class="far fa-user"></i> Lal Mohammad
+        </a>
+        <button class="mobile-nav-toggler" id="mobileNavTogglerSticky">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======= USER PANEL SECTION ======= -->
+  <section class="user-panel">
+    <div class="container">
+      <div class="row">
+
+        <!-- LEFT SIDEBAR -->
+        <div class="col-xl-3 col-lg-4 col-md-12">
+          <div class="sidebar">
+            <!-- Profile -->
+            <div class="sidebar__profile">
+              <img
+                src="https://ui-avatars.com/api/?name=Lal+Mohammad&background=7b2ff7&color=fff&size=160"
+                alt="User Avatar"
+                class="sidebar__avatar"
+              >
+              <h4 class="sidebar__name">Lal Mohammad</h4>
+              <p class="sidebar__plan">Expert Package</p>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="sidebar__actions">
+              <a href="#" class="bg-icn" title="Profile"><i class="far fa-user"></i></a>
+              <button class="bg-icn" title="Logout" onclick="confirmLogout()">
+                <i class="fas fa-power-off"></i>
+              </button>
+              <button class="bg-icn" title="Copy Referral Link" onclick="copyText()">
+                <i class="far fa-copy"></i>
+              </button>
+            </div>
+
+            <!-- Nav Menu -->
+            <ul class="sidebar__nav">
+              <li><a href="#" data-panel="dashboard" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+              <li><a href="#" data-panel="courses"><i class="fas fa-user-tie"></i> Courses</a></li>
+              <li><a href="#" data-panel="certificate"><i class="fas fa-certificate"></i> Get Your Certificate</a></li>
+              <li><a href="plans.html"><i class="fas fa-arrow-up"></i> Upgrade Plan</a></li>
+              <li><a href="index.html"><i class="fas fa-bell"></i> Recent Updates</a></li>
+              <li><a href="#" data-panel="favorites"><i class="fas fa-heart"></i> Favorites</a></li>
+              <li>
+                <a href="#" onclick="confirmLogout(); return false;">
+                  <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Hidden Logout Form -->
+          <form id="logoutForm" method="POST" action="signin.html" class="hidden-form">
+            <input type="hidden" name="_token" value="csrf_placeholder">
+          </form>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="col-xl-9 col-lg-8 col-md-12">
+          <div class="main-content">
+
+            <!-- ======= PANEL: DASHBOARD ======= -->
+            <div id="panel-dashboard" class="dashboard-panel active">
+            <div class="row">
+
+              <!-- Welcome + Courses (Left col) -->
+              <div class="col-md-7">
+                <!-- Welcome Card -->
+                <div class="welcome-card fade-in-up">
+                  <h2>
+                    Welcome! <span>Lal Mohammad</span>
+                    <img src="https://em-content.zobj.net/source/apple/391/waving-hand_1f44b.png" alt="ðŸ‘‹" class="d-none d-lg-inline-block">
+                  </h2>
+                  <p>Learn something new everyday..</p>
+                </div>
+
+                <!-- Referral & Affiliate Quick Stats -->
+                <div class="referral-dashboard-section" style="background:#fff;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                    <h4 style="margin:0;font-size:1rem;font-weight:700;color:var(--text-dark);">
+                      <i class="fas fa-link" style="color:var(--primary);margin-right:6px;"></i> Your Referral Link
+                    </h4>
+                    <a href="affiliate.html" style="font-size:0.8rem;color:var(--primary);font-weight:600;text-decoration:none;">View Full Panel <i class="fas fa-arrow-right"></i></a>
+                  </div>
+                  <div style="display:flex;gap:8px;margin-bottom:16px;">
+                    <input type="text" id="dashReferralLink" value="https://Richer.org/signup.html?ref=LALMOH7X" readonly style="flex:1;padding:10px 14px;border:2px solid #eee;border-radius:10px;font-size:0.85rem;color:var(--text-dark);background:#f8f9ff;font-family:monospace;">
+                    <button onclick="copyDashReferral()" style="padding:10px 18px;background:var(--gradient-purple);border:none;color:#fff;border-radius:10px;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;transition:transform 0.2s;">
+                      <i class="fas fa-copy"></i> Copy
+                    </button>
+                  </div>
+                  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+                    <div style="text-align:center;padding:12px 8px;background:rgba(123, 47, 247,0.06);border-radius:10px;">
+                      <div style="font-size:1.3rem;font-weight:800;color:var(--primary);">24</div>
+                      <div style="font-size:0.7rem;color:var(--text-light);margin-top:2px;">Clicks</div>
+                    </div>
+                    <div style="text-align:center;padding:12px 8px;background:rgba(40,167,69,0.06);border-radius:10px;">
+                      <div style="font-size:1.3rem;font-weight:800;color:#28a745;">5</div>
+                      <div style="font-size:0.7rem;color:var(--text-light);margin-top:2px;">Sign Ups</div>
+                    </div>
+                    <div style="text-align:center;padding:12px 8px;background:rgba(123, 47, 247,0.06);border-radius:10px;">
+                      <div style="font-size:1.3rem;font-weight:800;color:#7B2FF7;">₹1,250</div>
+                      <div style="font-size:0.7rem;color:var(--text-light);margin-top:2px;">Earned</div>
+                    </div>
+                    <div style="text-align:center;padding:12px 8px;background:rgba(255, 60, 142,0.06);border-radius:10px;">
+                      <div style="font-size:1.3rem;font-weight:800;color:var(--secondary);">₹500</div>
+                      <div style="font-size:0.7rem;color:var(--text-light);margin-top:2px;">Pending</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Course Grid -->
+                <div class="section-title-bar">
+                  <h3>Expert Package</h3>
+                  <a href="#" onclick="switchPanel('courses'); return false;">View All <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right" style="margin-left:-4px"></i></a>
+                </div>
+                <div class="row">
+                  <!-- Course 1 -->
+                  <div class="col-6 col-lg-6">
+                    <div class="course-card">
+                      <div class="course-card__img">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=250&fit=crop&q=80" alt="Course">
+                        <button class="course-card__fav"><i class="far fa-heart"></i></button>
+                      </div>
+                      <div class="course-card__body">
+                        <h3 class="course-card__title"><a href="#">Basics Of Lead Generation</a></h3>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Course 2 -->
+                  <div class="col-6 col-lg-6">
+                    <div class="course-card">
+                      <div class="course-card__img">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop&q=80" alt="Course">
+                        <button class="course-card__fav"><i class="far fa-heart"></i></button>
+                      </div>
+                      <div class="course-card__body">
+                        <h3 class="course-card__title"><a href="#">Lead Management Strategies</a></h3>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Course 3 -->
+                  <div class="col-6 col-lg-6">
+                    <div class="course-card">
+                      <div class="course-card__img">
+                        <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=400&h=250&fit=crop&q=80" alt="Course">
+                        <button class="course-card__fav"><i class="far fa-heart"></i></button>
+                      </div>
+                      <div class="course-card__body">
+                        <h3 class="course-card__title"><a href="#">Inorganic Lead Generation</a></h3>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Course 4 -->
+                  <div class="col-6 col-lg-6">
+                    <div class="course-card">
+                      <div class="course-card__img">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=250&fit=crop&q=80" alt="Course">
+                        <button class="course-card__fav"><i class="far fa-heart"></i></button>
+                      </div>
+                      <div class="course-card__body">
+                        <h3 class="course-card__title"><a href="#">Giveaway's & Collaboration</a></h3>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Course 5 -->
+                  <div class="col-6 col-lg-6">
+                    <div class="course-card">
+                      <div class="course-card__img">
+                        <img src="https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=400&h=250&fit=crop&q=80" alt="Course">
+                        <button class="course-card__fav"><i class="far fa-heart"></i></button>
+                      </div>
+                      <div class="course-card__body">
+                        <h3 class="course-card__title"><a href="#">Google Ad's Organic Lead Gen</a></h3>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Course 6 -->
+                  <div class="col-6 col-lg-6">
+                    <div class="course-card">
+                      <div class="course-card__img">
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=250&fit=crop&q=80" alt="Course">
+                        <button class="course-card__fav"><i class="far fa-heart"></i></button>
+                      </div>
+                      <div class="course-card__body">
+                        <h3 class="course-card__title"><a href="#">Social Media Marketing Mastery</a></h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recent Watch Video Sidebar (Right col) -->
+              <div class="col-md-5">
+                <div class="recent-videos">
+                  <h4 class="recent-videos__title">Recent Watch Video</h4>
+
+                  <!-- Video 1 -->
+                  <div class="recent-videos__item">
+                    <div class="recent-videos__thumb">
+                      <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=130&h=96&fit=crop&q=80" alt="Video">
+                    </div>
+                    <div class="recent-videos__info">
+                      <span class="recent-videos__tag"><i class="fas fa-tags"></i> Lead Generation</span>
+                      <a href="#" class="recent-videos__name">1. Basics Of Lead Generation</a>
+                    </div>
+                  </div>
+
+                  <!-- Video 2 -->
+                  <div class="recent-videos__item">
+                    <div class="recent-videos__thumb">
+                      <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=130&h=96&fit=crop&q=80" alt="Video">
+                    </div>
+                    <div class="recent-videos__info">
+                      <span class="recent-videos__tag"><i class="fas fa-tags"></i> Management</span>
+                      <a href="#" class="recent-videos__name">2. Lead Management</a>
+                    </div>
+                  </div>
+
+                  <!-- Video 3 -->
+                  <div class="recent-videos__item">
+                    <div class="recent-videos__thumb">
+                      <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=130&h=96&fit=crop&q=80" alt="Video">
+                    </div>
+                    <div class="recent-videos__info">
+                      <span class="recent-videos__tag"><i class="fas fa-tags"></i> Inorganic</span>
+                      <a href="#" class="recent-videos__name">3. Inorganic Lead Generation</a>
+                    </div>
+                  </div>
+
+                  <!-- Video 4 -->
+                  <div class="recent-videos__item">
+                    <div class="recent-videos__thumb">
+                      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=130&h=96&fit=crop&q=80" alt="Video">
+                    </div>
+                    <div class="recent-videos__info">
+                      <span class="recent-videos__tag"><i class="fas fa-tags"></i> Collaboration</span>
+                      <a href="#" class="recent-videos__name">4. Giveaway's & Collaboration</a>
+                    </div>
+                  </div>
+
+                  <!-- Video 5 -->
+                  <div class="recent-videos__item">
+                    <div class="recent-videos__thumb">
+                      <img src="https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=130&h=96&fit=crop&q=80" alt="Video">
+                    </div>
+                    <div class="recent-videos__info">
+                      <span class="recent-videos__tag"><i class="fas fa-tags"></i> Google Ads</span>
+                      <a href="#" class="recent-videos__name">5. Google Ad's Organic Lead Generation</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            </div><!-- /panel-dashboard -->
+
+            <!-- ======= PANEL: COURSES ======= -->
+            <div id="panel-courses" class="dashboard-panel">
+              <div class="welcome-card fade-in-up" style="border-left:5px solid var(--primary);">
+                <h2><i class="fas fa-graduation-cap" style="color:var(--primary);margin-right:8px;"></i> All Courses</h2>
+                <p>Browse, search, and start learning from our complete course catalog</p>
+              </div>
+
+              <div class="courses-filter-bar">
+                <div class="courses-search">
+                  <i class="fas fa-search"></i>
+                  <input type="text" id="courseSearchInput" placeholder="Search courses..." oninput="filterDashCourses()">
+                </div>
+                <div class="courses-category-btns">
+                  <button class="courses-cat-btn active" onclick="filterCourseCategory('all', this)">All</button>
+                  <button class="courses-cat-btn" onclick="filterCourseCategory('lead', this)">Lead Gen</button>
+                  <button class="courses-cat-btn" onclick="filterCourseCategory('marketing', this)">Marketing</button>
+                  <button class="courses-cat-btn" onclick="filterCourseCategory('ads', this)">Ads</button>
+                  <button class="courses-cat-btn" onclick="filterCourseCategory('business', this)">Business</button>
+                </div>
+                <div class="courses-sort-wrapper">
+                  <button class="courses-sort-btn" onclick="toggleSortMenu()">
+                    <i class="fas fa-sort-amount-down"></i> Sort by
+                    <i class="fas fa-chevron-down" style="font-size:10px;"></i>
+                  </button>
+                  <div class="courses-sort-menu" id="sortMenu">
+                    <button class="active" onclick="sortCourses('popular', this)"><i class="fas fa-fire"></i> Most Popular</button>
+                    <button onclick="sortCourses('newest', this)"><i class="fas fa-clock"></i> Newest First</button>
+                    <button onclick="sortCourses('rating', this)"><i class="fas fa-star"></i> Highest Rated</button>
+                    <button onclick="sortCourses('az', this)"><i class="fas fa-sort-alpha-down"></i> A - Z</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="courses-count" id="coursesCount"><strong>12</strong> courses available</div>
+              <div style="margin-bottom:16px;"></div>
+
+              <div class="row" id="coursesGrid">
+                <!-- Course 1 -->
+                <div class="col-6 col-lg-4 dash-course-item" data-category="lead" data-name="basics of lead generation" data-rating="4.8" data-popularity="95" data-date="2025-01">
+                  <div class="course-full-card">
+                    <div class="course-full-card__img">
+                      <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=250&fit=crop&q=80" alt="Course">
+                      <span class="course-full-card__badge course-full-card__badge--popular">Popular</span>
+                      <span class="course-full-card__price course-full-card__price--free">Free</span>
+                      <button class="course-full-card__fav" onclick="toggleCourseFav(this)"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="course-full-card__body">
+                      <h3 class="course-full-card__title">Basics Of Lead Generation</h3>
+                      <div class="course-full-card__meta">
+                        <span><i class="fas fa-play-circle"></i> 8 Lessons</span>
+                        <span><i class="fas fa-clock"></i> 2h 30m</span>
+                      </div>
+                      <div class="course-full-card__rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <span class="rating-text">4.8</span>
+                        <span class="reviews">(234)</span>
+                      </div>
+                      <a href="course-detail.html" class="view-course-btn">View <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right" style="margin-left:-6px"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Course 2 -->
+                <div class="col-6 col-lg-4 dash-course-item" data-category="lead" data-name="lead management strategies" data-rating="4.5" data-popularity="88" data-date="2025-03">
+                  <div class="course-full-card">
+                    <div class="course-full-card__img">
+                      <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop&q=80" alt="Course">
+                      <span class="course-full-card__badge course-full-card__badge--new">New</span>
+                      <span class="course-full-card__price course-full-card__price--free">Free</span>
+                      <button class="course-full-card__fav" onclick="toggleCourseFav(this)"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="course-full-card__body">
+                      <h3 class="course-full-card__title">Lead Management Strategies</h3>
+                      <div class="course-full-card__meta">
+                        <span><i class="fas fa-play-circle"></i> 10 Lessons</span>
+                        <span><i class="fas fa-clock"></i> 3h 15m</span>
+                      </div>
+                      <div class="course-full-card__rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <span class="rating-text">4.5</span>
+                        <span class="reviews">(189)</span>
+                      </div>
+                      <a href="course-detail.html" class="view-course-btn">View <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right" style="margin-left:-6px"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Course 3 -->
+                <div class="col-6 col-lg-4 dash-course-item" data-category="lead" data-name="inorganic lead generation" data-rating="4.7" data-popularity="80" data-date="2024-11">
+                  <div class="course-full-card">
+                    <div class="course-full-card__img">
+                      <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=400&h=250&fit=crop&q=80" alt="Course">
+                      <span class="course-full-card__price course-full-card__price--free">Free</span>
+                      <button class="course-full-card__fav" onclick="toggleCourseFav(this)"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="course-full-card__body">
+                      <h3 class="course-full-card__title">Inorganic Lead Generation</h3>
+                      <div class="course-full-card__meta">
+                        <span><i class="fas fa-play-circle"></i> 6 Lessons</span>
+                        <span><i class="fas fa-clock"></i> 1h 45m</span>
+                      </div>
+                      <div class="course-full-card__rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <span class="rating-text">4.7</span>
+                        <span class="reviews">(156)</span>
+                      </div>
+                      <a href="course-detail.html" class="view-course-btn view-course-btn--completed">Review <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right" style="margin-left:-6px"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Course 4 -->
+                <div class="col-6 col-lg-4 dash-course-item" data-category="marketing" data-name="giveaways collaboration" data-rating="4.6" data-popularity="92" data-date="2025-02">
+                  <div class="course-full-card">
+                    <div class="course-full-card__img">
+                      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=250&fit=crop&q=80" alt="Course">
+                      <span class="course-full-card__badge course-full-card__badge--popular">Popular</span>
+                      <span class="course-full-card__price course-full-card__price--free">Free</span>
+                      <button class="course-full-card__fav" onclick="toggleCourseFav(this)"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="course-full-card__body">
+                      <h3 class="course-full-card__title">Giveaway's &amp; Collaboration</h3>
+                      <div class="course-full-card__meta">
+                        <span><i class="fas fa-play-circle"></i> 5 Lessons</span>
+                        <span><i class="fas fa-clock"></i> 1h 20m</span>
+                      </div>
+                      <div class="course-full-card__rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <span class="rating-text">4.6</span>
+                        <span class="reviews">(210)</span>
+                      </div>
+                      <a href="course-detail.html" class="view-course-btn">View <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right" style="margin-left:-6px"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Course 5 -->
+                <div class="col-6 col-lg-4 dash-course-item" data-category="ads" data-name="google ads organic lead gen" data-rating="4.9" data-popularity="85" data-date="2025-04">
+                  <div class="course-full-card">
+                    <div class="course-full-card__img">
+                      <img src="https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=400&h=250&fit=crop&q=80" alt="Course">
+                      <span class="course-full-card__badge course-full-card__badge--advanced">Advanced</span>
+                      <span class="course-full-card__price course-full-card__price--paid">&#8377;499</span>
+                      <button class="course-full-card__fav" onclick="toggleCourseFav(this)"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="course-full-card__body">
+                      <h3 class="course-full-card__title">Google Ad's Organic Lead Gen</h3>
+                      <div class="course-full-card__meta">
+                        <span><i class="fas fa-play-circle"></i> 12 Lessons</span>
+                        <span><i class="fas fa-clock"></i> 4h 10m</span>
+                      </div>
+                      <div class="course-full-card__rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <span class="rating-text">4.9</span>
+                        <span class="reviews">(312)</span>
+                      </div>
+                      <a href="course-detail.html" class="view-course-btn">View <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right" style="margin-left:-6px"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Course 6 -->
+                <div class="col-6 col-lg-4 dash-course-item" data-category="marketing" data-name="social media marketing mastery" data-rating="4.4" data-popularity="90" data-date="2025-05">
+                  <div class="course-full-card">
+                    <div class="course-full-card__img">
+                      <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=250&fit=crop&q=80" alt="Course">
+                      <span class="course-full-card__badge course-full-card__badge--new">New</span>
+                      <span class="course-full-card__price course-full-card__price--free">Free</span>
+                      <button class="course-full-card__fav" onclick="toggleCourseFav(this)"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="course-full-card__body">
+                      <h3 class="course-full-card__title">Social Media Marketing Mastery</h3>
+                      <div class="course-full-card__meta">
+                        <span><i class="fas fa-play-circle"></i> 15 Lessons</span>
+                        <span><i class="fas fa-clock"></i> 5h 00m</span>
+                      </div>
+                      <div class="course-full-card__rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star empty"></i></div>
+                        <span class="rating-text">4.4</span>
+                        <span class="reviews">(178)</span>
+                      </div>
+                      <a href="course-detail.html" class="view-course-btn">View <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right" style="margin-left:-6px"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Course 7 -->
+                <div class="col-6 col-lg-4 dash-course-item" data-category="marketing" data-name="email marketing fundamentals" data-rating="4.3" data-popularity="72" data-date="2024-10">
+                  <div class="course-full-card">
+                    <div class="course-full-card__img">
+                      <img src="https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=400&h=250&fit=crop&q=80" alt="Course">
+                      <span class="course-full-card__price course-full-card__price--free">Free</span>
+                      <button class="course-full-card__fav" onclick="toggleCourseFav(this)"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="course-full-card__body">
+                      <h3 class="course-full-card__title">Email Marketing Fundamentals</h3>
+                      <div class="course-full-card__meta">
+                        <span><i class="fas fa-play-circle"></i> 7 Lessons</span>
+                        <span><i class="fas fa-clock"></i> 2h 00m</span>
+                      </div>
+                      <div class="course-full-card__rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star empty"></i></div>
+                        <span class="rating-text">4.3</span>
+                        <span class="reviews">(98)</span>
+                      </div>
+                      <a href="course-detail.html" class="view-course-btn">View <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right" style="margin-left:-6px"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Course 8 -->
+                <div class="col-6 col-lg-4 dash-course-item" data-category="ads" data-name="facebook ads mastery" data-rating="4.6" data-popularity="86" data-date="2025-01">
+                  <div class="course-full-card">
+                    <div class="course-full-card__img">
+                      <img src="https://images.unsplash.com/photo-1563986768609-322da13575f2?w=400&h=250&fit=crop&q=80" alt="Course">
+                      <span class="course-full-card__badge course-full-card__badge--advanced">Advanced</span>
+                      <span class="course-full-card__price course-full-card__price--paid">&#8377;699</span>
+                      <button class="course-full-card__fav" onclick="toggleCourseFav(this)"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="course-full-card__body">
+                      <h3 class="course-full-card__title">Facebook Ads Mastery</h3>
+                      <div class="course-full-card__meta">
+                        <span><i class="fas fa-play-circle"></i> 9 Lessons</span>
+                        <span><i class="fas fa-clock"></i> 3h 30m</span>
+                      </div>
+                      <div class="course-full-card__rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <span class="rating-text">4.6</span>
+                        <span class="reviews">(267)</span>
+                      </div>
+                      <a href="course-detail.html" class="view-course-btn">View <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right" style="margin-left:-6px"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Course 9 -->
+                <div class="col-6 col-lg-4 dash-course-item" data-category="lead" data-name="advanced lead nurturing" data-rating="4.7" data-popularity="78" data-date="2024-12">
+                  <div class="course-full-card">
+                    <div class="course-full-card__img">
+                      <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=250&fit=crop&q=80" alt="Course">
+                      <span class="course-full-card__price course-full-card__price--free">Free</span>
+                      <button class="course-full-card__fav" onclick="toggleCourseFav(this)"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="course-full-card__body">
+                      <h3 class="course-full-card__title">Advanced Lead Nurturing</h3>
+                      <div class="course-full-card__meta">
+                        <span><i class="fas fa-play-circle"></i> 11 Lessons</span>
+                        <span><i class="fas fa-clock"></i> 3h 50m</span>
+                      </div>
+                      <div class="course-full-card__rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <span class="rating-text">4.7</span>
+                        <span class="reviews">(145)</span>
+                      </div>
+                      <a href="course-detail.html" class="view-course-btn">View <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right" style="margin-left:-6px"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Course 10 -->
+                <div class="col-6 col-lg-4 dash-course-item" data-category="business" data-name="business fundamentals startup guide" data-rating="4.8" data-popularity="91" data-date="2025-06">
+                  <div class="course-full-card">
+                    <div class="course-full-card__img">
+                      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&q=80" alt="Course">
+                      <span class="course-full-card__badge course-full-card__badge--new">New</span>
+                      <span class="course-full-card__price course-full-card__price--free">Free</span>
+                      <button class="course-full-card__fav" onclick="toggleCourseFav(this)"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="course-full-card__body">
+                      <h3 class="course-full-card__title">Business Fundamentals & Startup Guide</h3>
+                      <div class="course-full-card__meta">
+                        <span><i class="fas fa-play-circle"></i> 14 Lessons</span>
+                        <span><i class="fas fa-clock"></i> 4h 30m</span>
+                      </div>
+                      <div class="course-full-card__rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <span class="rating-text">4.8</span>
+                        <span class="reviews">(89)</span>
+                      </div>
+                      <a href="course-detail.html" class="view-course-btn">View <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right" style="margin-left:-6px"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Course 11 -->
+                <div class="col-6 col-lg-4 dash-course-item" data-category="ads" data-name="instagram reels ads strategy" data-rating="4.5" data-popularity="83" data-date="2025-04">
+                  <div class="course-full-card">
+                    <div class="course-full-card__img">
+                      <img src="https://images.unsplash.com/photo-1611262588024-d12430b98920?w=400&h=250&fit=crop&q=80" alt="Course">
+                      <span class="course-full-card__badge course-full-card__badge--popular">Popular</span>
+                      <span class="course-full-card__price course-full-card__price--paid">&#8377;399</span>
+                      <button class="course-full-card__fav" onclick="toggleCourseFav(this)"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="course-full-card__body">
+                      <h3 class="course-full-card__title">Instagram Reels & Ads Strategy</h3>
+                      <div class="course-full-card__meta">
+                        <span><i class="fas fa-play-circle"></i> 8 Lessons</span>
+                        <span><i class="fas fa-clock"></i> 2h 45m</span>
+                      </div>
+                      <div class="course-full-card__rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <span class="rating-text">4.5</span>
+                        <span class="reviews">(201)</span>
+                      </div>
+                      <a href="course-detail.html" class="view-course-btn">View <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right" style="margin-left:-6px"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Course 12 -->
+                <div class="col-6 col-lg-4 dash-course-item" data-category="business" data-name="personal branding blueprint" data-rating="4.9" data-popularity="97" data-date="2025-06">
+                  <div class="course-full-card">
+                    <div class="course-full-card__img">
+                      <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=250&fit=crop&q=80" alt="Course">
+                      <span class="course-full-card__badge course-full-card__badge--popular">Popular</span>
+                      <span class="course-full-card__price course-full-card__price--paid">&#8377;999</span>
+                      <button class="course-full-card__fav" onclick="toggleCourseFav(this)"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="course-full-card__body">
+                      <h3 class="course-full-card__title">Personal Branding Blueprint</h3>
+                      <div class="course-full-card__meta">
+                        <span><i class="fas fa-play-circle"></i> 18 Lessons</span>
+                        <span><i class="fas fa-clock"></i> 6h 00m</span>
+                      </div>
+                      <div class="course-full-card__rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <span class="rating-text">4.9</span>
+                        <span class="reviews">(356)</span>
+                      </div>
+                      <a href="course-detail.html" class="view-course-btn">View <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right" style="margin-left:-6px"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- No Results State -->
+              <div class="courses-no-results" id="coursesNoResults">
+                <i class="fas fa-search"></i>
+                <h3>No Courses Found</h3>
+                <p>Try adjusting your search or filter to find what you're looking for.</p>
+                <button class="thm-btn" style="margin-top:16px;" onclick="resetCourseFilters()"><i class="fas fa-redo"></i> Reset Filters</button>
+              </div>
+
+              <!-- Courses Pagination -->
+              <div class="pagination-wrapper" id="coursesPagination"></div>
+            </div><!-- /panel-courses -->
+
+            <!-- ======= PANEL: CERTIFICATE ======= -->
+            <div id="panel-certificate" class="dashboard-panel">
+
+              <!-- ─── Hero Header with Stats ─── -->
+              <div class="cert-hero">
+                <h2><i class="fas fa-award" style="margin-right:10px;"></i>My Certificates</h2>
+                <p>Track your progress, finish courses, and earn certificates</p>
+                <div class="cert-stats">
+                  <div class="cert-stat-chip cert-stat-chip--earned">
+                    <i class="fas fa-trophy"></i> <span id="certEarnedCount">1</span> Earned
+                  </div>
+                  <div class="cert-stat-chip cert-stat-chip--prog">
+                    <i class="fas fa-spinner"></i> <span id="certProgressCount">3</span> In Progress
+                  </div>
+                  <div class="cert-stat-chip cert-stat-chip--locked">
+                    <i class="fas fa-lock"></i> <span id="certLockedCount">2</span> Locked
+                  </div>
+                </div>
+              </div>
+
+              <!-- ─── Currently Watching ─── -->
+              <div class="cert-watching">
+                <div class="cert-watching__label">
+                  <i class="fas fa-circle" style="color:#FF3C8E;font-size:8px;"></i> CONTINUE WATCHING
+                </div>
+
+                <div class="cert-watching__grid">
+                  <!-- LEFT: Video Thumbnail -->
+                  <div>
+                    <div class="cert-video-thumb" onclick="alert('Resuming video…')">
+                      <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=640&h=360&fit=crop" alt="Current Course">
+                      <div class="cert-video-thumb__overlay">
+                        <div class="cert-play-btn"><i class="fas fa-play"></i></div>
+                      </div>
+                      <div class="cert-video-thumb__badge"><i class="fas fa-clock" style="margin-right:4px;"></i>12:34</div>
+                    </div>
+                  </div>
+
+                  <!-- RIGHT: Video Info -->
+                  <div class="cert-video-info">
+                    <div class="cert-video-info__course"><i class="fas fa-graduation-cap"></i> Basics Of Lead Generation</div>
+                    <div class="cert-video-info__title">Lesson 6: Building Your First Landing Page</div>
+                    <div class="cert-video-info__lesson"><i class="fas fa-list-ol"></i> Lesson 6 of 8 &bull; Module 3</div>
+                    <div class="cert-video-info__lesson"><i class="fas fa-clock"></i> Approx. 2 hours remaining</div>
+                    <button class="cert-continue-btn" onclick="alert('Resuming video…')">
+                      <i class="fas fa-play-circle"></i> Continue Watching
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="cert-progress-section" id="certProgressSection">
+                  <div class="cert-progress-header">
+                    <div class="cert-progress-header__left">
+                      <span class="cert-progress-header__pct" id="certProgressPct">75%</span>
+                      <span class="cert-progress-header__text">Course<br>Complete</span>
+                    </div>
+                    <div class="cert-progress-time">
+                      <i class="fas fa-hourglass-half"></i> ~2 hrs remaining
+                    </div>
+                  </div>
+                  <div class="cert-progress-track">
+                    <div class="cert-progress-fill" id="certProgressFill" style="width:75%;"></div>
+                  </div>
+                  <div class="cert-milestones">
+                    <div class="cert-milestone reached">
+                      <div class="cert-milestone__dot"></div>
+                      <span class="cert-milestone__label">0%</span>
+                    </div>
+                    <div class="cert-milestone reached">
+                      <div class="cert-milestone__dot"></div>
+                      <span class="cert-milestone__label">25%</span>
+                    </div>
+                    <div class="cert-milestone reached">
+                      <div class="cert-milestone__dot"></div>
+                      <span class="cert-milestone__label">50%</span>
+                    </div>
+                    <div class="cert-milestone reached">
+                      <div class="cert-milestone__dot"></div>
+                      <span class="cert-milestone__label">75%</span>
+                    </div>
+                    <div class="cert-milestone">
+                      <div class="cert-milestone__dot"></div>
+                      <span class="cert-milestone__label">100%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Certificate Ready Banner (hidden until 100%) -->
+                <div class="cert-ready-banner" id="certReadyBanner">
+                  <div class="cert-ready-icon"><i class="fas fa-certificate"></i></div>
+                  <h3>🎉 Certificate Ready!</h3>
+                  <p>Congratulations! You've completed the course. Download your certificate now.</p>
+                  <div class="cert-ready-actions">
+                    <button class="cert-download-btn" onclick="downloadCertificate('basics-of-lead-gen')">
+                      <i class="fas fa-file-pdf"></i> Download Certificate
+                    </button>
+                    <button class="cert-share-btn" onclick="shareCertificate('basics-of-lead-gen')">
+                      <i class="fas fa-share-alt"></i> Share
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ─── All Certificates Grid ─── -->
+              <div class="cert-grid-title">
+                <i class="fas fa-th-large"></i> All Certificates
+                <span style="margin-left:auto;font-size:12px;color:var(--text-light);font-weight:600;">1 of 6 Earned</span>
+              </div>
+
+              <div class="cert-grid" id="certGrid">
+                <!-- Card 1 – Completed -->
+                <div class="cert-card cert-card--completed" data-progress="100">
+                  <div class="cert-card__icon cert-card__icon--green"><i class="fas fa-check-circle"></i></div>
+                  <div class="cert-card__body">
+                    <div class="cert-card__title">Inorganic Lead Generation</div>
+                    <div class="cert-card__desc">Completed Feb 10, 2026 &bull; 6 Lessons</div>
+                    <div class="cert-card__progress">
+                      <div class="cert-card__progress-fill cert-card__progress-fill--green" style="width:100%;"></div>
+                    </div>
+                  </div>
+                  <span class="cert-card__status cert-card__status--completed" onclick="downloadCertificate('inorganic-lead-gen')">
+                    <i class="fas fa-download" style="margin-right:4px;"></i> Download
+                  </span>
+                </div>
+
+                <!-- Card 2 – 75% -->
+                <div class="cert-card cert-card--progress" data-progress="75">
+                  <div class="cert-card__icon cert-card__icon--gold"><i class="fas fa-star"></i></div>
+                  <div class="cert-card__body">
+                    <div class="cert-card__title">Basics Of Lead Generation</div>
+                    <div class="cert-card__desc">75% Complete &bull; 2 lessons remaining</div>
+                    <div class="cert-card__progress">
+                      <div class="cert-card__progress-fill cert-card__progress-fill--yellow" style="width:75%;"></div>
+                    </div>
+                  </div>
+                  <span class="cert-card__status cert-card__status--progress">Almost There!</span>
+                </div>
+
+                <!-- Card 3 – 60% -->
+                <div class="cert-card cert-card--progress" data-progress="60">
+                  <div class="cert-card__icon cert-card__icon--pink"><i class="fas fa-users"></i></div>
+                  <div class="cert-card__body">
+                    <div class="cert-card__title">Giveaway's &amp; Collaboration</div>
+                    <div class="cert-card__desc">60% Complete &bull; 2 lessons remaining</div>
+                    <div class="cert-card__progress">
+                      <div class="cert-card__progress-fill cert-card__progress-fill--yellow" style="width:60%;"></div>
+                    </div>
+                  </div>
+                  <span class="cert-card__status cert-card__status--progress">In Progress</span>
+                </div>
+
+                <!-- Card 4 – 40% -->
+                <div class="cert-card cert-card--progress" data-progress="40">
+                  <div class="cert-card__icon cert-card__icon--blue"><i class="fas fa-book-open"></i></div>
+                  <div class="cert-card__body">
+                    <div class="cert-card__title">Lead Management Strategies</div>
+                    <div class="cert-card__desc">40% Complete &bull; 6 lessons remaining</div>
+                    <div class="cert-card__progress">
+                      <div class="cert-card__progress-fill cert-card__progress-fill--yellow" style="width:40%;"></div>
+                    </div>
+                  </div>
+                  <span class="cert-card__status cert-card__status--locked"><i class="fas fa-lock" style="margin-right:4px;"></i> Locked</span>
+                </div>
+
+                <!-- Card 5 – 20% -->
+                <div class="cert-card cert-card--locked" data-progress="20">
+                  <div class="cert-card__icon cert-card__icon--blue"><i class="fas fa-bullhorn"></i></div>
+                  <div class="cert-card__body">
+                    <div class="cert-card__title">Google Ad's Organic Lead Gen</div>
+                    <div class="cert-card__desc">20% Complete &bull; 10 lessons remaining</div>
+                    <div class="cert-card__progress">
+                      <div class="cert-card__progress-fill cert-card__progress-fill--red" style="width:20%;"></div>
+                    </div>
+                  </div>
+                  <span class="cert-card__status cert-card__status--locked"><i class="fas fa-lock" style="margin-right:4px;"></i> Locked</span>
+                </div>
+
+                <!-- Card 6 – 10% -->
+                <div class="cert-card cert-card--locked" data-progress="10">
+                  <div class="cert-card__icon cert-card__icon--gold"><i class="fas fa-share-alt"></i></div>
+                  <div class="cert-card__body">
+                    <div class="cert-card__title">Social Media Marketing Mastery</div>
+                    <div class="cert-card__desc">10% Complete &bull; 14 lessons remaining</div>
+                    <div class="cert-card__progress">
+                      <div class="cert-card__progress-fill cert-card__progress-fill--red" style="width:10%;"></div>
+                    </div>
+                  </div>
+                  <span class="cert-card__status cert-card__status--locked"><i class="fas fa-lock" style="margin-right:4px;"></i> Locked</span>
+                </div>
+              </div>
+
+            </div><!-- /panel-certificate -->
+
+            <!-- ======= PANEL: FAVORITES ======= -->
+            <div id="panel-favorites" class="dashboard-panel">
+              <div class="welcome-card fade-in-up" style="border-left:5px solid var(--secondary);">
+                <h2><i class="fas fa-heart" style="color:var(--secondary);margin-right:8px;"></i> My Favorites</h2>
+                <p>Courses you've saved for quick access</p>
+              </div>
+
+              <div class="row" id="favoritesGrid">
+                <!-- Fav 1 -->
+                <div class="col-6 col-lg-6 fav-item">
+                  <div class="fav-course">
+                    <div class="fav-course__img">
+                      <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=250&fit=crop&q=80" alt="Course">
+                      <button class="fav-course__remove" onclick="removeFavorite(this)" title="Remove from Favorites"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="fav-course__body">
+                      <h3 class="fav-course__title">Basics Of Lead Generation</h3>
+                      <div class="fav-course__meta">
+                        <span><i class="fas fa-play-circle"></i> 8 Lessons</span>
+                        <span><i class="fas fa-star" style="color:#ffc107;"></i> 4.8</span>
+                      </div>
+                      <a href="course-detail.html" class="view-course-btn">View <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right" style="margin-left:-6px"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Fav 2 -->
+                <div class="col-6 col-lg-6 fav-item">
+                  <div class="fav-course">
+                    <div class="fav-course__img">
+                      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=250&fit=crop&q=80" alt="Course">
+                      <button class="fav-course__remove" onclick="removeFavorite(this)" title="Remove from Favorites"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="fav-course__body">
+                      <h3 class="fav-course__title">Giveaway's &amp; Collaboration</h3>
+                      <div class="fav-course__meta">
+                        <span><i class="fas fa-play-circle"></i> 5 Lessons</span>
+                        <span><i class="fas fa-star" style="color:#ffc107;"></i> 4.6</span>
+                      </div>
+                      <a href="course-detail.html" class="view-course-btn">View <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right" style="margin-left:-6px"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Fav 3 -->
+                <div class="col-6 col-lg-6 fav-item">
+                  <div class="fav-course">
+                    <div class="fav-course__img">
+                      <img src="https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=400&h=250&fit=crop&q=80" alt="Course">
+                      <button class="fav-course__remove" onclick="removeFavorite(this)" title="Remove from Favorites"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="fav-course__body">
+                      <h3 class="fav-course__title">Google Ad's Organic Lead Gen</h3>
+                      <div class="fav-course__meta">
+                        <span><i class="fas fa-play-circle"></i> 12 Lessons</span>
+                        <span><i class="fas fa-star" style="color:#ffc107;"></i> 4.9</span>
+                      </div>
+                      <a href="course-detail.html" class="view-course-btn">View <i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right" style="margin-left:-6px"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Empty state (hidden when there are favorites) -->
+              <div class="fav-empty" id="favEmptyState" style="display:none;">
+                <i class="far fa-heart"></i>
+                <h3>No Favorites Yet</h3>
+                <p>Click the heart icon on any course to save it here for quick access.</p>
+                <button class="thm-btn" style="margin-top:16px;" onclick="switchPanel('courses')"><i class="fas fa-graduation-cap"></i> Browse Courses</button>
+              </div>
+            </div><!-- /panel-favorites -->
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= PACKAGES CAROUSEL SECTION ======= -->
+  <section class="packages-section">
+    <div class="container">
+      <h2 class="packages-section__title">More Than Just A Brand: A Journey Of <span>Excellence</span></h2>
+
+      <div class="owl-carousel package-carousel">
+
+        <!-- Package 1 - Starter -->
+        <div class="package-card">
+          <div class="package-card__img">
+            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=240&fit=crop&q=80" alt="Starter Package">
+          </div>
+          <div class="package-card__body">
+            <div class="package-card__meta">
+              <span><i class="fas fa-book"></i> 2 Lessons</span>
+              <span class="star-rating"><i class="fas fa-star"></i> 4.5</span>
+            </div>
+            <h3 class="package-card__name">Starter Package</h3>
+            <a href="#" class="thm-btn active-pkg">Active <i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Package 2 - Intermediate -->
+        <div class="package-card">
+          <div class="package-card__img">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=240&fit=crop&q=80" alt="Intermediate Package">
+          </div>
+          <div class="package-card__body">
+            <div class="package-card__meta">
+              <span><i class="fas fa-book"></i> 6 Lessons</span>
+              <span class="star-rating"><i class="fas fa-star"></i> 4.5</span>
+            </div>
+            <h3 class="package-card__name">Intermediate Package</h3>
+            <a href="#" class="thm-btn active-pkg">Active <i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Package 3 - Expert -->
+        <div class="package-card">
+          <div class="package-card__img">
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=240&fit=crop&q=80" alt="Expert Package">
+          </div>
+          <div class="package-card__body">
+            <div class="package-card__meta">
+              <span><i class="fas fa-book"></i> 12 Lessons</span>
+              <span class="star-rating"><i class="fas fa-star"></i> 4.5</span>
+            </div>
+            <h3 class="package-card__name">Expert Package</h3>
+            <a href="#" class="thm-btn active-pkg">Active <i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Package 4 - Master -->
+        <div class="package-card">
+          <div class="package-card__img">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&h=240&fit=crop&q=80" alt="Master Package">
+          </div>
+          <div class="package-card__body">
+            <div class="package-card__meta">
+              <span><i class="fas fa-book"></i> 17 Lessons</span>
+              <span class="star-rating"><i class="fas fa-star"></i> 5</span>
+            </div>
+            <h3 class="package-card__name">Master Package</h3>
+            <a href="plans.html" class="thm-btn">Upgrade <i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Package 5 - Brahmastra -->
+        <div class="package-card">
+          <div class="package-card__img">
+            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=240&fit=crop&q=80" alt="Brahmastra Package">
+          </div>
+          <div class="package-card__body">
+            <div class="package-card__meta">
+              <span><i class="fas fa-book"></i> 20 Lessons</span>
+              <span class="star-rating"><i class="fas fa-star"></i> 5</span>
+            </div>
+            <h3 class="package-card__name">Brahmastra Package</h3>
+            <a href="plans.html" class="thm-btn">Upgrade <i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Package 6 - Premium Pro -->
+        <div class="package-card">
+          <div class="package-card__img">
+            <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=240&fit=crop&q=80" alt="Premium Pro">
+          </div>
+          <div class="package-card__body">
+            <div class="package-card__meta">
+              <span><i class="fas fa-book"></i> 23 Lessons</span>
+              <span class="star-rating"><i class="fas fa-star"></i> 4.5</span>
+            </div>
+            <h3 class="package-card__name">Premium Pro</h3>
+            <a href="plans.html" class="thm-btn">Upgrade <i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= SCRIPTS ======= -->
+  <!-- jQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <!-- Bootstrap 4 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Owl Carousel -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <script>
+    // ======= CUSTOM CURSOR =======
+    (function() {
+      const cursor = document.querySelector('.custom-cursor__cursor');
+      const cursorTwo = document.querySelector('.custom-cursor__cursor-two');
+      if (!cursor || !cursorTwo) return;
+
+      document.addEventListener('mousemove', function(e) {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+        cursorTwo.style.left = e.clientX + 'px';
+        cursorTwo.style.top = e.clientY + 'px';
+      });
+
+      // Click/hold: inner dot grows to fill the outer ring
+      document.addEventListener('mousedown', function() {
+        cursor.style.width = '40px';
+        cursor.style.height = '40px';
+        cursor.style.background = 'rgba(123, 47, 247,0.25)';
+        cursorTwo.style.width = '40px';
+        cursorTwo.style.height = '40px';
+        cursorTwo.style.borderColor = 'rgba(123, 47, 247,0.6)';
+      });
+      document.addEventListener('mouseup', function() {
+        cursor.style.width = '8px';
+        cursor.style.height = '8px';
+        cursor.style.background = 'var(--primary)';
+        cursorTwo.style.width = '40px';
+        cursorTwo.style.height = '40px';
+        cursorTwo.style.borderColor = 'rgba(123, 47, 247,0.35)';
+      });
+
+      // Enlarge on hoverable elements
+      document.querySelectorAll('a, button, .bg-icn, .course-card, .package-card, input').forEach(function(el) {
+        el.addEventListener('mouseenter', function() {
+          cursor.style.width = '14px';
+          cursor.style.height = '14px';
+          cursor.style.background = 'var(--secondary)';
+          cursorTwo.style.width = '55px';
+          cursorTwo.style.height = '55px';
+          cursorTwo.style.borderColor = 'rgba(255, 60, 142,0.3)';
+        });
+        el.addEventListener('mouseleave', function() {
+          cursor.style.width = '8px';
+          cursor.style.height = '8px';
+          cursor.style.background = 'var(--primary)';
+          cursorTwo.style.width = '40px';
+          cursorTwo.style.height = '40px';
+          cursorTwo.style.borderColor = 'rgba(123, 47, 247,0.35)';
+        });
+      });
+    })();
+
+    // ======= STICKY HEADER =======
+    (function() {
+      const stricky = document.querySelector('.stricky-header');
+      let lastScroll = 0;
+
+      window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        if (currentScroll > 120) {
+          stricky.classList.add('stricky-fixed');
+        } else {
+          stricky.classList.remove('stricky-fixed');
+        }
+        lastScroll = currentScroll;
+      });
+    })();
+
+    // ======= MOBILE NAV =======
+    (function() {
+      const drawer = document.getElementById('mobileNavDrawer');
+      const overlay = document.getElementById('mobileNavOverlay');
+      const closeBtn = document.getElementById('mobileNavClose');
+      const togglers = document.querySelectorAll('.mobile-nav-toggler');
+
+      function openNav() {
+        drawer.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeNav() {
+        drawer.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      togglers.forEach(function(btn) {
+        btn.addEventListener('click', openNav);
+      });
+      if (closeBtn) closeBtn.addEventListener('click', closeNav);
+      if (overlay) overlay.addEventListener('click', closeNav);
+    })();
+
+    // ======= COPY REFERRAL LINK =======
+    function copyText() {
+      var copyText = "https://Richer.org?referrer_code=RINDKCO4DF";
+      navigator.clipboard.writeText(copyText).then(function() {
+        // Show tooltip
+        var btn = event.currentTarget;
+        var originalTitle = btn.getAttribute('title');
+        btn.setAttribute('title', 'Copied!');
+        alert("Copied the text: " + copyText);
+        setTimeout(function() { btn.setAttribute('title', originalTitle); }, 2000);
+      });
+    }
+
+    // ======= OWL CAROUSEL =======
+    $(document).ready(function() {
+      $('.package-carousel').owlCarousel({
+        loop: true,
+        margin: 20,
+        nav: true,
+        dots: true,
+        autoplay: true,
+        autoplayTimeout: 4000,
+        autoplayHoverPause: true,
+        smartSpeed: 600,
+        navText: ['<i class="fas fa-chevron-left"></i>', '<i class="fas fa-chevron-right"></i>'],
+        responsive: {
+          0:   { items: 1, margin: 10 },
+          480: { items: 2, margin: 12 },
+          768: { items: 2, margin: 16 },
+          992: { items: 3, margin: 20 },
+          1200:{ items: 4, margin: 20 }
+        }
+      });
+    });
+
+    // ======= COURSE CARD FAVORITE TOGGLE =======
+    document.querySelectorAll('.course-card__fav').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var icon = this.querySelector('i');
+        if (icon.classList.contains('far')) {
+          icon.classList.remove('far');
+          icon.classList.add('fas');
+          this.style.background = 'var(--secondary)';
+          this.style.color = '#fff';
+        } else {
+          icon.classList.remove('fas');
+          icon.classList.add('far');
+          this.style.background = 'rgba(255,255,255,0.9)';
+          this.style.color = 'var(--secondary)';
+        }
+      });
+    });
+
+    // ======= SIDEBAR NAV ACTIVE STATE + PANEL SWITCHING =======
+    function switchPanel(panelName) {
+      // Hide all panels
+      document.querySelectorAll('.dashboard-panel').forEach(function(p) {
+        p.classList.remove('active');
+      });
+      // Show target
+      var target = document.getElementById('panel-' + panelName);
+      if (target) {
+        target.classList.add('active');
+        // Re-trigger animation
+        target.style.animation = 'none';
+        target.offsetHeight; // reflow
+        target.style.animation = '';
+      }
+      // Update sidebar active links
+      document.querySelectorAll('.sidebar__nav a').forEach(function(l) { l.classList.remove('active'); });
+      var activeLink = document.querySelector('.sidebar__nav a[data-panel="' + panelName + '"]');
+      if (activeLink) activeLink.classList.add('active');
+      // Scroll to top of content
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Animate panel content with GSAP
+      if (typeof gsap !== 'undefined') {
+        setTimeout(function() { animatePanelContent(panelName); }, 50);
+      }
+      // Initialize pagination for courses panel
+      if (panelName === 'courses') {
+        currentCoursePage = 1;
+        paginateCourses();
+      }
+    }
+
+    document.querySelectorAll('.sidebar__nav a[data-panel]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var panel = this.getAttribute('data-panel');
+        switchPanel(panel);
+      });
+    });
+
+    // ======= COURSES PANEL: SEARCH & FILTER WITH PAGINATION =======
+    var coursesPerPage = 9;
+    var currentCoursePage = 1;
+    var currentSortMode = 'popular';
+
+    function filterDashCourses() {
+      currentCoursePage = 1;
+      paginateCourses();
+    }
+
+    function filterCourseCategory(cat, btn) {
+      document.querySelectorAll('.courses-cat-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentCoursePage = 1;
+      paginateCourses();
+    }
+
+    function toggleSortMenu() {
+      var menu = document.getElementById('sortMenu');
+      menu.classList.toggle('show');
+      // Close on outside click
+      setTimeout(function() {
+        document.addEventListener('click', closeSortMenuOutside);
+      }, 10);
+    }
+
+    function closeSortMenuOutside(e) {
+      var wrapper = document.querySelector('.courses-sort-wrapper');
+      if (wrapper && !wrapper.contains(e.target)) {
+        document.getElementById('sortMenu').classList.remove('show');
+        document.removeEventListener('click', closeSortMenuOutside);
+      }
+    }
+
+    function sortCourses(mode, btn) {
+      currentSortMode = mode;
+      document.querySelectorAll('.courses-sort-menu button').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('sortMenu').classList.remove('show');
+      document.removeEventListener('click', closeSortMenuOutside);
+      // Update sort button text
+      var sortBtn = document.querySelector('.courses-sort-btn');
+      var labels = { popular: 'Most Popular', newest: 'Newest First', rating: 'Highest Rated', az: 'A - Z' };
+      sortBtn.innerHTML = '<i class="fas fa-sort-amount-down"></i> ' + labels[mode] + ' <i class="fas fa-chevron-down" style="font-size:10px;"></i>';
+      currentCoursePage = 1;
+      paginateCourses();
+    }
+
+    function resetCourseFilters() {
+      // Reset search
+      var input = document.getElementById('courseSearchInput');
+      if (input) input.value = '';
+      // Reset category
+      document.querySelectorAll('.courses-cat-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelector('.courses-cat-btn').classList.add('active');
+      // Reset sort
+      currentSortMode = 'popular';
+      var sortBtn = document.querySelector('.courses-sort-btn');
+      if (sortBtn) sortBtn.innerHTML = '<i class="fas fa-sort-amount-down"></i> Sort by <i class="fas fa-chevron-down" style="font-size:10px;"></i>';
+      document.querySelectorAll('.courses-sort-menu button').forEach(function(b, i) {
+        b.classList.toggle('active', i === 0);
+      });
+      currentCoursePage = 1;
+      paginateCourses();
+    }
+
+    function paginateCourses() {
+      var activeFilter = document.querySelector('.courses-cat-btn.active');
+      var cat = 'all';
+      if (activeFilter) {
+        var txt = activeFilter.textContent.trim().toLowerCase();
+        if (txt === 'lead gen') cat = 'lead';
+        else if (txt === 'marketing') cat = 'marketing';
+        else if (txt === 'ads') cat = 'ads';
+        else if (txt === 'business') cat = 'business';
+        else cat = 'all';
+      }
+      var query = (document.getElementById('courseSearchInput') ? document.getElementById('courseSearchInput').value : '').toLowerCase();
+      var items = document.querySelectorAll('.dash-course-item');
+      var filtered = [];
+
+      items.forEach(function(item) {
+        var name = item.getAttribute('data-name') || '';
+        var itemCat = item.getAttribute('data-category') || '';
+        var matchCat = (cat === 'all' || itemCat === cat);
+        var matchSearch = !query || name.indexOf(query) > -1;
+        if (matchCat && matchSearch) {
+          filtered.push(item);
+        }
+        item.style.display = 'none';
+      });
+
+      // Sort filtered items
+      filtered.sort(function(a, b) {
+        if (currentSortMode === 'rating') {
+          return parseFloat(b.getAttribute('data-rating') || 0) - parseFloat(a.getAttribute('data-rating') || 0);
+        } else if (currentSortMode === 'newest') {
+          return (b.getAttribute('data-date') || '').localeCompare(a.getAttribute('data-date') || '');
+        } else if (currentSortMode === 'az') {
+          return (a.getAttribute('data-name') || '').localeCompare(b.getAttribute('data-name') || '');
+        } else { // popular
+          return parseFloat(b.getAttribute('data-popularity') || 0) - parseFloat(a.getAttribute('data-popularity') || 0);
+        }
+      });
+
+      // Reorder DOM to match sort
+      var grid = document.getElementById('coursesGrid');
+      filtered.forEach(function(item) { grid.appendChild(item); });
+
+      // Update course count
+      var countEl = document.getElementById('coursesCount');
+      if (countEl) {
+        countEl.innerHTML = '<strong>' + filtered.length + '</strong> course' + (filtered.length !== 1 ? 's' : '') + ' found';
+      }
+
+      // Show/hide no results state
+      var noResults = document.getElementById('coursesNoResults');
+      if (noResults) {
+        noResults.style.display = filtered.length === 0 ? 'block' : 'none';
+      }
+
+      var totalPages = Math.ceil(filtered.length / coursesPerPage);
+      if (currentCoursePage > totalPages && totalPages > 0) currentCoursePage = totalPages;
+      if (totalPages === 0) currentCoursePage = 1;
+
+      var start = (currentCoursePage - 1) * coursesPerPage;
+      var end = start + coursesPerPage;
+      var visibleCards = [];
+
+      for (var i = 0; i < filtered.length; i++) {
+        if (i >= start && i < end) {
+          filtered[i].style.display = '';
+          var card = filtered[i].querySelector('.course-full-card');
+          if (card) visibleCards.push(card);
+        }
+      }
+
+      renderPagination(totalPages, filtered.length);
+
+      // Animate newly visible cards
+      if (typeof gsap !== 'undefined' && visibleCards.length > 0) {
+        gsap.fromTo(visibleCards,
+          { opacity: 0, y: 20, scale: 0.95 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.35, stagger: 0.05, ease: 'power2.out' }
+        );
+      }
+    }
+
+    function renderPagination(totalPages, totalItems) {
+      var container = document.getElementById('coursesPagination');
+      if (!container) return;
+      if (totalPages <= 1) {
+        container.innerHTML = totalItems > 0
+          ? '<span class="page-info">Showing all ' + totalItems + ' courses</span>'
+          : '<span class="page-info">No courses found</span>';
+        return;
+      }
+      var html = '';
+      html += '<button class="page-btn page-btn--nav" onclick="goToCoursePage(' + (currentCoursePage - 1) + ')" ' + (currentCoursePage === 1 ? 'disabled' : '') + '><i class="fas fa-chevron-left"></i> Prev</button>';
+      for (var i = 1; i <= totalPages; i++) {
+        html += '<button class="page-btn' + (i === currentCoursePage ? ' active' : '') + '" onclick="goToCoursePage(' + i + ')">' + i + '</button>';
+      }
+      html += '<button class="page-btn page-btn--nav" onclick="goToCoursePage(' + (currentCoursePage + 1) + ')" ' + (currentCoursePage === totalPages ? 'disabled' : '') + '>Next <i class="fas fa-chevron-right"></i></button>';
+      html += '<span class="page-info">Page ' + currentCoursePage + ' of ' + totalPages + ' (' + totalItems + ' courses)</span>';
+      container.innerHTML = html;
+    }
+
+    function goToCoursePage(page) {
+      currentCoursePage = page;
+      paginateCourses();
+      // Scroll to courses filter bar
+      var filterBar = document.querySelector('.courses-filter-bar');
+      if (filterBar) filterBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function toggleCourseFav(btn) {
+      var icon = btn.querySelector('i');
+      if (icon.classList.contains('far')) {
+        icon.classList.remove('far');
+        icon.classList.add('fas');
+        btn.style.background = 'var(--secondary)';
+        btn.style.color = '#fff';
+      } else {
+        icon.classList.remove('fas');
+        icon.classList.add('far');
+        btn.style.background = 'rgba(255,255,255,0.9)';
+        btn.style.color = 'var(--secondary)';
+      }
+    }
+
+    // ======= FAVORITES PANEL: REMOVE =======
+    function removeFavorite(btn) {
+      var card = btn.closest('.fav-item');
+      if (card) {
+        card.style.transition = 'all 0.3s ease';
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.8)';
+        setTimeout(function() {
+          card.remove();
+          // Check if empty
+          var remaining = document.querySelectorAll('#favoritesGrid .fav-item');
+          if (remaining.length === 0) {
+            document.getElementById('favEmptyState').style.display = 'block';
+            document.getElementById('favoritesGrid').style.display = 'none';
+          }
+        }, 300);
+      }
+    }
+
+    // ======= SWEETALERT2 LOGOUT CONFIRMATION =======
+    function confirmLogout() {
+      Swal.fire({
+        title: 'Logout Confirmation',
+        html: '<p style="margin:0;">Are you sure you want to logout?</p><p style="margin:4px 0 0;font-size:12px;color:var(--text-light);">You\'ll need to sign in again to access your dashboard.</p>',
+        icon: 'warning',
+        iconColor: '#FF3C8E',
+        showCancelButton: true,
+        confirmButtonText: '<i class="fas fa-sign-out-alt"></i> Yes, Logout',
+        cancelButtonText: '<i class="fas fa-times"></i> Cancel',
+        customClass: {
+          popup: 'logout-popup',
+          confirmButton: 'thm-btn',
+          cancelButton: 'thm-btn'
+        },
+        buttonsStyling: false,
+        reverseButtons: true,
+        focusCancel: true,
+        showLoaderOnConfirm: true,
+        preConfirm: function() {
+          return new Promise(function(resolve) {
+            setTimeout(resolve, 1200);
+          });
+        },
+        allowOutsideClick: function() { return !Swal.isLoading(); }
+      }).then(function(result) {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: 'Logging out...',
+            text: 'Redirecting to sign in page',
+            icon: 'success',
+            timer: 1000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            customClass: { popup: 'logout-popup' }
+          }).then(function() {
+            document.getElementById('logoutForm').submit();
+          });
+        }
+      });
+    }
+
+    // ======= GSAP ENTRANCE ANIMATIONS =======
+    function animateDashboardEntrance() {
+      if (typeof gsap === 'undefined') return;
+
+      // Sidebar profile
+      gsap.fromTo('.sidebar__profile',
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
+      );
+
+      // Sidebar nav items - staggered
+      gsap.fromTo('.sidebar__nav li',
+        { opacity: 0, x: -30 },
+        { opacity: 1, x: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out', delay: 0.15 }
+      );
+
+      // Welcome card
+      gsap.fromTo('.welcome-card',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: 0.1 }
+      );
+
+      // Section title bar
+      gsap.fromTo('#panel-dashboard .section-title-bar',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.3 }
+      );
+
+      // Course cards - scale up stagger
+      gsap.fromTo('#panel-dashboard .course-card',
+        { opacity: 0, y: 40, scale: 0.88 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.08, ease: 'back.out(1.2)', delay: 0.35 }
+      );
+
+      // Recent videos sidebar
+      gsap.fromTo('.recent-videos',
+        { opacity: 0, x: 30 },
+        { opacity: 1, x: 0, duration: 0.6, ease: 'power2.out', delay: 0.3 }
+      );
+      gsap.fromTo('.recent-videos__item',
+        { opacity: 0, x: 20 },
+        { opacity: 1, x: 0, duration: 0.4, stagger: 0.08, ease: 'power2.out', delay: 0.5 }
+      );
+
+      // Packages section title
+      gsap.fromTo('.packages-section__title',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.2 }
+      );
+
+      // Add gradient animation to welcome name after GSAP finishes
+      setTimeout(function() {
+        var nameSpan = document.querySelector('.welcome-card h2 span');
+        if (nameSpan) nameSpan.classList.add('gradient-animate-text');
+      }, 700);
+    }
+
+    function animatePanelContent(panelName) {
+      if (typeof gsap === 'undefined') return;
+      var panel = document.getElementById('panel-' + panelName);
+      if (!panel) return;
+
+      // Animate welcome/hero cards
+      gsap.fromTo(panel.querySelectorAll('.welcome-card, .cert-hero'),
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', delay: 0.05, stagger: 0.1 }
+      );
+
+      // Animate section titles & filter bars
+      gsap.fromTo(panel.querySelectorAll('.section-title-bar, .courses-filter-bar, .cert-grid-title'),
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', delay: 0.15, stagger: 0.08 }
+      );
+
+      // Animate cards
+      gsap.fromTo(panel.querySelectorAll('.course-full-card, .cert-card, .fav-course'),
+        { opacity: 0, y: 30, scale: 0.92 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.45, stagger: 0.06, ease: 'back.out(1.1)', delay: 0.25 }
+      );
+
+      // Animate certificate watching section
+      gsap.fromTo(panel.querySelectorAll('.cert-watching'),
+        { opacity: 0, y: 25 },
+        { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out', delay: 0.12 }
+      );
+
+      // Animate pagination
+      gsap.fromTo(panel.querySelectorAll('.pagination-wrapper'),
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', delay: 0.45 }
+      );
+    }
+
+    // Run entrance animations on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      animateDashboardEntrance();
+    });
+
+    // ======= CERTIFICATE PANEL LOGIC =======
+
+    // Simulate setting course progress (call this to demo)
+    function setCertificateProgress(pct) {
+      pct = Math.max(0, Math.min(100, pct));
+      var fill = document.getElementById('certProgressFill');
+      var pctEl = document.getElementById('certProgressPct');
+      var banner = document.getElementById('certReadyBanner');
+      var section = document.getElementById('certProgressSection');
+
+      if (fill) fill.style.width = pct + '%';
+      if (pctEl) pctEl.textContent = pct + '%';
+
+      // Update milestones
+      var milestones = document.querySelectorAll('#certProgressSection .cert-milestone');
+      var thresholds = [0, 25, 50, 75, 100];
+      milestones.forEach(function(m, i) {
+        if (pct >= thresholds[i]) {
+          m.classList.add('reached');
+        } else {
+          m.classList.remove('reached');
+        }
+      });
+
+      // Update time remaining text
+      var timeEl = document.querySelector('.cert-progress-time');
+      if (timeEl) {
+        var hrsLeft = Math.max(0, Math.round((100 - pct) * 8 / 100 * 10) / 10);
+        if (pct >= 100) {
+          timeEl.innerHTML = '<i class="fas fa-check-circle" style="color:#28a745;"></i> Completed!';
+        } else {
+          timeEl.innerHTML = '<i class="fas fa-hourglass-half"></i> ~' + hrsLeft + ' hrs remaining';
+        }
+      }
+
+      // Show/hide certificate banner
+      if (pct >= 100) {
+        if (banner) {
+          banner.classList.add('visible');
+          // Launch confetti
+          launchConfetti();
+        }
+        if (section) section.style.display = 'none';
+      } else {
+        if (banner) banner.classList.remove('visible');
+        if (section) section.style.display = '';
+      }
+
+      // Update hero stats
+      updateCertStats();
+    }
+
+    // Recount earned / in-progress / locked from cards
+    function updateCertStats() {
+      var cards = document.querySelectorAll('#certGrid .cert-card');
+      var earned = 0, prog = 0, locked = 0;
+      cards.forEach(function(c) {
+        var p = parseInt(c.getAttribute('data-progress') || '0', 10);
+        if (p >= 100) earned++;
+        else if (p >= 50) prog++;
+        else locked++;
+      });
+      var eEl = document.getElementById('certEarnedCount');
+      var pEl = document.getElementById('certProgressCount');
+      var lEl = document.getElementById('certLockedCount');
+      if (eEl) eEl.textContent = earned;
+      if (pEl) pEl.textContent = prog;
+      if (lEl) lEl.textContent = locked;
+    }
+
+    // Download certificate (mock)
+    function downloadCertificate(courseId) {
+      if (typeof Swal !== 'undefined') {
+        Swal.fire({
+          icon: 'success',
+          title: 'Downloading Certificate',
+          html: '<p style="color:#555;">Your <strong>' + courseId.replace(/-/g, ' ') + '</strong> certificate is being prepared as a PDF&hellip;</p>',
+          timer: 2500,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          customClass: { popup: 'logout-popup' }
+        });
+      } else {
+        alert('Downloading certificate for: ' + courseId);
+      }
+    }
+
+    // Share certificate (mock)
+    function shareCertificate(courseId) {
+      if (typeof Swal !== 'undefined') {
+        Swal.fire({
+          title: 'Share Your Achievement',
+          html: '<div style="display:flex;gap:16px;justify-content:center;margin-top:14px;">' +
+            '<a href="#" style="width:48px;height:48px;border-radius:50%;background:#1877F2;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;" title="Facebook"><i class="fab fa-facebook-f"></i></a>' +
+            '<a href="#" style="width:48px;height:48px;border-radius:50%;background:#1DA1F2;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;" title="Twitter"><i class="fab fa-twitter"></i></a>' +
+            '<a href="#" style="width:48px;height:48px;border-radius:50%;background:#0A66C2;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>' +
+            '<a href="#" style="width:48px;height:48px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>' +
+            '</div>',
+          showConfirmButton: false,
+          showCloseButton: true,
+          customClass: { popup: 'logout-popup' }
+        });
+      } else {
+        alert('Share certificate: ' + courseId);
+      }
+    }
+
+    // ── Confetti Effect ──
+    function launchConfetti() {
+      var canvas = document.createElement('canvas');
+      canvas.className = 'cert-confetti-canvas';
+      document.body.appendChild(canvas);
+      var ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      var particles = [];
+      var colors = ['#7B2FF7','#FF3C8E','#7B2FF7','#28a745','#ffc107','#ff6b6b','#20c997'];
+
+      for (var i = 0; i < 120; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          w: Math.random() * 8 + 4,
+          h: Math.random() * 6 + 3,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          speed: Math.random() * 3 + 2,
+          angle: Math.random() * Math.PI * 2,
+          spin: (Math.random() - 0.5) * 0.2,
+          drift: (Math.random() - 0.5) * 1.5,
+          opacity: 1
+        });
+      }
+
+      var frame = 0;
+      var maxFrames = 180;
+
+      function animateConfetti() {
+        frame++;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach(function(p) {
+          p.y += p.speed;
+          p.x += p.drift;
+          p.angle += p.spin;
+          if (frame > maxFrames - 40) {
+            p.opacity = Math.max(0, p.opacity - 0.03);
+          }
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.angle);
+          ctx.globalAlpha = p.opacity;
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        });
+
+        if (frame < maxFrames) {
+          requestAnimationFrame(animateConfetti);
+        } else {
+          canvas.remove();
+        }
+      }
+      requestAnimationFrame(animateConfetti);
+    }
+
+    // Update stats on load
+    updateCertStats();
+  </script>
+  <!-- Enhancement Scripts -->
+  <script src="assets/new/js/enhancements.js"></script>
+  <script>
+    // Copy referral link
+    function copyDashReferral() {
+      var link = document.getElementById('dashReferralLink');
+      link.select();
+      document.execCommand('copy');
+      if (typeof Swal !== 'undefined') {
+        Swal.fire({ icon: 'success', title: 'Copied!', text: 'Referral link copied to clipboard', timer: 1500, showConfirmButton: false });
+      }
+    }
+    // Toggle notification dropdowns
+    document.querySelectorAll('.notif-dropdown').forEach(function(dd) {
+      dd.style.display = 'none';
+    });
+    document.querySelectorAll('.notification-bell').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var dd = this.nextElementSibling;
+        if (dd && dd.classList.contains('notif-dropdown')) {
+          dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+        }
+      });
+    });
+    document.addEventListener('click', function() {
+      document.querySelectorAll('.notif-dropdown').forEach(function(dd) {
+        dd.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>

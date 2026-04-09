@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - Richer</title>
+  <link rel="shortcut icon" href="assets/new/images/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+
+    .signin-container {
+      background: linear-gradient(135deg, var(--light-bg) 0%, var(--light-bg-2) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 12px;
+      width: 100%;
+    }
+
+    .signin-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+      width: 100%;
+      max-width: 400px;
+      padding: 28px 30px;
+      animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 1px solid rgba(123, 47, 247, 0.08);
+      transition: box-shadow 0.4s ease;
+    }
+
+    .signin-card:hover {
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .signin-header {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .signin-header img {
+      max-height: 32px;
+      margin-bottom: 8px;
+    }
+
+    .signin-header h1 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 2px;
+      color: var(--text-dark);
+      letter-spacing: -0.5px;
+    }
+
+    .signin-header p {
+      color: var(--text-light);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .signin-form {
+      margin-bottom: 0;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 600;
+      color: var(--text-dark);
+      font-size: 13px;
+      letter-spacing: 0.2px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      background: var(--light-bg);
+      font-family: inherit;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(123, 47, 247, 0.1);
+    }
+
+    .form-group input::placeholder {
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      gap: 10px;
+    }
+
+    .remember-forgot label {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-dark);
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .remember-forgot input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+      accent-color: var(--primary-color);
+    }
+
+    .remember-forgot a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 12px;
+      transition: color 0.3s ease;
+    }
+
+    .remember-forgot a:hover {
+      color: var(--primary-dark);
+    }
+
+    .signin-btn {
+      width: 100%;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #7B2FF7 0%, #FF3C8E 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.35s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(123, 47, 247, 0.35);
+    }
+
+    .signin-btn:hover {
+      background: linear-gradient(135deg, #5A1AD4 0%, #d4327a 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(123, 47, 247, 0.5);
+    }
+
+    .signin-btn i {
+      font-size: 15px;
+    }
+
+    .divider {
+      position: relative;
+      margin: 14px 0;
+      text-align: center;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--border-color);
+    }
+
+    .divider span {
+      position: relative;
+      background: white;
+      padding: 0 12px;
+      color: var(--text-light);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .social-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .social-btn {
+      padding: 9px 14px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #7B2FF7 0%, #FF3C8E 100%);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.35s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 13px;
+      box-shadow: 0 4px 15px rgba(123, 47, 247, 0.35);
+    }
+
+    .social-btn:hover {
+      background: linear-gradient(135deg, #5A1AD4 0%, #d4327a 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(123, 47, 247, 0.5);
+    }
+
+    .signin-footer {
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+      padding-top: 14px;
+    }
+
+    .signin-footer p {
+      color: var(--text-light);
+      margin-bottom: 4px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .signin-footer a {
+      color: var(--primary-color);
+      font-weight: 700;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .signin-footer a:hover {
+      color: var(--primary-dark);
+    }
+
+    /* Desktop (1025px+) */
+    @media (min-width: 1025px) {
+      .signin-card {
+        max-width: 420px;
+        padding: 32px 36px;
+      }
+      .signin-header h1 { font-size: 24px; }
+      .form-group input { padding: 11px 14px; }
+      .signin-btn { padding: 11px 22px; font-size: 15px; }
+    }
+
+    /* Tablet (768px - 1024px) */
+    @media (max-width: 1024px) {
+      .signin-card { max-width: 400px; padding: 26px 28px; }
+      .signin-header h1 { font-size: 22px; }
+    }
+
+    /* Mobile Large (481px - 768px) */
+    @media (max-width: 768px) {
+      .signin-container { padding: 10px; }
+      .signin-card {
+        max-width: 100%;
+        padding: 22px 20px;
+        border-radius: 14px;
+      }
+      .signin-header { margin-bottom: 14px; }
+      .signin-header h1 { font-size: 20px; }
+      .signin-header p { font-size: 12px; }
+      .form-group { margin-bottom: 10px; }
+      .form-group input { padding: 9px 11px; font-size: 14px; }
+      .remember-forgot { margin-bottom: 12px; }
+      .signin-btn { padding: 9px 18px; font-size: 14px; }
+      .divider { margin: 12px 0; }
+      .social-buttons { margin-bottom: 14px; gap: 8px; }
+      .social-btn { padding: 8px 12px; font-size: 12px; }
+      .signin-footer { padding-top: 12px; }
+    }
+
+    /* Mobile Small (320px - 480px) */
+    @media (max-width: 480px) {
+      .signin-container { padding: 8px; }
+      .signin-card { padding: 18px 16px; border-radius: 12px; }
+      .signin-header { margin-bottom: 12px; }
+      .signin-header img { max-height: 28px; margin-bottom: 6px; }
+      .signin-header h1 { font-size: 18px; }
+      .signin-header p { font-size: 11px; }
+      .form-group { margin-bottom: 8px; }
+      .form-group label { font-size: 12px; margin-bottom: 3px; }
+      .form-group input { padding: 8px 10px; font-size: 14px; border-radius: 7px; }
+      .remember-forgot { margin-bottom: 10px; }
+      .remember-forgot label, .remember-forgot a { font-size: 11px; }
+      .signin-btn { padding: 9px 16px; font-size: 13px; }
+      .divider { margin: 10px 0; }
+      .divider span { font-size: 11px; }
+      .social-buttons { gap: 6px; margin-bottom: 12px; }
+      .social-btn { padding: 7px 10px; font-size: 11px; border-radius: 7px; }
+      .signin-footer { padding-top: 10px; }
+      .signin-footer p { font-size: 11px; margin-bottom: 3px; }
+    }
+
+    /* Extra Small (Below 320px) */
+    @media (max-width: 319px) {
+      .signin-card { padding: 14px 12px; }
+      .signin-header h1 { font-size: 16px; }
+      .form-group input { padding: 7px 9px; font-size: 13px; }
+      .signin-btn { padding: 8px 14px; font-size: 12px; }
+      .social-btn { font-size: 10px; padding: 6px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="signin-container">
+    <div class="signin-card">
+      <div class="signin-header">
+        <img src="assets/new/images/logo.png" alt="Richer Logo">
+        <h1>Welcome Back</h1>
+        <p>Sign in to your Richer account</p>
+      </div>
+
+      <form id="signin-form" class="signin-form">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required placeholder="your@email.com" autocomplete="email">
+        </div>
+
+        <div class="form-group" style="position:relative;">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required placeholder="Enter your password" autocomplete="current-password" style="padding-right:42px;">
+          <button type="button" id="togglePassword" style="position:absolute;right:12px;top:32px;background:none;border:none;color:var(--text-light);cursor:pointer;font-size:15px;padding:4px;" aria-label="Toggle password visibility">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+
+        <div class="remember-forgot">
+          <label>
+            <input type="checkbox" name="remember"> Remember me
+          </label>
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="signin-btn">
+          <i class="fas fa-sign-in-alt"></i> Sign In
+        </button>
+      </form>
+
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <div class="social-buttons">
+        <button type="button" class="social-btn">
+          <i class="fab fa-google"></i> Google
+        </button>
+        <button type="button" class="social-btn">
+          <i class="fab fa-facebook-f"></i> Facebook
+        </button>
+      </div>
+
+      <div class="signin-footer">
+        <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+        <p style="font-size: 11px; margin-top: 6px; color: var(--text-light);">
+          By signing in, you agree to our <a href="terms.html">Terms</a> & <a href="privacy-policy.html">Privacy</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Password visibility toggle
+    document.getElementById('togglePassword').addEventListener('click', function() {
+      var pwd = document.getElementById('password');
+      var icon = this.querySelector('i');
+      if (pwd.type === 'password') {
+        pwd.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        pwd.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    });
+
+    document.getElementById('signin-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var email = document.getElementById('email').value.trim();
+      var password = document.getElementById('password').value;
+
+      // Basic client-side validation
+      if (!email || !password) {
+        showError('Please fill in all fields.');
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError('Please enter a valid email address.');
+        return;
+      }
+
+      var btn = document.querySelector('.signin-btn');
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+      btn.style.pointerEvents = 'none';
+      btn.style.opacity = '0.8';
+      setTimeout(function() {
+        window.location.href = 'dashboard.html';
+      }, 800);
+    });
+
+    function showError(msg) {
+      // Remove existing error
+      var existing = document.querySelector('.signin-error');
+      if (existing) existing.remove();
+      var err = document.createElement('div');
+      err.className = 'signin-error';
+      err.style.cssText = 'background:rgba(255, 60, 142,0.08);color:#d4327a;padding:10px 14px;border-radius:8px;font-size:0.82rem;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px;animation:slideInUp 0.3s ease;';
+      err.innerHTML = '<i class="fas fa-exclamation-circle"></i> ' + msg;
+      var form = document.getElementById('signin-form');
+      form.insertBefore(err, form.firstChild);
+      setTimeout(function() { if (err.parentNode) err.remove(); }, 4000);
+    }
+  </script>
+</body>
+</html>
