@@ -497,6 +497,30 @@
     justify-content: flex-start;
   }
 
+  .footer-section:last-child {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .footer-section:last-child h3 {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .footer-section:last-child .contact-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 0;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 14px 10px;
+  }
+
   .footer-bottom {
     padding-top: 14px;
     margin-top: 8px;
