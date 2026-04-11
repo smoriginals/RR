@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Admin Panel</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="../assets/new/images/logo.png" alt="Richer" class="sidebar-logo">
+      <span class="sidebar-brand">Admin</span>
+      <button class="sidebar-close" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="index.html" class="nav-link active"><i class="fas fa-th-large"></i> Dashboard</a>
+      <a href="courses.html" class="nav-link"><i class="fas fa-graduation-cap"></i> Courses</a>
+      <a href="users.html" class="nav-link"><i class="fas fa-users"></i> Users</a>
+      <a href="orders.html" class="nav-link"><i class="fas fa-shopping-bag"></i> Orders</a>
+      <a href="coupons.html" class="nav-link"><i class="fas fa-tags"></i> Coupons</a>
+      <a href="blog-manage.html" class="nav-link"><i class="fas fa-blog"></i> Blog Posts</a>
+      <a href="settings.html" class="nav-link"><i class="fas fa-cog"></i> Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../index.html" class="nav-link"><i class="fas fa-external-link-alt"></i> View Website</a>
+      <a href="#" class="nav-link logout" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" onclick="toggleSidebar()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <h2 class="page-title">Dashboard</h2>
+      </div>
+      <div class="topbar-right">
+        <div class="admin-info">
+          <div class="admin-avatar"><i class="fas fa-user-shield"></i></div>
+          <span class="admin-name" id="adminName">Admin</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="content">
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(123, 47, 247, 0.1); color: #7B2FF7;">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <div class="stat-info">
+            <h3 id="totalCourses">0</h3>
+            <p>Total Courses</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(255, 60, 142, 0.1); color: #FF3C8E;">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-info">
+            <h3 id="totalUsers">0</h3>
+            <p>Total Users</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(255, 140, 66, 0.1); color: #FF8C42;">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <div class="stat-info">
+            <h3 id="totalOrders">0</h3>
+            <p>Total Orders</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(40, 199, 111, 0.1); color: #28c76f;">
+            <i class="fas fa-rupee-sign"></i>
+          </div>
+          <div class="stat-info">
+            <h3 id="totalRevenue">₹0</h3>
+            <p>Total Revenue</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="section-header">
+        <h3>Quick Actions</h3>
+      </div>
+      <div class="quick-actions">
+        <a href="courses.html?action=add" class="action-card">
+          <i class="fas fa-plus-circle"></i>
+          <span>Add Course</span>
+        </a>
+        <a href="users.html" class="action-card">
+          <i class="fas fa-user-plus"></i>
+          <span>Manage Users</span>
+        </a>
+        <a href="coupons.html" class="action-card">
+          <i class="fas fa-tag"></i>
+          <span>Create Coupon</span>
+        </a>
+        <a href="settings.html" class="action-card">
+          <i class="fas fa-sliders-h"></i>
+          <span>Site Settings</span>
+        </a>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="panel-grid">
+        <!-- Recent Courses -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3><i class="fas fa-graduation-cap"></i> Recent Courses</h3>
+            <a href="courses.html" class="panel-link">View All</a>
+          </div>
+          <div class="panel-body" id="recentCourses">
+            <div class="empty-state">
+              <i class="fas fa-book-open"></i>
+              <p>No courses yet. <a href="courses.html?action=add">Add your first course</a></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3><i class="fas fa-shopping-bag"></i> Recent Orders</h3>
+            <a href="orders.html" class="panel-link">View All</a>
+          </div>
+          <div class="panel-body" id="recentOrders">
+            <div class="empty-state">
+              <i class="fas fa-receipt"></i>
+              <p>No orders yet</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+  <script>
+    requireAdmin();
+    loadDashboard();
+  </script>
+</body>
+</html>

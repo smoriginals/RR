@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Users - Admin Panel</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="../assets/new/images/logo.png" alt="Richer" class="sidebar-logo">
+      <span class="sidebar-brand">Admin</span>
+      <button class="sidebar-close" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html" class="nav-link"><i class="fas fa-th-large"></i> Dashboard</a>
+      <a href="courses.html" class="nav-link"><i class="fas fa-graduation-cap"></i> Courses</a>
+      <a href="users.html" class="nav-link active"><i class="fas fa-users"></i> Users</a>
+      <a href="orders.html" class="nav-link"><i class="fas fa-shopping-bag"></i> Orders</a>
+      <a href="coupons.html" class="nav-link"><i class="fas fa-tags"></i> Coupons</a>
+      <a href="blog-manage.html" class="nav-link"><i class="fas fa-blog"></i> Blog Posts</a>
+      <a href="settings.html" class="nav-link"><i class="fas fa-cog"></i> Settings</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../index.html" class="nav-link"><i class="fas fa-external-link-alt"></i> View Website</a>
+      <a href="#" class="nav-link logout" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+  </aside>
+
+  <div class="main-content" id="mainContent">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <h2 class="page-title">Users</h2>
+      </div>
+      <div class="topbar-right">
+        <button class="btn-primary" onclick="showUserForm()">
+          <i class="fas fa-user-plus"></i> Add User
+        </button>
+      </div>
+    </header>
+
+    <div class="content">
+      <!-- User Form -->
+      <div class="panel" id="userFormPanel" style="display: none;">
+        <div class="panel-header">
+          <h3 id="userFormTitle"><i class="fas fa-user-plus"></i> Add New User</h3>
+          <button class="btn-ghost" onclick="hideUserForm()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="panel-body">
+          <form id="userForm" onsubmit="saveUser(event)">
+            <input type="hidden" id="userId">
+            <div class="form-row">
+              <div class="form-group">
+                <label>First Name *</label>
+                <input type="text" id="userFirstName" placeholder="John" required>
+              </div>
+              <div class="form-group">
+                <label>Last Name *</label>
+                <input type="text" id="userLastName" placeholder="Doe" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Email *</label>
+                <input type="email" id="userEmail" placeholder="user@example.com" required>
+              </div>
+              <div class="form-group">
+                <label>Phone</label>
+                <input type="tel" id="userPhone" placeholder="+91-9876543210">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Role</label>
+                <select id="userRole">
+                  <option value="student">Student</option>
+                  <option value="instructor">Instructor</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Status</label>
+                <select id="userStatus">
+                  <option value="active">Active</option>
+                  <option value="suspended">Suspended</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn-ghost" onclick="hideUserForm()">Cancel</button>
+              <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Save User</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div class="toolbar">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="userSearch" placeholder="Search users..." oninput="filterUsers()">
+        </div>
+        <select id="userFilter" onchange="filterUsers()">
+          <option value="all">All Roles</option>
+          <option value="student">Students</option>
+          <option value="instructor">Instructors</option>
+        </select>
+      </div>
+
+      <!-- Users Table -->
+      <div class="panel">
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Joined</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <tr>
+                <td colspan="6" class="empty-state">
+                  <i class="fas fa-users"></i>
+                  <p>No users found</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+  <script>
+    requireAdmin();
+    loadUsersList();
+  </script>
+</body>
+</html>
